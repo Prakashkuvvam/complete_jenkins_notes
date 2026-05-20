@@ -1,0 +1,1310 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Real-World Scenario Questions# Learning Objectives# Apply Jenkins knowledge to practical scenarios Troubleshoot real-world CI/CD problems Design solutions for common Jenkins challenges Understand the trade-offs in architectural decisions Scenario 1: CI/CD Migration# Context: Your team currently builds and deploys manually by SSHing into servers, running build commands, and copying JAR files. Deployments happen once a week and frequently break.
+Task: Design a CI/CD pipeline that addresses these problems.
+Solution:
+pipeline { agent any triggers { githubPush() } stages { stage(&#39;Build&#39;) { steps { sh &#39;mvn clean package&#39; } } stage(&#39;Test&#39;) { steps { sh &#39;mvn test&#39; } post { always { junit &#39;target/surefire-reports/*.xml&#39; } } } stage(&#39;Deploy to Staging&#39;) { when { branch &#39;develop&#39; } steps { sh &#39;deploy.sh staging&#39; } } stage(&#39;Deploy to Production&#39;) { when { branch &#39;main&#39; } input { message &#34;Deploy to production?&#34; } steps { sh &#39;deploy.sh production&#39; } } } }Key improvements:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/complete_jenkins_notes/docs/17-real-world-scenarios/">
+  <meta property="og:site_name" content="Jenkins Learning Path">
+  <meta property="og:title" content="Ch 17: Real-World Scenario Questions">
+  <meta property="og:description" content="Real-World Scenario Questions# Learning Objectives# Apply Jenkins knowledge to practical scenarios Troubleshoot real-world CI/CD problems Design solutions for common Jenkins challenges Understand the trade-offs in architectural decisions Scenario 1: CI/CD Migration# Context: Your team currently builds and deploys manually by SSHing into servers, running build commands, and copying JAR files. Deployments happen once a week and frequently break.
+Task: Design a CI/CD pipeline that addresses these problems.
+Solution:
+pipeline { agent any triggers { githubPush() } stages { stage(&#39;Build&#39;) { steps { sh &#39;mvn clean package&#39; } } stage(&#39;Test&#39;) { steps { sh &#39;mvn test&#39; } post { always { junit &#39;target/surefire-reports/*.xml&#39; } } } stage(&#39;Deploy to Staging&#39;) { when { branch &#39;develop&#39; } steps { sh &#39;deploy.sh staging&#39; } } stage(&#39;Deploy to Production&#39;) { when { branch &#39;main&#39; } input { message &#34;Deploy to production?&#34; } steps { sh &#39;deploy.sh production&#39; } } } }Key improvements:">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Ch 17: Real-World Scenario Questions">
+  <meta itemprop="description" content="Real-World Scenario Questions# Learning Objectives# Apply Jenkins knowledge to practical scenarios Troubleshoot real-world CI/CD problems Design solutions for common Jenkins challenges Understand the trade-offs in architectural decisions Scenario 1: CI/CD Migration# Context: Your team currently builds and deploys manually by SSHing into servers, running build commands, and copying JAR files. Deployments happen once a week and frequently break.
+Task: Design a CI/CD pipeline that addresses these problems.
+Solution:
+pipeline { agent any triggers { githubPush() } stages { stage(&#39;Build&#39;) { steps { sh &#39;mvn clean package&#39; } } stage(&#39;Test&#39;) { steps { sh &#39;mvn test&#39; } post { always { junit &#39;target/surefire-reports/*.xml&#39; } } } stage(&#39;Deploy to Staging&#39;) { when { branch &#39;develop&#39; } steps { sh &#39;deploy.sh staging&#39; } } stage(&#39;Deploy to Production&#39;) { when { branch &#39;main&#39; } input { message &#34;Deploy to production?&#34; } steps { sh &#39;deploy.sh production&#39; } } } }Key improvements:">
+  <meta itemprop="wordCount" content="1970">
+
+<title>Ch 17: Real-World Scenario Questions • Jenkins Learning Path</title>
+<link rel="icon" href="/complete_jenkins_notes/favicon.png" >
+<link rel="manifest" href="/complete_jenkins_notes/manifest.json">
+<link rel="canonical" href="/complete_jenkins_notes/docs/17-real-world-scenarios/">
+<link rel="stylesheet" href="/complete_jenkins_notes/book.min.a65532e79bcac2f95ba4108b26cdc17b0fe6382f603d8a6b72971bfa3261bf47.css" >
+
+
+  <script defer type="module" src="/complete_jenkins_notes/en.search.min.2d25fa1fe6842b36dbd4e753f3112a465146ff5f09912883575978a46c3ff969.js" ></script>
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<div class="book-sidebar-toggle">
+  <label for="menu-control" role="button" class="sidebar-toggle-label" title="Toggle sidebar">
+    <span class="sidebar-toggle-icon">◀</span>
+  </label>
+</div>
+<aside class="book-menu">
+  <label for="menu-control" class="book-menu-collapse-target" title="Expand sidebar" aria-label="Expand sidebar"></label>
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/complete_jenkins_notes/"><span>Jenkins Learning Path</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+<div class="sidebar-progress" id="sidebar-progress">
+  <div class="sidebar-progress-header">
+    <span class="sidebar-progress-label">📊 Progress</span>
+    <span class="sidebar-progress-pct" id="sidebar-progress-pct">0%</span>
+  </div>
+  <div class="sidebar-progress-track">
+    <div class="sidebar-progress-fill" id="sidebar-progress-fill" style="width:0%;"></div>
+  </div>
+  <div class="sidebar-progress-detail" id="sidebar-progress-detail">
+    <span id="sidebar-progress-chapters">0/17 chapters</span>
+    <span id="sidebar-progress-tests">0/7 tests</span>
+  </div>
+</div>
+
+
+
+<ul><li><a href="/complete_jenkins_notes/">Home</a></li><li><a href="/complete_jenkins_notes/docs/">Documentation</a></li></ul>
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/25-progress-dashboard/" class="">
+      📊 Progress Dashboard</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/26-start-here/" class="">
+      🚀 Start Here</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="">
+      Ch 1: Introduction to CI/CD &amp; Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="">
+      Ch 2: Jenkins Architecture &amp; Installation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="">
+      Ch 3: Configuration &amp; Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="">
+      Ch 4: Freestyle Projects &amp; Build Jobs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/" class="">
+      Ch 5: Pipeline Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/" class="">
+      Ch 6: Pipeline Syntax &amp; Steps</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/" class="">
+      Ch 7: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="">
+      Ch 8: Source Code Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/" class="">
+      Ch 9: Shared Libraries &amp; Reusability</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="">
+      Ch 10: Multi-Branch Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="">
+      Ch 11: Docker &amp; Kubernetes Integration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/" class="">
+      Ch 12: Testing, Security &amp; Compliance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="">
+      Ch 13: Jenkins Configuration as Code (JCasC)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="">
+      Ch 14: Production-Grade Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/15-exam-preparation-guide/" class="">
+      Ch 15: Exam Preparation Guide</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="">
+      Ch 16: Interview Questions &amp; Answers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="active">
+      Ch 17: Real-World Scenario Questions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="">
+      📝 Practice Test 1: CI/CD Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="">
+      📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="">
+      📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="">
+      📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="">
+      📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="">
+      📝 Practice Test 6: Production Jenkins &amp; Monitoring</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="">
+      📝 Practice Test 7: DevOps &amp; Real-World Scenarios</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/complete_jenkins_notes/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Ch 17: Real-World Scenario Questions</h3>
+
+  <label for="toc-control">
+    
+    <img src="/complete_jenkins_notes/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#scenario-1-cicd-migration">Scenario 1: CI/CD Migration</a></li>
+    <li><a href="#scenario-2-cicd-for-microservices">Scenario 2: CI/CD for Microservices</a></li>
+    <li><a href="#scenario-3-database-migration-in-pipeline">Scenario 3: Database Migration in Pipeline</a></li>
+    <li><a href="#scenario-4-container-security-scan">Scenario 4: Container Security Scan</a></li>
+    <li><a href="#scenario-5-multi-environment-promotion">Scenario 5: Multi-Environment Promotion</a></li>
+    <li><a href="#scenario-6-pipeline-failure-recovery">Scenario 6: Pipeline Failure Recovery</a></li>
+    <li><a href="#scenario-7-secrets-rotation">Scenario 7: Secrets Rotation</a></li>
+    <li><a href="#scenario-8-large-scale-monorepo">Scenario 8: Large-Scale Monorepo</a></li>
+    <li><a href="#scenario-9-zero-downtime-deployment">Scenario 9: Zero-Downtime Deployment</a></li>
+    <li><a href="#scenario-10-jenkins-pipeline-for-infrastructure-as-code">Scenario 10: Jenkins Pipeline for Infrastructure as Code</a></li>
+    <li><a href="#scenario-11-emergency-hotfix-pipeline">Scenario 11: Emergency Hotfix Pipeline</a></li>
+    <li><a href="#scenario-12-compliance-and-audit-pipeline">Scenario 12: Compliance and Audit Pipeline</a></li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="real-world-scenario-questions">Real-World Scenario Questions<a class="anchor" href="#real-world-scenario-questions">#</a></h1>
+<h2 id="learning-objectives">Learning Objectives<a class="anchor" href="#learning-objectives">#</a></h2>
+<ul>
+<li>Apply Jenkins knowledge to practical scenarios</li>
+<li>Troubleshoot real-world CI/CD problems</li>
+<li>Design solutions for common Jenkins challenges</li>
+<li>Understand the trade-offs in architectural decisions</li>
+</ul>
+<hr>
+<h2 id="scenario-1-cicd-migration">Scenario 1: CI/CD Migration<a class="anchor" href="#scenario-1-cicd-migration">#</a></h2>
+<p><strong>Context:</strong> Your team currently builds and deploys manually by SSHing into servers, running build commands, and copying JAR files. Deployments happen once a week and frequently break.</p>
+<p><strong>Task:</strong> Design a CI/CD pipeline that addresses these problems.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">triggers</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">githubPush</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s1">&#39;mvn clean package&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Test&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s1">&#39;mvn test&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">post</span> <span class="o">{</span> <span class="n">always</span> <span class="o">{</span> <span class="n">junit</span> <span class="s1">&#39;target/surefire-reports/*.xml&#39;</span> <span class="o">}</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy to Staging&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">when</span> <span class="o">{</span> <span class="n">branch</span> <span class="s1">&#39;develop&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s1">&#39;deploy.sh staging&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy to Production&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">when</span> <span class="o">{</span> <span class="n">branch</span> <span class="s1">&#39;main&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">input</span> <span class="o">{</span> <span class="n">message</span> <span class="s2">&#34;Deploy to production?&#34;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s1">&#39;deploy.sh production&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><p><strong>Key improvements:</strong></p>
+<ul>
+<li>Automated builds on every commit</li>
+<li>Test automation catches bugs early</li>
+<li>Staging environment for validation</li>
+<li>Approval gate for production releases</li>
+<li>Rollback capability by keeping previous artifacts</li>
+</ul>
+<hr>
+<h2 id="scenario-2-cicd-for-microservices">Scenario 2: CI/CD for Microservices<a class="anchor" href="#scenario-2-cicd-for-microservices">#</a></h2>
+<p><strong>Context:</strong> You have 15 microservices in separate repositories. Each service has its own build, test, and deploy pipeline. Teams want to reuse common pipeline logic.</p>
+<p><strong>Task:</strong> Design a scalable Jenkins setup for microservices.</p>
+<p><strong>Solution:</strong></p>
+<ol>
+<li><strong>Single shared library</strong> with common build/deploy steps:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// vars/buildMicroservice.groovy
+</span></span></span><span class="line"><span class="cl"><span class="kt">def</span> <span class="nf">call</span><span class="o">(</span><span class="n">Map</span> <span class="n">config</span> <span class="o">=</span> <span class="o">[:])</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">        <span class="n">parameters</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">string</span><span class="o">(</span><span class="nl">name:</span> <span class="s1">&#39;SERVICE_NAME&#39;</span><span class="o">,</span> <span class="nl">defaultValue:</span> <span class="n">config</span><span class="o">.</span><span class="na">serviceName</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s2">&#34;cd services/${SERVICE_NAME} &amp;&amp; mvn clean package&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Test&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s2">&#34;cd services/${SERVICE_NAME} &amp;&amp; mvn test&#34;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Dockerize&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s2">&#34;docker build -t ${SERVICE_NAME}:latest services/${SERVICE_NAME}&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><ol start="2">
+<li><strong>Organization folder</strong> to discover all service repos</li>
+<li><strong>Multi-Branch Pipeline</strong> configuration per repo</li>
+<li><strong>One Jenkinsfile per service</strong> that calls the shared library:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="nd">@Library</span><span class="o">(</span><span class="s1">&#39;ms-common-lib&#39;</span><span class="o">)</span> <span class="n">_</span>
+</span></span><span class="line"><span class="cl"><span class="n">buildMicroservice</span><span class="o">(</span><span class="nl">serviceName:</span> <span class="s1">&#39;user-service&#39;</span><span class="o">)</span></span></span></code></pre></div><hr>
+<h2 id="scenario-3-database-migration-in-pipeline">Scenario 3: Database Migration in Pipeline<a class="anchor" href="#scenario-3-database-migration-in-pipeline">#</a></h2>
+<p><strong>Context:</strong> You need to run database migrations as part of your pipeline. The migration script requires database credentials and must run only once per deployment.</p>
+<p><strong>Task:</strong> Implement safe database migrations in a pipeline.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s1">&#39;mvn clean package&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Migrate Database&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">when</span> <span class="o">{</span> <span class="n">branch</span> <span class="s1">&#39;main&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">withCredentials</span><span class="o">([</span><span class="n">usernamePassword</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">credentialsId:</span> <span class="s1">&#39;db-credentials&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">usernameVariable:</span> <span class="s1">&#39;DB_USER&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">passwordVariable:</span> <span class="s1">&#39;DB_PASSWORD&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">)])</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        # Run migrations with idempotency check
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        migrate.sh \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            --url jdbc:postgresql://db.example.com:5432/appdb \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            --user &#34;$DB_USER&#34; \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            --password &#34;$DB_PASSWORD&#34; \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            --locations filesystem:migrations
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s1">&#39;deploy.sh&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><p><strong>Safety measures:</strong></p>
+<ul>
+<li>Run migrations BEFORE deploying the new code</li>
+<li>Use idempotent migration scripts (Flyway/Liquibase)</li>
+<li>Always have a rollback migration ready</li>
+<li>Test migrations in staging first</li>
+</ul>
+<hr>
+<h2 id="scenario-4-container-security-scan">Scenario 4: Container Security Scan<a class="anchor" href="#scenario-4-container-security-scan">#</a></h2>
+<p><strong>Context:</strong> Security team requires all container images to be scanned for vulnerabilities before deployment. High-severity CVEs must block the build.</p>
+<p><strong>Task:</strong> Integrate container security scanning into the pipeline.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">environment</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">IMAGE</span> <span class="o">=</span> <span class="s2">&#34;myapp:${BUILD_NUMBER}&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s1">&#39;mvn clean package&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Docker Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s1">&#39;docker build -t $IMAGE .&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Security Scan&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    trivy image --severity HIGH,CRITICAL \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        --exit-code 1 $IMAGE
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">failure</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Allow override for false positives
+</span></span></span><span class="line"><span class="cl">                    <span class="n">input</span> <span class="nl">message:</span> <span class="s2">&#34;Scan failed. Override?&#34;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">submitter:</span> <span class="s2">&#34;security-team&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Push &amp; Deploy&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;docker push $IMAGE&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;kubectl set image deployment/myapp myapp=$IMAGE&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="scenario-5-multi-environment-promotion">Scenario 5: Multi-Environment Promotion<a class="anchor" href="#scenario-5-multi-environment-promotion">#</a></h2>
+<p><strong>Context:</strong> An application needs to be promoted through Dev → Staging → Production environments. Each environment requires different configurations and approvals.</p>
+<p><strong>Task:</strong> Design a promotion pipeline.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s1">&#39;mvn clean package&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">post</span> <span class="o">{</span> <span class="n">success</span> <span class="o">{</span> <span class="n">archiveArtifacts</span> <span class="s1">&#39;target/*.jar&#39;</span> <span class="o">}</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Dev Deploy&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">when</span> <span class="o">{</span> <span class="n">branch</span> <span class="s1">&#39;develop&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s1">&#39;deploy.sh dev&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Staging Promote&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">when</span> <span class="o">{</span> <span class="n">branch</span> <span class="s1">&#39;release/*&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s1">&#39;deploy.sh staging&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Staging Tests&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span> <span class="n">sh</span> <span class="s1">&#39;make integration-tests&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Production Approval&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">when</span> <span class="o">{</span> <span class="n">branch</span> <span class="s1">&#39;main&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">input</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">message</span> <span class="s2">&#34;Promote to production?&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">submitter</span> <span class="s2">&#34;release-manager&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">parameters</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">string</span><span class="o">(</span><span class="nl">name:</span> <span class="s1">&#39;VERSION&#39;</span><span class="o">,</span> 
+</span></span><span class="line"><span class="cl">                        <span class="nl">defaultValue:</span> <span class="s1">&#39;&#39;</span><span class="o">,</span> 
+</span></span><span class="line"><span class="cl">                        <span class="nl">description:</span> <span class="s1">&#39;Version from staging&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Production Deploy&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">when</span> <span class="o">{</span> <span class="n">branch</span> <span class="s1">&#39;main&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s2">&#34;deploy.sh production --version ${params.VERSION}&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="scenario-6-pipeline-failure-recovery">Scenario 6: Pipeline Failure Recovery<a class="anchor" href="#scenario-6-pipeline-failure-recovery">#</a></h2>
+<p><strong>Context:</strong> A multi-hour integration test pipeline fails midway due to a transient infrastructure issue. Developers need to resume from the failure point without rebuilding everything.</p>
+<p><strong>Task:</strong> Design a resilient pipeline with failure recovery.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">options</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">preserveStashes</span><span class="o">(</span><span class="nl">buildCount:</span> <span class="mi">10</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;mvn clean package&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">stash</span> <span class="nl">name:</span> <span class="s1">&#39;build-output&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="s1">&#39;target/*.jar&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Unit Tests&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">unstash</span> <span class="s1">&#39;build-output&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;mvn test&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Integration Tests&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">unstash</span> <span class="s1">&#39;build-output&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">retry</span><span class="o">(</span><span class="mi">3</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">timeout</span><span class="o">(</span><span class="mi">30</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">sh</span> <span class="s1">&#39;mvn verify -Pintegration&#39;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Performance Tests&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">when</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">expression</span> <span class="o">{</span> <span class="n">params</span><span class="o">.</span><span class="na">RUN_PERF_TESTS</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">unstash</span> <span class="s1">&#39;build-output&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">catchError</span><span class="o">(</span><span class="nl">buildResult:</span> <span class="s1">&#39;UNSTABLE&#39;</span><span class="o">,</span> <span class="nl">stageResult:</span> <span class="s1">&#39;FAILURE&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s1">&#39;make perf-tests&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><p><strong>Resilience features:</strong></p>
+<ul>
+<li><code>retry(3)</code> for transient failures</li>
+<li><code>timeout</code> to prevent hung builds</li>
+<li><code>catchError</code> for non-critical stages</li>
+<li><code>preserveStashes</code> for debugging</li>
+<li>Parallel execution with <code>failFast false</code></li>
+</ul>
+<hr>
+<h2 id="scenario-7-secrets-rotation">Scenario 7: Secrets Rotation<a class="anchor" href="#scenario-7-secrets-rotation">#</a></h2>
+<p><strong>Context:</strong> Security policy requires all Jenkins credentials to be rotated every 90 days. You have 200+ credentials across 30 Jenkins folders.</p>
+<p><strong>Task:</strong> Automate credential rotation.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Rotation script (run as a pipeline job)
+</span></span></span><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Generate New Secrets&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Generate new API keys from Vault
+</span></span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">newKeys</span> <span class="o">=</span> <span class="n">sh</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">script:</span> <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            vault write -format=json aws/creds/jenkins |
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            jq &#39;{access_key: .data.access_key, 
+</span></span></span><span class="line"><span class="cl"><span class="s1">                                 secret_key: .data.secret_key}&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        &#39;&#39;&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">returnStdout:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">).</span><span class="na">trim</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="n">writeFile</span> <span class="nl">file:</span> <span class="s1">&#39;new-creds.json&#39;</span><span class="o">,</span> <span class="nl">text:</span> <span class="n">newKeys</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Update Jenkins Credentials&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">creds</span> <span class="o">=</span> <span class="n">readJSON</span> <span class="nl">file:</span> <span class="s1">&#39;new-creds.json&#39;</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Use Jenkins API to update credentials
+</span></span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">                        curl -X POST http://localhost:8080/credentials/store/system/domain/_/updateCredentials \\
+</span></span></span><span class="line"><span class="cl"><span class="s2">                            --user admin:\${ADMIN_TOKEN} \\
+</span></span></span><span class="line"><span class="cl"><span class="s2">                            --data-urlencode &#39;json={
+</span></span></span><span class="line"><span class="cl"><span class="s2">                                &#34;credentials&#34;: {
+</span></span></span><span class="line"><span class="cl"><span class="s2">                                    &#34;scope&#34;: &#34;GLOBAL&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s2">                                    &#34;id&#34;: &#34;aws-jenkins-role&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s2">                                    &#34;username&#34;: &#34;${creds.access_key}&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s2">                                    &#34;password&#34;: &#34;${creds.secret_key}&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s2">                                    &#34;description&#34;: &#34;Rotated on ${new Date()}&#34;,
+</span></span></span><span class="line"><span class="cl"><span class="s2">                                    &#34;\$class&#34;: &#34;com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">                                }
+</span></span></span><span class="line"><span class="cl"><span class="s2">                            }&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s2">                    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><p><strong>Best practices:</strong></p>
+<ul>
+<li>Use Vault for dynamic secret generation</li>
+<li>Schedule rotation jobs with cron</li>
+<li>Validate new credentials before deleting old ones</li>
+<li>Keep a window of overlapping validity</li>
+<li>Notify teams of upcoming rotations</li>
+</ul>
+<hr>
+<h2 id="scenario-8-large-scale-monorepo">Scenario 8: Large-Scale Monorepo<a class="anchor" href="#scenario-8-large-scale-monorepo">#</a></h2>
+<p><strong>Context:</strong> A monorepo contains 50+ projects in different languages (Java, Node, Python). Building everything on every commit takes 2+ hours. Teams want to build only what changed.</p>
+<p><strong>Task:</strong> Design an optimized monorepo pipeline.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Detect Changes&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Get changed files
+</span></span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">changedFiles</span> <span class="o">=</span> <span class="n">sh</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">script:</span> <span class="s1">&#39;git diff --name-only HEAD~1 HEAD&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">returnStdout:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">).</span><span class="na">trim</span><span class="o">().</span><span class="na">split</span><span class="o">(</span><span class="s1">&#39;\n&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Determine which projects changed
+</span></span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">projectsToBuild</span> <span class="o">=</span> <span class="o">[]</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">changedFiles</span><span class="o">.</span><span class="na">each</span> <span class="o">{</span> <span class="n">file</span> <span class="o">-&gt;</span>
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s1">&#39;services/java/&#39;</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">projectsToBuild</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s1">&#39;java&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s1">&#39;services/node/&#39;</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">projectsToBuild</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s1">&#39;node&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">file</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s1">&#39;services/python/&#39;</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">projectsToBuild</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="s1">&#39;python&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="n">env</span><span class="o">.</span><span class="na">BUILD_JAVA</span> <span class="o">=</span> <span class="n">projectsToBuild</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s1">&#39;java&#39;</span><span class="o">)</span> <span class="o">?</span> <span class="s1">&#39;true&#39;</span> <span class="o">:</span> <span class="s1">&#39;false&#39;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">env</span><span class="o">.</span><span class="na">BUILD_NODE</span> <span class="o">=</span> <span class="n">projectsToBuild</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s1">&#39;node&#39;</span><span class="o">)</span> <span class="o">?</span> <span class="s1">&#39;true&#39;</span> <span class="o">:</span> <span class="s1">&#39;false&#39;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">env</span><span class="o">.</span><span class="na">BUILD_PYTHON</span> <span class="o">=</span> <span class="n">projectsToBuild</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s1">&#39;python&#39;</span><span class="o">)</span> <span class="o">?</span> <span class="s1">&#39;true&#39;</span> <span class="o">:</span> <span class="s1">&#39;false&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build Changed Projects&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">parallel</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Java&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">when</span> <span class="o">{</span> <span class="n">expression</span> <span class="o">{</span> <span class="n">env</span><span class="o">.</span><span class="na">BUILD_JAVA</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span> <span class="o">}</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">sh</span> <span class="s1">&#39;cd services/java &amp;&amp; mvn clean package&#39;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Node&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">when</span> <span class="o">{</span> <span class="n">expression</span> <span class="o">{</span> <span class="n">env</span><span class="o">.</span><span class="na">BUILD_NODE</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span> <span class="o">}</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">sh</span> <span class="s1">&#39;cd services/node &amp;&amp; npm ci &amp;&amp; npm run build&#39;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Python&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">when</span> <span class="o">{</span> <span class="n">expression</span> <span class="o">{</span> <span class="n">env</span><span class="o">.</span><span class="na">BUILD_PYTHON</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span> <span class="o">}</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">sh</span> <span class="s1">&#39;cd services/python &amp;&amp; pip install -r requirements.txt&#39;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="scenario-9-zero-downtime-deployment">Scenario 9: Zero-Downtime Deployment<a class="anchor" href="#scenario-9-zero-downtime-deployment">#</a></h2>
+<p><strong>Context:</strong> A critical web application cannot tolerate downtime during deployment. You need to deploy new versions without interrupting user traffic.</p>
+<p><strong>Task:</strong> Implement a zero-downtime deployment strategy.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">environment</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">APP_NAME</span> <span class="o">=</span> <span class="s1">&#39;myapp&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="n">K8S_NAMESPACE</span> <span class="o">=</span> <span class="s1">&#39;production&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build &amp; Push Image&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">docker</span><span class="o">.</span><span class="na">build</span><span class="o">(</span><span class="s2">&#34;${APP_NAME}:${BUILD_NUMBER}&#34;</span><span class="o">).</span><span class="na">push</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Rolling Update&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">                    kubectl set image deployment/${APP_NAME} \\
+</span></span></span><span class="line"><span class="cl"><span class="s2">                        ${APP_NAME}=${APP_NAME}:${BUILD_NUMBER} \\
+</span></span></span><span class="line"><span class="cl"><span class="s2">                        -n ${K8S_NAMESPACE} \\
+</span></span></span><span class="line"><span class="cl"><span class="s2">                        --record
+</span></span></span><span class="line"><span class="cl"><span class="s2">                    
+</span></span></span><span class="line"><span class="cl"><span class="s2">                    # Wait for rollout to complete
+</span></span></span><span class="line"><span class="cl"><span class="s2">                    kubectl rollout status deployment/${APP_NAME} \\
+</span></span></span><span class="line"><span class="cl"><span class="s2">                        -n ${K8S_NAMESPACE} \\
+</span></span></span><span class="line"><span class="cl"><span class="s2">                        --timeout=10m
+</span></span></span><span class="line"><span class="cl"><span class="s2">                &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Smoke Test&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    # Verify the new deployment
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    URL=$(kubectl get svc ${APP_NAME} -n ${K8S_NAMESPACE} \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        -o jsonpath=&#39;{.status.loadBalancer.ingress[0].hostname}&#39;)
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    curl -f http://$URL/health
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">failure</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Rollback on failure
+</span></span></span><span class="line"><span class="cl">            <span class="n">sh</span> <span class="s2">&#34;kubectl rollout undo deployment/${APP_NAME} -n ${K8S_NAMESPACE}&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="scenario-10-jenkins-pipeline-for-infrastructure-as-code">Scenario 10: Jenkins Pipeline for Infrastructure as Code<a class="anchor" href="#scenario-10-jenkins-pipeline-for-infrastructure-as-code">#</a></h2>
+<p><strong>Context:</strong> Your platform team manages AWS infrastructure using Terraform. Changes must be reviewed before apply, and state must be locked to prevent concurrent modifications.</p>
+<p><strong>Task:</strong> Design a Terraform pipeline with plan/apply workflow.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">parameters</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">choice</span><span class="o">(</span><span class="nl">name:</span> <span class="s1">&#39;ACTION&#39;</span><span class="o">,</span> <span class="nl">choices:</span> <span class="o">[</span><span class="s1">&#39;plan&#39;</span><span class="o">,</span> <span class="s1">&#39;apply&#39;</span><span class="o">],</span> <span class="nl">description:</span> <span class="s1">&#39;Terraform action&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Checkout&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">checkout</span> <span class="n">scm</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Terraform Init&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;terraform init -backend-config=backend-prod.hcl&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Terraform Plan&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;terraform plan -out=tfplan&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">success</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Archive plan for apply
+</span></span></span><span class="line"><span class="cl">                    <span class="n">stash</span> <span class="nl">name:</span> <span class="s1">&#39;tfplan&#39;</span><span class="o">,</span> <span class="nl">includes:</span> <span class="s1">&#39;tfplan&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Terraform Apply&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">when</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">expression</span> <span class="o">{</span> <span class="n">params</span><span class="o">.</span><span class="na">ACTION</span> <span class="o">==</span> <span class="s1">&#39;apply&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="n">branch</span> <span class="s1">&#39;main&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">input</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">message</span> <span class="s2">&#34;Apply this Terraform plan?&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">ok</span> <span class="s2">&#34;Apply&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">unstash</span> <span class="s1">&#39;tfplan&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;terraform apply tfplan&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="scenario-11-emergency-hotfix-pipeline">Scenario 11: Emergency Hotfix Pipeline<a class="anchor" href="#scenario-11-emergency-hotfix-pipeline">#</a></h2>
+<p><strong>Context:</strong> A critical production bug needs an immediate fix. The normal CI/CD pipeline takes 2 hours with full test suites. The hotfix must bypass some steps but still maintain quality.</p>
+<p><strong>Task:</strong> Design an emergency hotfix pipeline with guardrails.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">parameters</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">string</span><span class="o">(</span><span class="nl">name:</span> <span class="s1">&#39;HOTFIX_BRANCH&#39;</span><span class="o">,</span> 
+</span></span><span class="line"><span class="cl">            <span class="nl">description:</span> <span class="s1">&#39;Branch name for the hotfix&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">booleanParam</span><span class="o">(</span><span class="nl">name:</span> <span class="s1">&#39;SKIP_LONG_TESTS&#39;</span><span class="o">,</span> 
+</span></span><span class="line"><span class="cl">            <span class="nl">defaultValue:</span> <span class="kc">true</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">description:</span> <span class="s1">&#39;Skip integration and performance tests&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Validate Hotfix&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Ensure hotfix branch naming convention
+</span></span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="o">(!</span><span class="n">env</span><span class="o">.</span><span class="na">HOTFIX_BRANCH</span><span class="o">.</span><span class="na">startsWith</span><span class="o">(</span><span class="s1">&#39;hotfix/&#39;</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">error</span><span class="o">(</span><span class="s2">&#34;Branch must start with &#39;hotfix/&#39;&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Require JIRA ticket
+</span></span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">commitMsg</span> <span class="o">=</span> <span class="n">sh</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">script:</span> <span class="s1">&#39;git log -1 --pretty=%s&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">returnStdout:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">).</span><span class="na">trim</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="o">(!(</span><span class="n">commitMsg</span> <span class="o">=~</span> <span class="s">/HOTFIX-\d+/</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">error</span><span class="o">(</span><span class="s2">&#34;Commit must reference a JIRA hotfix ticket&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Quick Tests&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;mvn test -DskipITs=true&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">post</span> <span class="o">{</span> <span class="n">always</span> <span class="o">{</span> <span class="n">junit</span> <span class="s1">&#39;target/surefire-reports/*.xml&#39;</span> <span class="o">}</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Skip staging for hotfix
+</span></span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s1">&#39;deploy.sh production --hotfix&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Post-Deploy Verification&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;run-smoke-tests.sh&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">always</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Notify team of hotfix deployment
+</span></span></span><span class="line"><span class="cl">            <span class="n">slackSend</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">color:</span> <span class="s1">&#39;#FF0000&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">message:</span> <span class="s2">&#34;🚨 HOTFIX ${env.HOTFIX_BRANCH} deployed to production&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="scenario-12-compliance-and-audit-pipeline">Scenario 12: Compliance and Audit Pipeline<a class="anchor" href="#scenario-12-compliance-and-audit-pipeline">#</a></h2>
+<p><strong>Context:</strong> A financial services company needs every build to produce an auditable trail showing who approved what, when, and what code was deployed.</p>
+<p><strong>Task:</strong> Design a compliance-focused pipeline.</p>
+<p><strong>Solution:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Pre-Build Compliance&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Verify GPG-signed commit
+</span></span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">signature</span> <span class="o">=</span> <span class="n">sh</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">script:</span> <span class="s1">&#39;git log -1 --pretty=format:&#34;%G?&#34;&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">returnStdout:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">).</span><span class="na">trim</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="o">(</span><span class="n">signature</span> <span class="o">!=</span> <span class="s1">&#39;G&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">error</span><span class="o">(</span><span class="s2">&#34;Commit must be signed with a verified GPG key&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Record who triggered the build
+</span></span></span><span class="line"><span class="cl">                    <span class="n">echo</span> <span class="s2">&#34;Build triggered by: ${env.BUILD_USER}&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">echo</span> <span class="s2">&#34;Build user ID: ${env.BUILD_USER_ID}&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build &amp; Test&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;mvn clean verify&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Approval Gate&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">when</span> <span class="o">{</span> <span class="n">branch</span> <span class="s1">&#39;main&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">input</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">message</span> <span class="s2">&#34;Approve deployment?&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">submitter</span> <span class="s2">&#34;compliance-officer,release-manager&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">submitterParameter</span> <span class="s2">&#34;APPROVED_BY&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">echo</span> <span class="s2">&#34;Approved by: ${APPROVED_BY}&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Generate Audit Report&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">report</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Audit Report - ${env.JOB_NAME} #${env.BUILD_NUMBER}
+</span></span></span><span class="line"><span class="cl"><span class="s2">======================================================
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: ${new Date().format(&#39;yyyy-MM-dd HH:mm:ss&#39;)}
+</span></span></span><span class="line"><span class="cl"><span class="s2">Triggered by: ${env.BUILD_USER} (${env.BUILD_USER_ID})
+</span></span></span><span class="line"><span class="cl"><span class="s2">Commit: ${env.GIT_COMMIT}
+</span></span></span><span class="line"><span class="cl"><span class="s2">Branch: ${env.BRANCH_NAME}
+</span></span></span><span class="line"><span class="cl"><span class="s2">Approved by: ${APPROVED_BY ?: &#39;N/A&#39;}
+</span></span></span><span class="line"><span class="cl"><span class="s2">Build result: ${currentBuild.result ?: &#39;PENDING&#39;}
+</span></span></span><span class="line"><span class="cl"><span class="s2">======================================================
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">writeFile</span> <span class="nl">file:</span> <span class="s1">&#39;audit-report.txt&#39;</span><span class="o">,</span> <span class="nl">text:</span> <span class="n">report</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">archiveArtifacts</span> <span class="nl">artifacts:</span> <span class="s1">&#39;audit-report.txt&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="key-takeaways">Key Takeaways<a class="anchor" href="#key-takeaways">#</a></h2>
+<ul>
+<li>Design pipelines for resilience — use retries, timeouts, and stash/unstash</li>
+<li>Implement approval gates for production deployments</li>
+<li>Use shared libraries for consistency across microservices</li>
+<li>Automate credential rotation with Vault and Jenkins API</li>
+<li>Zero-downtime deployments require rolling updates and health checks</li>
+<li>Compliance pipelines must log who did what and when</li>
+<li>Emergency hotfix pipelines need guardrails, not full bypass</li>
+</ul>
+<hr>
+<h2 id="next-steps">Next Steps<a class="anchor" href="#next-steps">#</a></h2>
+<p>→ <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/">Take Practice Test 1</a> to test your knowledge</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="flex align-center">
+        <img src="/complete_jenkins_notes/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Ch 16: Interview Questions &amp; Answers</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="flex align-center">
+        <span>📝 Practice Test 1: CI/CD Fundamentals</span>
+        <img src="/complete_jenkins_notes/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){"use strict";document.querySelectorAll("pre > code").forEach(function(t){var n,s=t.parentElement;if(!s||s.tagName!=="PRE")return;if(s.querySelector(".copy-button"))return;s.style.position="relative",n=document.createElement("button"),n.className="copy-button",n.textContent="Copy",n.setAttribute("aria-label","Copy code to clipboard"),n.setAttribute("type","button"),s.appendChild(n),n.addEventListener("click",function(){var s=t.textContent||"";navigator.clipboard?navigator.clipboard.writeText(s).then(function(){n.textContent="Copied!",n.classList.add("copied"),setTimeout(function(){n.textContent="Copy",n.classList.remove("copied")},2e3)}).catch(function(){e(s,n)}):e(s,n)})});function e(e,t){var n=document.createElement("textarea");n.value=e,n.style.position="fixed",n.style.opacity="0",document.body.appendChild(n),n.select();try{document.execCommand("copy"),t.textContent="Copied!",t.classList.add("copied"),setTimeout(function(){t.textContent="Copy",t.classList.remove("copied")},2e3)}catch{t.textContent="Error",setTimeout(function(){t.textContent="Copy"},2e3)}document.body.removeChild(n)}})()</script>
+  
+
+        
+  
+    <script>(function(){"use strict";var t,a,o="jenkins_exam_progress",c="jenkins_chapter_progress";function e(e){this.element=e,this.minutesDisplay=e.querySelector(".timer-minutes"),this.secondsDisplay=e.querySelector(".timer-seconds"),this.statusEl=e.querySelector(".timer-status"),this.totalSeconds=parseInt(e.dataset.minutes||"60",10)*60,this.remaining=this.totalSeconds,this.interval=null,this.running=!1,this.finished=!1;var n,s,o,i,t=this.loadState();t&&t.remaining>0&&!t.finished&&(this.remaining=t.remaining),this.updateDisplay(),n=this,s=e.querySelector(".timer-start"),o=e.querySelector(".timer-pause"),i=e.querySelector(".timer-reset"),s&&s.addEventListener("click",function(){n.start()}),o&&o.addEventListener("click",function(){n.pause()}),i&&i.addEventListener("click",function(){n.reset()}),t&&t.running&&this.start()}e.prototype.start=function(){if(this.finished)return;if(this.running)return;this.running=!0,this.element.classList.add("timer-running"),this.element.classList.remove("timer-paused");var e=this;this.interval=setInterval(function(){e.remaining--,e.updateDisplay(),e.saveState(),e.remaining<=0&&(e.remaining=0,e.updateDisplay(),e.finish())},1e3)},e.prototype.pause=function(){if(!this.running)return;this.running=!1,this.element.classList.remove("timer-running"),this.element.classList.add("timer-paused"),clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.reset=function(){this.pause(),this.remaining=this.totalSeconds,this.finished=!1,this.element.classList.remove("timer-finished"),this.element.classList.remove("timer-paused"),this.statusEl.textContent="Time Remaining",this.updateDisplay(),this.saveState(),localStorage.removeItem(this.getTimerStorageKey())},e.prototype.finish=function(){this.running=!1,this.finished=!0,this.element.classList.remove("timer-running"),this.element.classList.add("timer-finished"),this.statusEl.textContent="⏰ Time's Up!",clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.updateDisplay=function(){var e=Math.floor(this.remaining/60),t=this.remaining%60;this.minutesDisplay.textContent=String(e).padStart(2,"0"),this.secondsDisplay.textContent=String(t).padStart(2,"0"),this.remaining<=300&&this.remaining>0?this.element.classList.add("timer-warning"):this.element.classList.remove("timer-warning")},e.prototype.getTimerStorageKey=function(){return o+"_timer_"+this.element.dataset.testId},e.prototype.loadState=function(){try{var e=localStorage.getItem(this.getTimerStorageKey());return e?JSON.parse(e):null}catch{return null}},e.prototype.saveState=function(){try{var e={remaining:this.remaining,running:this.running,finished:this.finished,savedAt:Date.now()};localStorage.setItem(this.getTimerStorageKey(),JSON.stringify(e))}catch{}},document.querySelectorAll(".exam-timer").forEach(function(t){new e(t)});function f(e,t){try{var s=n();s[e]=t,localStorage.setItem(o,JSON.stringify(s)),m()}catch{}}function n(){try{var e=localStorage.getItem(o);return e?JSON.parse(e):{}}catch{return{}}}function _(){var e=n();return Object.keys(e).filter(function(t){return e[t]===!0}).length}function p(){return 7}function m(){var t=_(),e=p(),n=e>0?Math.round(t/e*100):0,a=i(),s=document.getElementById("exam-progress-bar"),o=document.getElementById("exam-progress-text");s&&(s.style.width=n+"%",s.textContent=n>15?n+"%":""),o&&(o.textContent=t+" of "+e+" tests completed"),l(a,t,e)}function l(e,t,n){var s,o,l,i=document.getElementById("sidebar-progress-fill"),a=document.getElementById("sidebar-progress-pct"),r=document.getElementById("sidebar-progress-chapters"),c=document.getElementById("sidebar-progress-tests");if(!i)return;s=e.total+n,l=e.completed+t,o=s>0?Math.round(l/s*100):0,i.style.width=o+"%",a&&(a.textContent=o+"%"),r&&(r.textContent=e.completed+"/"+e.total+" chapters"),c&&(c.textContent=t+"/"+n+" tests")}document.addEventListener("change",function(e){if(e.target&&e.target.matches(".test-complete-check")){var t=e.target.dataset.testId;t&&f(t,e.target.checked)}});function w(){var e=n();document.querySelectorAll(".test-complete-check").forEach(function(t){var n=t.dataset.testId;n&&e[n]===!0&&(t.checked=!0)}),m()}t=[{id:"01-introduction-to-ci-cd-and-jenkins",title:"Ch 1: Introduction to CI/CD & Jenkins",number:1,section:"Foundation"},{id:"02-jenkins-architecture-and-installation",title:"Ch 2: Jenkins Architecture & Installation",number:2,section:"Foundation"},{id:"03-jenkins-configuration-and-management",title:"Ch 3: Configuration & Management",number:3,section:"Foundation"},{id:"04-freestyle-projects-and-build-jobs",title:"Ch 4: Freestyle Projects & Build Jobs",number:4,section:"Foundation"},{id:"05-pipeline-fundamentals",title:"Ch 5: Pipeline Fundamentals",number:5,section:"Core Skills"},{id:"06-pipeline-syntax-and-steps",title:"Ch 6: Pipeline Syntax & Steps",number:6,section:"Core Skills"},{id:"07-agents-nodes-and-distributed-builds",title:"Ch 7: Agents, Nodes & Distributed Builds",number:7,section:"Core Skills"},{id:"08-source-code-management",title:"Ch 8: Source Code Management",number:8,section:"Core Skills"},{id:"09-shared-libraries-and-reusability",title:"Ch 9: Shared Libraries & Reusability",number:9,section:"Advanced"},{id:"10-multi-branch-pipelines",title:"Ch 10: Multi-Branch Pipelines",number:10,section:"Advanced"},{id:"11-jenkins-docker-and-kubernetes",title:"Ch 11: Docker & Kubernetes Integration",number:11,section:"Advanced"},{id:"12-testing-security-and-compliance",title:"Ch 12: Testing, Security & Compliance",number:12,section:"Advanced"},{id:"13-jenkins-configuration-as-code",title:"Ch 13: Jenkins Configuration as Code (JCasC)",number:13,section:"Production & Exam Prep"},{id:"14-production-grade-jenkins",title:"Ch 14: Production-Grade Jenkins",number:14,section:"Production & Exam Prep"},{id:"15-exam-preparation-guide",title:"Ch 15: Exam Preparation Guide",number:15,section:"Production & Exam Prep"},{id:"16-interview-questions",title:"Ch 16: Interview Questions & Answers",number:16,section:"Bonus"},{id:"17-real-world-scenarios",title:"Ch 17: Real-World Scenario Questions",number:17,section:"Bonus"}],a=[{id:"exam-test-1",title:"Practice Test 1",number:1},{id:"exam-test-2",title:"Practice Test 2",number:2},{id:"exam-test-3",title:"Practice Test 3",number:3},{id:"exam-test-4",title:"Practice Test 4",number:4},{id:"exam-test-5",title:"Practice Test 5",number:5},{id:"exam-test-6",title:"Practice Test 6",number:6},{id:"exam-test-7",title:"Practice Test 7",number:7}];function s(){try{var e=localStorage.getItem(c);return e?JSON.parse(e):{}}catch{return{}}}function u(e,t){try{var n=s();n[e]=n[e]||{},Object.keys(t).forEach(function(s){n[e][s]=t[s]}),localStorage.setItem(c,JSON.stringify(n))}catch{}}function i(){var o=s(),e=0,n=0;return t.forEach(function(t){var s=o[t.id];s&&(s.read&&e++,s.completed&&n++)}),{read:e,completed:n,total:t.length}}function r(){var t=n(),e=0;return a.forEach(function(n){t[n.id]===!0&&e++}),{completed:e,total:a.length}}function g(){var e=window.location.pathname.match(/\/docs\/(\d+-[^/]+)\//);return e?e[1]:null}function v(){var e=g(),n=e&&t.some(function(t){return t.id===e});n&&(b(e),j(e))}function b(e){var t=s();(!t[e]||!t[e].read)&&u(e,{read:!0,readAt:Date.now()})}function j(e){var t,n,i,a,r,o=document.querySelector(".book-article");if(!o)return;if(o.querySelector(".chapter-complete-check"))return;a=s(),r=a[e]||{},i=r.completed===!0,t=document.createElement("div"),t.className="chapter-complete-check",t.innerHTML='<hr><div class="chapter-progress-bar"><input type="checkbox" id="ch-cpl-'+e+'" class="chapter-complete-checkbox" data-chapter-id="'+e+'"'+(i?" checked":"")+'><label for="ch-cpl-'+e+'" class="chapter-complete-label">✓ Mark this chapter as completed</label><span class="chapter-status-badge">'+(i?"✅ Completed":"📖 Reading")+"</span></div>",o.appendChild(t),n=t.querySelector(".chapter-complete-checkbox"),n.addEventListener("change",function(){u(e,{completed:n.checked,completedAt:n.checked?Date.now():null});var s=t.querySelector(".chapter-status-badge");s.textContent=n.checked?"✅ Completed":"📖 Reading"})}window.initExamDashboard=function(){var e,t=document.getElementById("exam-dashboard-app");if(!t)return;t.innerHTML=y(),document.querySelectorAll(".dashboard-chapter-check").forEach(function(e){e.addEventListener("change",function(){u(e.dataset.chapterId,{completed:e.checked,completedAt:e.checked?Date.now():null}),d()})}),document.querySelectorAll(".dashboard-test-check").forEach(function(e){e.addEventListener("change",function(){f(e.dataset.testId,e.checked),d()})}),e=document.getElementById("exam-reset-all"),e&&e.addEventListener("click",function(){confirm("Reset ALL progress (chapters and tests)? This cannot be undone.")&&(localStorage.removeItem(o),localStorage.removeItem(c),d())})};function y(){var m,o=i(),c=r(),u=s(),f=n(),d=o.total+c.total,h=o.completed+c.completed,l=d>0?Math.round(h/d*100):0,e="";return e+='<div class="exam-dashboard-header">',e+="  <h1>📊 Your Learning Dashboard</h1>",e+='  <p class="exam-progress-summary">Track your Jenkins learning journey — from chapters to practice exams</p>',e+="</div>",e+='<div class="exam-combined-progress">',e+='  <div class="exam-progress-bar-wrapper" style="max-width:100%;">',e+='    <div class="exam-progress-bar-fill" id="dash-combined-bar" style="width:'+l+'%;">'+(l>15?l+"%":"")+"</div>",e+="  </div>",e+='  <p class="exam-progress-summary" style="text-align:center;margin-top:0.75rem;">'+h+" of "+d+" total items completed</p>",e+="</div>",e+='<div class="exam-stats">',e+='  <div class="exam-stat-card"><span class="stat-number">'+o.completed+'</span><span class="stat-label">of '+o.total+" Chapters</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+o.read+'</span><span class="stat-label">Chapters Read</span></div>',e+='  <div class="exam-stat-card"><span class="stat-number">'+c.completed+'</span><span class="stat-label">of '+c.total+" Tests Passed</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+l+'%</span><span class="stat-label">Overall Progress</span></div>',e+="</div>",e+='<h2 style="margin-top:2.5rem;">📚 Learning Progress</h2>',e+='<div class="exam-dashboard-grid">',m=["Foundation","Core Skills","Advanced","Production & Exam Prep","Bonus"],m.forEach(function(n){if(s=t.filter(function(e){return e.section===n}),s.length===0)return;var s,i,a=0,o=0;s.forEach(function(e){var t=u[e.id];t&&(t.read&&a++,t.completed&&o++)}),i=Math.round(o/s.length*100),e+='<div class="dashboard-section-card">',e+='  <div class="dashboard-section-header">',e+='    <span class="dashboard-section-badge">'+n+"</span>",e+='    <span class="dashboard-section-count">'+o+"/"+s.length+"</span>",e+="  </div>",e+='  <div class="dashboard-section-bar-wrapper"><div class="dashboard-section-bar-fill" style="width:'+i+'%;"></div></div>',e+='  <div class="dashboard-section-chapters">',s.forEach(function(t){var s=u[t.id]||{},n=s.completed===!0,o=s.read===!0,i=n?"✅":o?"📖":"⬜";e+='    <div class="dashboard-chapter-row'+(n?" completed":"")+'" title="'+t.title+'">',e+='      <input type="checkbox" class="dashboard-chapter-check" data-chapter-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="dashboard-chapter-status">'+i+"</span>",e+='      <span class="dashboard-chapter-title">'+t.title+"</span>",e+="    </div>"}),e+="  </div>",e+="</div>"}),e+="</div>",e+='<h2 style="margin-top:2.5rem;">📝 Practice Test Progress</h2>',e+='<div class="exam-dashboard-grid">',a.forEach(function(t){var n=f[t.id]===!0;e+='  <div class="exam-dashboard-card'+(n?" completed":"")+'">',e+="    <h3>Practice Test "+t.number+"</h3>",e+="    <p>57 questions across all domains | 60 min</p>",e+='    <div style="display:flex;align-items:center;gap:0.5rem;">',e+='      <input type="checkbox" class="exam-dashboard-check dashboard-test-check" data-test-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="card-status">'+(n?"✅ Passed":"⬜ Not yet")+"</span>",e+="    </div>",e+='    <a href="/docs/'+(17+t.number)+"-exam-practice-test-"+t.number+'/" style="display:inline-block;margin-top:0.75rem;font-size:0.85rem;">→ Open test</a>',e+="  </div>"}),e+="</div>",e+='<div style="text-align:center;margin:2.5rem 0;">',e+='  <button class="btn-reset" id="exam-reset-all">🔄 Reset All Progress</button>',e+="</div>",e}function d(){window.initExamDashboard&&window.initExamDashboard()}window.refreshSidebarProgress=function(){var t=i(),e=r();l(t,e.completed,e.total)};function h(){w(),v(),document.getElementById("exam-dashboard-app")&&initExamDashboard();var t=i(),e=r();l(t,e.completed,e.total)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <div class="book-toc-toggle">
+    <label for="toc-control" role="button" class="toc-toggle-label" title="Toggle table of contents">
+      <span class="toc-toggle-icon">▶</span>
+    </label>
+  </div>
+  <aside class="book-toc">
+    <label for="toc-control" class="book-toc-collapse-target" title="Expand table of contents" aria-label="Expand table of contents"></label>
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#scenario-1-cicd-migration">Scenario 1: CI/CD Migration</a></li>
+    <li><a href="#scenario-2-cicd-for-microservices">Scenario 2: CI/CD for Microservices</a></li>
+    <li><a href="#scenario-3-database-migration-in-pipeline">Scenario 3: Database Migration in Pipeline</a></li>
+    <li><a href="#scenario-4-container-security-scan">Scenario 4: Container Security Scan</a></li>
+    <li><a href="#scenario-5-multi-environment-promotion">Scenario 5: Multi-Environment Promotion</a></li>
+    <li><a href="#scenario-6-pipeline-failure-recovery">Scenario 6: Pipeline Failure Recovery</a></li>
+    <li><a href="#scenario-7-secrets-rotation">Scenario 7: Secrets Rotation</a></li>
+    <li><a href="#scenario-8-large-scale-monorepo">Scenario 8: Large-Scale Monorepo</a></li>
+    <li><a href="#scenario-9-zero-downtime-deployment">Scenario 9: Zero-Downtime Deployment</a></li>
+    <li><a href="#scenario-10-jenkins-pipeline-for-infrastructure-as-code">Scenario 10: Jenkins Pipeline for Infrastructure as Code</a></li>
+    <li><a href="#scenario-11-emergency-hotfix-pipeline">Scenario 11: Emergency Hotfix Pipeline</a></li>
+    <li><a href="#scenario-12-compliance-and-audit-pipeline">Scenario 12: Compliance and Audit Pipeline</a></li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

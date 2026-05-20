@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Jenkins Architecture &amp; Installation# Learning Objectives# After reading this chapter, you will be able to:
+Explain the Jenkins master/agent architecture Understand the different types of nodes and their roles Deploy Jenkins across various platforms Configure nodes for distributed builds Understand Jenkins’ system requirements and scaling model 2.1 The Master/Agent Architecture# Jenkins follows a master/agent (also called controller/agent) architecture:
+┌─────────────────────────────────────────────────────────┐ │ Jenkins Master │ │ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ │ │ │ Scheduler │ │ Web UI │ │ REST API │ │ │ └─────────────┘ └─────────────┘ └─────────────┘ │ │ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ │ │ │ Pipeline │ │ Plugin Mgr │ │ Credentials │ │ │ └─────────────┘ └─────────────┘ └─────────────┘ │ └────────────────────────┬────────────────────────────────┘ │ ┌───────────────┼───────────────┐ │ │ │ ▼ ▼ ▼ ┌────────────┐ ┌────────────┐ ┌────────────┐ │ Agent 1 │ │ Agent 2 │ │ Agent 3 │ │ (Linux) │ │ (Windows) │ │ (macOS) │ └────────────┘ └────────────┘ └────────────┘Master (Controller)# The master is the central Jenkins server that:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/">
+  <meta property="og:site_name" content="Jenkins Learning Path">
+  <meta property="og:title" content="Ch 2: Jenkins Architecture & Installation">
+  <meta property="og:description" content="Jenkins Architecture &amp; Installation# Learning Objectives# After reading this chapter, you will be able to:
+Explain the Jenkins master/agent architecture Understand the different types of nodes and their roles Deploy Jenkins across various platforms Configure nodes for distributed builds Understand Jenkins’ system requirements and scaling model 2.1 The Master/Agent Architecture# Jenkins follows a master/agent (also called controller/agent) architecture:
+┌─────────────────────────────────────────────────────────┐ │ Jenkins Master │ │ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ │ │ │ Scheduler │ │ Web UI │ │ REST API │ │ │ └─────────────┘ └─────────────┘ └─────────────┘ │ │ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ │ │ │ Pipeline │ │ Plugin Mgr │ │ Credentials │ │ │ └─────────────┘ └─────────────┘ └─────────────┘ │ └────────────────────────┬────────────────────────────────┘ │ ┌───────────────┼───────────────┐ │ │ │ ▼ ▼ ▼ ┌────────────┐ ┌────────────┐ ┌────────────┐ │ Agent 1 │ │ Agent 2 │ │ Agent 3 │ │ (Linux) │ │ (Windows) │ │ (macOS) │ └────────────┘ └────────────┘ └────────────┘Master (Controller)# The master is the central Jenkins server that:">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Ch 2: Jenkins Architecture & Installation">
+  <meta itemprop="description" content="Jenkins Architecture &amp; Installation# Learning Objectives# After reading this chapter, you will be able to:
+Explain the Jenkins master/agent architecture Understand the different types of nodes and their roles Deploy Jenkins across various platforms Configure nodes for distributed builds Understand Jenkins’ system requirements and scaling model 2.1 The Master/Agent Architecture# Jenkins follows a master/agent (also called controller/agent) architecture:
+┌─────────────────────────────────────────────────────────┐ │ Jenkins Master │ │ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ │ │ │ Scheduler │ │ Web UI │ │ REST API │ │ │ └─────────────┘ └─────────────┘ └─────────────┘ │ │ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ │ │ │ Pipeline │ │ Plugin Mgr │ │ Credentials │ │ │ └─────────────┘ └─────────────┘ └─────────────┘ │ └────────────────────────┬────────────────────────────────┘ │ ┌───────────────┼───────────────┐ │ │ │ ▼ ▼ ▼ ┌────────────┐ ┌────────────┐ ┌────────────┐ │ Agent 1 │ │ Agent 2 │ │ Agent 3 │ │ (Linux) │ │ (Windows) │ │ (macOS) │ └────────────┘ └────────────┘ └────────────┘Master (Controller)# The master is the central Jenkins server that:">
+  <meta itemprop="wordCount" content="847">
+
+<title>Ch 2: Jenkins Architecture &amp; Installation • Jenkins Learning Path</title>
+<link rel="icon" href="/complete_jenkins_notes/favicon.png" >
+<link rel="manifest" href="/complete_jenkins_notes/manifest.json">
+<link rel="canonical" href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/">
+<link rel="stylesheet" href="/complete_jenkins_notes/book.min.a65532e79bcac2f95ba4108b26cdc17b0fe6382f603d8a6b72971bfa3261bf47.css" >
+
+
+  <script defer type="module" src="/complete_jenkins_notes/en.search.min.2d25fa1fe6842b36dbd4e753f3112a465146ff5f09912883575978a46c3ff969.js" ></script>
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<div class="book-sidebar-toggle">
+  <label for="menu-control" role="button" class="sidebar-toggle-label" title="Toggle sidebar">
+    <span class="sidebar-toggle-icon">◀</span>
+  </label>
+</div>
+<aside class="book-menu">
+  <label for="menu-control" class="book-menu-collapse-target" title="Expand sidebar" aria-label="Expand sidebar"></label>
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/complete_jenkins_notes/"><span>Jenkins Learning Path</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+<div class="sidebar-progress" id="sidebar-progress">
+  <div class="sidebar-progress-header">
+    <span class="sidebar-progress-label">📊 Progress</span>
+    <span class="sidebar-progress-pct" id="sidebar-progress-pct">0%</span>
+  </div>
+  <div class="sidebar-progress-track">
+    <div class="sidebar-progress-fill" id="sidebar-progress-fill" style="width:0%;"></div>
+  </div>
+  <div class="sidebar-progress-detail" id="sidebar-progress-detail">
+    <span id="sidebar-progress-chapters">0/17 chapters</span>
+    <span id="sidebar-progress-tests">0/7 tests</span>
+  </div>
+</div>
+
+
+
+<ul><li><a href="/complete_jenkins_notes/">Home</a></li><li><a href="/complete_jenkins_notes/docs/">Documentation</a></li></ul>
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/25-progress-dashboard/" class="">
+      📊 Progress Dashboard</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/26-start-here/" class="">
+      🚀 Start Here</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="">
+      Ch 1: Introduction to CI/CD &amp; Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="active">
+      Ch 2: Jenkins Architecture &amp; Installation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="">
+      Ch 3: Configuration &amp; Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="">
+      Ch 4: Freestyle Projects &amp; Build Jobs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/" class="">
+      Ch 5: Pipeline Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/" class="">
+      Ch 6: Pipeline Syntax &amp; Steps</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/" class="">
+      Ch 7: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="">
+      Ch 8: Source Code Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/" class="">
+      Ch 9: Shared Libraries &amp; Reusability</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="">
+      Ch 10: Multi-Branch Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="">
+      Ch 11: Docker &amp; Kubernetes Integration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/" class="">
+      Ch 12: Testing, Security &amp; Compliance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="">
+      Ch 13: Jenkins Configuration as Code (JCasC)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="">
+      Ch 14: Production-Grade Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/15-exam-preparation-guide/" class="">
+      Ch 15: Exam Preparation Guide</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="">
+      Ch 16: Interview Questions &amp; Answers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="">
+      Ch 17: Real-World Scenario Questions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="">
+      📝 Practice Test 1: CI/CD Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="">
+      📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="">
+      📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="">
+      📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="">
+      📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="">
+      📝 Practice Test 6: Production Jenkins &amp; Monitoring</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="">
+      📝 Practice Test 7: DevOps &amp; Real-World Scenarios</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/complete_jenkins_notes/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Ch 2: Jenkins Architecture &amp; Installation</h3>
+
+  <label for="toc-control">
+    
+    <img src="/complete_jenkins_notes/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#21-the-masteragent-architecture">2.1 The Master/Agent Architecture</a>
+      <ul>
+        <li><a href="#master-controller">Master (Controller)</a></li>
+        <li><a href="#agents-nodes">Agents (Nodes)</a></li>
+      </ul>
+    </li>
+    <li><a href="#22-system-requirements">2.2 System Requirements</a>
+      <ul>
+        <li><a href="#master-controller-1">Master (Controller)</a></li>
+        <li><a href="#agent">Agent</a></li>
+      </ul>
+    </li>
+    <li><a href="#23-installation-methods">2.3 Installation Methods</a>
+      <ul>
+        <li><a href="#docker-compose-production-like-setup">Docker Compose (Production-Like Setup)</a></li>
+        <li><a href="#war-file">WAR File</a></li>
+        <li><a href="#kubernetes-helm">Kubernetes (Helm)</a></li>
+      </ul>
+    </li>
+    <li><a href="#24-configuring-agents">2.4 Configuring Agents</a>
+      <ul>
+        <li><a href="#adding-a-permanent-agent-ssh">Adding a Permanent Agent (SSH)</a></li>
+        <li><a href="#adding-a-permanent-agent-jnlp">Adding a Permanent Agent (JNLP)</a></li>
+      </ul>
+    </li>
+    <li><a href="#25-using-agents-in-pipelines">2.5 Using Agents in Pipelines</a>
+      <ul>
+        <li><a href="#agent-labels">Agent Labels</a></li>
+      </ul>
+    </li>
+    <li><a href="#26-cloud-agents-dynamic-provisioning">2.6 Cloud Agents (Dynamic Provisioning)</a>
+      <ul>
+        <li><a href="#kubernetes-cloud">Kubernetes Cloud</a></li>
+      </ul>
+    </li>
+    <li><a href="#27-scaling-jenkins">2.7 Scaling Jenkins</a>
+      <ul>
+        <li><a href="#vertical-scaling">Vertical Scaling</a></li>
+        <li><a href="#horizontal-scaling">Horizontal Scaling</a></li>
+        <li><a href="#best-practices">Best Practices</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="jenkins-architecture--installation">Jenkins Architecture &amp; Installation<a class="anchor" href="#jenkins-architecture--installation">#</a></h1>
+<h2 id="learning-objectives">Learning Objectives<a class="anchor" href="#learning-objectives">#</a></h2>
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Explain the Jenkins master/agent architecture</li>
+<li>Understand the different types of nodes and their roles</li>
+<li>Deploy Jenkins across various platforms</li>
+<li>Configure nodes for distributed builds</li>
+<li>Understand Jenkins&rsquo; system requirements and scaling model</li>
+</ul>
+<hr>
+<h2 id="21-the-masteragent-architecture">2.1 The Master/Agent Architecture<a class="anchor" href="#21-the-masteragent-architecture">#</a></h2>
+<p>Jenkins follows a <strong>master/agent</strong> (also called controller/agent) architecture:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">┌─────────────────────────────────────────────────────────┐
+</span></span><span class="line"><span class="cl">│                     Jenkins Master                       │
+</span></span><span class="line"><span class="cl">│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐    │
+</span></span><span class="line"><span class="cl">│  │   Scheduler  │  │  Web UI     │  │  REST API   │    │
+</span></span><span class="line"><span class="cl">│  └─────────────┘  └─────────────┘  └─────────────┘    │
+</span></span><span class="line"><span class="cl">│  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐    │
+</span></span><span class="line"><span class="cl">│  │  Pipeline   │  │  Plugin Mgr │  │  Credentials │    │
+</span></span><span class="line"><span class="cl">│  └─────────────┘  └─────────────┘  └─────────────┘    │
+</span></span><span class="line"><span class="cl">└────────────────────────┬────────────────────────────────┘
+</span></span><span class="line"><span class="cl">                         │
+</span></span><span class="line"><span class="cl">         ┌───────────────┼───────────────┐
+</span></span><span class="line"><span class="cl">         │               │               │
+</span></span><span class="line"><span class="cl">         ▼               ▼               ▼
+</span></span><span class="line"><span class="cl">  ┌────────────┐  ┌────────────┐  ┌────────────┐
+</span></span><span class="line"><span class="cl">  │  Agent 1   │  │  Agent 2   │  │  Agent 3   │
+</span></span><span class="line"><span class="cl">  │ (Linux)    │  │ (Windows)  │  │ (macOS)    │
+</span></span><span class="line"><span class="cl">  └────────────┘  └────────────┘  └────────────┘</span></span></code></pre></div><h3 id="master-controller">Master (Controller)<a class="anchor" href="#master-controller">#</a></h3>
+<p>The master is the central Jenkins server that:</p>
+<ul>
+<li>Serves the web UI and REST API</li>
+<li>Schedules and monitors build jobs</li>
+<li>Stores configuration and build history</li>
+<li>Manages credentials and permissions</li>
+<li>Orchestrates agent connections</li>
+</ul>
+<blockquote class='book-hint '>
+<p><strong>Important:</strong> In modern Jenkins, the master should NOT run build jobs itself. It should only coordinate.</p>
+</blockquote><h3 id="agents-nodes">Agents (Nodes)<a class="anchor" href="#agents-nodes">#</a></h3>
+<p>Agents are worker machines that execute build jobs. They:</p>
+<ul>
+<li>Connect to the master via JNLP (TCP) or SSH</li>
+<li>Run the actual build steps (compile, test, package)</li>
+<li>Can be ephemeral (spun up on demand in cloud environments)</li>
+<li>Can run different operating systems than the master</li>
+</ul>
+<hr>
+<h2 id="22-system-requirements">2.2 System Requirements<a class="anchor" href="#22-system-requirements">#</a></h2>
+<h3 id="master-controller-1">Master (Controller)<a class="anchor" href="#master-controller-1">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Resource</th>
+          <th>Minimum</th>
+          <th>Recommended</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>CPU</strong></td>
+          <td>2 cores</td>
+          <td>4+ cores</td>
+      </tr>
+      <tr>
+          <td><strong>RAM</strong></td>
+          <td>4 GB</td>
+          <td>8 GB+</td>
+      </tr>
+      <tr>
+          <td><strong>Disk</strong></td>
+          <td>50 GB</td>
+          <td>100 GB+ SSD</td>
+      </tr>
+      <tr>
+          <td><strong>Java</strong></td>
+          <td>Java 11</td>
+          <td>Java 17</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="agent">Agent<a class="anchor" href="#agent">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Resource</th>
+          <th>Minimum</th>
+          <th>Recommended</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>CPU</strong></td>
+          <td>1 core</td>
+          <td>2+ cores</td>
+      </tr>
+      <tr>
+          <td><strong>RAM</strong></td>
+          <td>1 GB</td>
+          <td>4 GB+</td>
+      </tr>
+      <tr>
+          <td><strong>Disk</strong></td>
+          <td>10 GB</td>
+          <td>50 GB+</td>
+      </tr>
+      <tr>
+          <td><strong>Java</strong></td>
+          <td>Java 11</td>
+          <td>Java 17</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="23-installation-methods">2.3 Installation Methods<a class="anchor" href="#23-installation-methods">#</a></h2>
+<h3 id="docker-compose-production-like-setup">Docker Compose (Production-Like Setup)<a class="anchor" href="#docker-compose-production-like-setup">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># docker-compose.yml</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;3.8&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">services</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">jenkins</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">jenkins/jenkins:lts</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">container_name</span><span class="p">:</span><span class="w"> </span><span class="l">jenkins</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">ports</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;8080:8080&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="s2">&#34;50000:50000&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">jenkins_home:/var/jenkins_home</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">/var/run/docker.sock:/var/run/docker.sock</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">environment</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">JAVA_OPTS=-Djenkins.install.runSetupWizard=false</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">JENKINS_ADMIN_ID=admin</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">JENKINS_ADMIN_PASSWORD=admin</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="nt">volumes</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="l">jenkins_home:</span></span></span></code></pre></div><h3 id="war-file">WAR File<a class="anchor" href="#war-file">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Download and run Jenkins WAR directly</span>
+</span></span><span class="line"><span class="cl">wget https://get.jenkins.io/war-stable/latest/jenkins.war
+</span></span><span class="line"><span class="cl">java -jar jenkins.war --httpPort<span class="o">=</span><span class="m">8080</span></span></span></code></pre></div><h3 id="kubernetes-helm">Kubernetes (Helm)<a class="anchor" href="#kubernetes-helm">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Add Jenkins Helm repo</span>
+</span></span><span class="line"><span class="cl">helm repo add jenkins https://charts.jenkins.io
+</span></span><span class="line"><span class="cl">helm repo update
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Install Jenkins</span>
+</span></span><span class="line"><span class="cl">helm upgrade --install jenkins jenkins/jenkins <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --set controller.serviceType<span class="o">=</span>LoadBalancer</span></span></code></pre></div><hr>
+<h2 id="24-configuring-agents">2.4 Configuring Agents<a class="anchor" href="#24-configuring-agents">#</a></h2>
+<h3 id="adding-a-permanent-agent-ssh">Adding a Permanent Agent (SSH)<a class="anchor" href="#adding-a-permanent-agent-ssh">#</a></h3>
+<ol>
+<li>Go to <strong>Dashboard → Manage Jenkins → Nodes → New Node</strong></li>
+<li>Set node name and select &ldquo;Permanent Agent&rdquo;</li>
+<li>Configure:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Name: linux-builder-01
+</span></span><span class="line"><span class="cl">Remote root directory: /home/jenkins/agent
+</span></span><span class="line"><span class="cl">Labels: linux amd64 docker
+</span></span><span class="line"><span class="cl">Launch method: Launch agents via SSH
+</span></span><span class="line"><span class="cl">Host: 192.168.1.100
+</span></span><span class="line"><span class="cl">Credentials: (SSH key or user/password)
+</span></span><span class="line"><span class="cl">Host Key Verification Strategy: Known hosts file
+</span></span><span class="line"><span class="cl">Availability: Keep this agent online as much as possible</span></span></code></pre></div><h3 id="adding-a-permanent-agent-jnlp">Adding a Permanent Agent (JNLP)<a class="anchor" href="#adding-a-permanent-agent-jnlp">#</a></h3>
+<ol>
+<li>Go to <strong>Dashboard → Manage Jenkins → Nodes → New Node</strong></li>
+<li>Select &ldquo;Permanent Agent&rdquo;, set launch method to &ldquo;Launch agent by connecting it to the controller&rdquo;</li>
+<li>On the agent machine:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Download agent.jar</span>
+</span></span><span class="line"><span class="cl">curl -O http://jenkins-master:8080/jnlpJars/agent.jar
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Connect to master</span>
+</span></span><span class="line"><span class="cl">java -jar agent.jar <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -url http://jenkins-master:8080 <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -secret &lt;SECRET&gt; <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -name <span class="s2">&#34;agent-01&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -workDir <span class="s2">&#34;/home/jenkins/agent&#34;</span></span></span></code></pre></div><hr>
+<h2 id="25-using-agents-in-pipelines">2.5 Using Agents in Pipelines<a class="anchor" href="#25-using-agents-in-pipelines">#</a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">none</span>  <span class="c1">// No global agent — assign per stage
+</span></span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build on Linux&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">agent</span> <span class="o">{</span> <span class="n">label</span> <span class="s1">&#39;linux&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;make build&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Test on Windows&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">agent</span> <span class="o">{</span> <span class="n">label</span> <span class="s1">&#39;windows&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">bat</span> <span class="s1">&#39;mvn test&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Package&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">agent</span> <span class="o">{</span> <span class="n">label</span> <span class="s1">&#39;docker&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;docker build -t myapp:latest .&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="agent-labels">Agent Labels<a class="anchor" href="#agent-labels">#</a></h3>
+<p>Labels help you route jobs to the right nodes:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">agent</span> <span class="o">{</span> <span class="n">label</span> <span class="s1">&#39;linux &amp;&amp; docker&#39;</span> <span class="o">}</span>      <span class="c1">// Linux machine with Docker
+</span></span></span><span class="line"><span class="cl"><span class="n">agent</span> <span class="o">{</span> <span class="n">label</span> <span class="s1">&#39;high-mem || gpu&#39;</span> <span class="o">}</span>      <span class="c1">// High-memory or GPU machine
+</span></span></span><span class="line"><span class="cl"><span class="n">agent</span> <span class="o">{</span> <span class="n">label</span> <span class="s1">&#39;!spot-instance&#39;</span> <span class="o">}</span>       <span class="s">//</span> <span class="n">Exclude</span> <span class="n">spot</span> <span class="n">instances</span></span></span></code></pre></div><hr>
+<h2 id="26-cloud-agents-dynamic-provisioning">2.6 Cloud Agents (Dynamic Provisioning)<a class="anchor" href="#26-cloud-agents-dynamic-provisioning">#</a></h2>
+<p>Jenkins can spin up agents on demand in cloud environments:</p>
+<h3 id="kubernetes-cloud">Kubernetes Cloud<a class="anchor" href="#kubernetes-cloud">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">kubernetes</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">label</span> <span class="s1">&#39;k8s-pod&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">yaml</span> <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">apiVersion: v1
+</span></span></span><span class="line"><span class="cl"><span class="s2">kind: Pod
+</span></span></span><span class="line"><span class="cl"><span class="s2">spec:
+</span></span></span><span class="line"><span class="cl"><span class="s2">  containers:
+</span></span></span><span class="line"><span class="cl"><span class="s2">  - name: maven
+</span></span></span><span class="line"><span class="cl"><span class="s2">    image: maven:3.8
+</span></span></span><span class="line"><span class="cl"><span class="s2">    command: [&#34;cat&#34;]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    tty: true
+</span></span></span><span class="line"><span class="cl"><span class="s2">  - name: docker
+</span></span></span><span class="line"><span class="cl"><span class="s2">    image: docker:20.10
+</span></span></span><span class="line"><span class="cl"><span class="s2">    command: [&#34;cat&#34;]
+</span></span></span><span class="line"><span class="cl"><span class="s2">    tty: true
+</span></span></span><span class="line"><span class="cl"><span class="s2">  - name: jnlp
+</span></span></span><span class="line"><span class="cl"><span class="s2">    image: jenkins/inbound-agent:latest
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">container</span><span class="o">(</span><span class="s1">&#39;maven&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s1">&#39;mvn clean package&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Docker Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">container</span><span class="o">(</span><span class="s1">&#39;docker&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s1">&#39;docker build -t myapp .&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="27-scaling-jenkins">2.7 Scaling Jenkins<a class="anchor" href="#27-scaling-jenkins">#</a></h2>
+<h3 id="vertical-scaling">Vertical Scaling<a class="anchor" href="#vertical-scaling">#</a></h3>
+<ul>
+<li>Add more RAM, CPU, and disk to the master</li>
+<li>Master handles ~50-100 concurrent connections before needing agents</li>
+</ul>
+<h3 id="horizontal-scaling">Horizontal Scaling<a class="anchor" href="#horizontal-scaling">#</a></h3>
+<ul>
+<li>Add more permanent agents for steady workload</li>
+<li>Use cloud agents for burst capacity</li>
+<li>Distribute agents across availability zones for resilience</li>
+</ul>
+<h3 id="best-practices">Best Practices<a class="anchor" href="#best-practices">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Practice</th>
+          <th>Reason</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Master runs NO builds</td>
+          <td>Prevents resource contention</td>
+      </tr>
+      <tr>
+          <td>Use labels for routing</td>
+          <td>Ensures builds run on correct environment</td>
+      </tr>
+      <tr>
+          <td>Keep agents stateless</td>
+          <td>Makes agents disposable and replaceable</td>
+      </tr>
+      <tr>
+          <td>Monitor agent connectivity</td>
+          <td>Prevent silent failures</td>
+      </tr>
+      <tr>
+          <td>Pin plugin versions</td>
+          <td>Avoid compatibility issues</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="key-takeaways">Key Takeaways<a class="anchor" href="#key-takeaways">#</a></h2>
+<ul>
+<li>Jenkins uses a master/agent architecture — the master schedules, agents execute</li>
+<li>Agents connect via SSH or JNLP and can run different operating systems</li>
+<li>Cloud agents (Kubernetes, AWS EC2, Azure) can be provisioned dynamically</li>
+<li>Labels route pipeline stages to the correct agent types</li>
+<li>For production, the master should only coordinate — never run builds</li>
+</ul>
+<hr>
+<h2 id="next-steps">Next Steps<a class="anchor" href="#next-steps">#</a></h2>
+<p>→ Continue to <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/">Chapter 3: Configuration &amp; Management</a></p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="flex align-center">
+        <img src="/complete_jenkins_notes/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Ch 1: Introduction to CI/CD &amp; Jenkins</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="flex align-center">
+        <span>Ch 3: Configuration &amp; Management</span>
+        <img src="/complete_jenkins_notes/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){"use strict";document.querySelectorAll("pre > code").forEach(function(t){var n,s=t.parentElement;if(!s||s.tagName!=="PRE")return;if(s.querySelector(".copy-button"))return;s.style.position="relative",n=document.createElement("button"),n.className="copy-button",n.textContent="Copy",n.setAttribute("aria-label","Copy code to clipboard"),n.setAttribute("type","button"),s.appendChild(n),n.addEventListener("click",function(){var s=t.textContent||"";navigator.clipboard?navigator.clipboard.writeText(s).then(function(){n.textContent="Copied!",n.classList.add("copied"),setTimeout(function(){n.textContent="Copy",n.classList.remove("copied")},2e3)}).catch(function(){e(s,n)}):e(s,n)})});function e(e,t){var n=document.createElement("textarea");n.value=e,n.style.position="fixed",n.style.opacity="0",document.body.appendChild(n),n.select();try{document.execCommand("copy"),t.textContent="Copied!",t.classList.add("copied"),setTimeout(function(){t.textContent="Copy",t.classList.remove("copied")},2e3)}catch{t.textContent="Error",setTimeout(function(){t.textContent="Copy"},2e3)}document.body.removeChild(n)}})()</script>
+  
+
+        
+  
+    <script>(function(){"use strict";var t,a,o="jenkins_exam_progress",c="jenkins_chapter_progress";function e(e){this.element=e,this.minutesDisplay=e.querySelector(".timer-minutes"),this.secondsDisplay=e.querySelector(".timer-seconds"),this.statusEl=e.querySelector(".timer-status"),this.totalSeconds=parseInt(e.dataset.minutes||"60",10)*60,this.remaining=this.totalSeconds,this.interval=null,this.running=!1,this.finished=!1;var n,s,o,i,t=this.loadState();t&&t.remaining>0&&!t.finished&&(this.remaining=t.remaining),this.updateDisplay(),n=this,s=e.querySelector(".timer-start"),o=e.querySelector(".timer-pause"),i=e.querySelector(".timer-reset"),s&&s.addEventListener("click",function(){n.start()}),o&&o.addEventListener("click",function(){n.pause()}),i&&i.addEventListener("click",function(){n.reset()}),t&&t.running&&this.start()}e.prototype.start=function(){if(this.finished)return;if(this.running)return;this.running=!0,this.element.classList.add("timer-running"),this.element.classList.remove("timer-paused");var e=this;this.interval=setInterval(function(){e.remaining--,e.updateDisplay(),e.saveState(),e.remaining<=0&&(e.remaining=0,e.updateDisplay(),e.finish())},1e3)},e.prototype.pause=function(){if(!this.running)return;this.running=!1,this.element.classList.remove("timer-running"),this.element.classList.add("timer-paused"),clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.reset=function(){this.pause(),this.remaining=this.totalSeconds,this.finished=!1,this.element.classList.remove("timer-finished"),this.element.classList.remove("timer-paused"),this.statusEl.textContent="Time Remaining",this.updateDisplay(),this.saveState(),localStorage.removeItem(this.getTimerStorageKey())},e.prototype.finish=function(){this.running=!1,this.finished=!0,this.element.classList.remove("timer-running"),this.element.classList.add("timer-finished"),this.statusEl.textContent="⏰ Time's Up!",clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.updateDisplay=function(){var e=Math.floor(this.remaining/60),t=this.remaining%60;this.minutesDisplay.textContent=String(e).padStart(2,"0"),this.secondsDisplay.textContent=String(t).padStart(2,"0"),this.remaining<=300&&this.remaining>0?this.element.classList.add("timer-warning"):this.element.classList.remove("timer-warning")},e.prototype.getTimerStorageKey=function(){return o+"_timer_"+this.element.dataset.testId},e.prototype.loadState=function(){try{var e=localStorage.getItem(this.getTimerStorageKey());return e?JSON.parse(e):null}catch{return null}},e.prototype.saveState=function(){try{var e={remaining:this.remaining,running:this.running,finished:this.finished,savedAt:Date.now()};localStorage.setItem(this.getTimerStorageKey(),JSON.stringify(e))}catch{}},document.querySelectorAll(".exam-timer").forEach(function(t){new e(t)});function f(e,t){try{var s=n();s[e]=t,localStorage.setItem(o,JSON.stringify(s)),m()}catch{}}function n(){try{var e=localStorage.getItem(o);return e?JSON.parse(e):{}}catch{return{}}}function _(){var e=n();return Object.keys(e).filter(function(t){return e[t]===!0}).length}function p(){return 7}function m(){var t=_(),e=p(),n=e>0?Math.round(t/e*100):0,a=i(),s=document.getElementById("exam-progress-bar"),o=document.getElementById("exam-progress-text");s&&(s.style.width=n+"%",s.textContent=n>15?n+"%":""),o&&(o.textContent=t+" of "+e+" tests completed"),l(a,t,e)}function l(e,t,n){var s,o,l,i=document.getElementById("sidebar-progress-fill"),a=document.getElementById("sidebar-progress-pct"),r=document.getElementById("sidebar-progress-chapters"),c=document.getElementById("sidebar-progress-tests");if(!i)return;s=e.total+n,l=e.completed+t,o=s>0?Math.round(l/s*100):0,i.style.width=o+"%",a&&(a.textContent=o+"%"),r&&(r.textContent=e.completed+"/"+e.total+" chapters"),c&&(c.textContent=t+"/"+n+" tests")}document.addEventListener("change",function(e){if(e.target&&e.target.matches(".test-complete-check")){var t=e.target.dataset.testId;t&&f(t,e.target.checked)}});function w(){var e=n();document.querySelectorAll(".test-complete-check").forEach(function(t){var n=t.dataset.testId;n&&e[n]===!0&&(t.checked=!0)}),m()}t=[{id:"01-introduction-to-ci-cd-and-jenkins",title:"Ch 1: Introduction to CI/CD & Jenkins",number:1,section:"Foundation"},{id:"02-jenkins-architecture-and-installation",title:"Ch 2: Jenkins Architecture & Installation",number:2,section:"Foundation"},{id:"03-jenkins-configuration-and-management",title:"Ch 3: Configuration & Management",number:3,section:"Foundation"},{id:"04-freestyle-projects-and-build-jobs",title:"Ch 4: Freestyle Projects & Build Jobs",number:4,section:"Foundation"},{id:"05-pipeline-fundamentals",title:"Ch 5: Pipeline Fundamentals",number:5,section:"Core Skills"},{id:"06-pipeline-syntax-and-steps",title:"Ch 6: Pipeline Syntax & Steps",number:6,section:"Core Skills"},{id:"07-agents-nodes-and-distributed-builds",title:"Ch 7: Agents, Nodes & Distributed Builds",number:7,section:"Core Skills"},{id:"08-source-code-management",title:"Ch 8: Source Code Management",number:8,section:"Core Skills"},{id:"09-shared-libraries-and-reusability",title:"Ch 9: Shared Libraries & Reusability",number:9,section:"Advanced"},{id:"10-multi-branch-pipelines",title:"Ch 10: Multi-Branch Pipelines",number:10,section:"Advanced"},{id:"11-jenkins-docker-and-kubernetes",title:"Ch 11: Docker & Kubernetes Integration",number:11,section:"Advanced"},{id:"12-testing-security-and-compliance",title:"Ch 12: Testing, Security & Compliance",number:12,section:"Advanced"},{id:"13-jenkins-configuration-as-code",title:"Ch 13: Jenkins Configuration as Code (JCasC)",number:13,section:"Production & Exam Prep"},{id:"14-production-grade-jenkins",title:"Ch 14: Production-Grade Jenkins",number:14,section:"Production & Exam Prep"},{id:"15-exam-preparation-guide",title:"Ch 15: Exam Preparation Guide",number:15,section:"Production & Exam Prep"},{id:"16-interview-questions",title:"Ch 16: Interview Questions & Answers",number:16,section:"Bonus"},{id:"17-real-world-scenarios",title:"Ch 17: Real-World Scenario Questions",number:17,section:"Bonus"}],a=[{id:"exam-test-1",title:"Practice Test 1",number:1},{id:"exam-test-2",title:"Practice Test 2",number:2},{id:"exam-test-3",title:"Practice Test 3",number:3},{id:"exam-test-4",title:"Practice Test 4",number:4},{id:"exam-test-5",title:"Practice Test 5",number:5},{id:"exam-test-6",title:"Practice Test 6",number:6},{id:"exam-test-7",title:"Practice Test 7",number:7}];function s(){try{var e=localStorage.getItem(c);return e?JSON.parse(e):{}}catch{return{}}}function u(e,t){try{var n=s();n[e]=n[e]||{},Object.keys(t).forEach(function(s){n[e][s]=t[s]}),localStorage.setItem(c,JSON.stringify(n))}catch{}}function i(){var o=s(),e=0,n=0;return t.forEach(function(t){var s=o[t.id];s&&(s.read&&e++,s.completed&&n++)}),{read:e,completed:n,total:t.length}}function r(){var t=n(),e=0;return a.forEach(function(n){t[n.id]===!0&&e++}),{completed:e,total:a.length}}function g(){var e=window.location.pathname.match(/\/docs\/(\d+-[^/]+)\//);return e?e[1]:null}function v(){var e=g(),n=e&&t.some(function(t){return t.id===e});n&&(b(e),j(e))}function b(e){var t=s();(!t[e]||!t[e].read)&&u(e,{read:!0,readAt:Date.now()})}function j(e){var t,n,i,a,r,o=document.querySelector(".book-article");if(!o)return;if(o.querySelector(".chapter-complete-check"))return;a=s(),r=a[e]||{},i=r.completed===!0,t=document.createElement("div"),t.className="chapter-complete-check",t.innerHTML='<hr><div class="chapter-progress-bar"><input type="checkbox" id="ch-cpl-'+e+'" class="chapter-complete-checkbox" data-chapter-id="'+e+'"'+(i?" checked":"")+'><label for="ch-cpl-'+e+'" class="chapter-complete-label">✓ Mark this chapter as completed</label><span class="chapter-status-badge">'+(i?"✅ Completed":"📖 Reading")+"</span></div>",o.appendChild(t),n=t.querySelector(".chapter-complete-checkbox"),n.addEventListener("change",function(){u(e,{completed:n.checked,completedAt:n.checked?Date.now():null});var s=t.querySelector(".chapter-status-badge");s.textContent=n.checked?"✅ Completed":"📖 Reading"})}window.initExamDashboard=function(){var e,t=document.getElementById("exam-dashboard-app");if(!t)return;t.innerHTML=y(),document.querySelectorAll(".dashboard-chapter-check").forEach(function(e){e.addEventListener("change",function(){u(e.dataset.chapterId,{completed:e.checked,completedAt:e.checked?Date.now():null}),d()})}),document.querySelectorAll(".dashboard-test-check").forEach(function(e){e.addEventListener("change",function(){f(e.dataset.testId,e.checked),d()})}),e=document.getElementById("exam-reset-all"),e&&e.addEventListener("click",function(){confirm("Reset ALL progress (chapters and tests)? This cannot be undone.")&&(localStorage.removeItem(o),localStorage.removeItem(c),d())})};function y(){var m,o=i(),c=r(),u=s(),f=n(),d=o.total+c.total,h=o.completed+c.completed,l=d>0?Math.round(h/d*100):0,e="";return e+='<div class="exam-dashboard-header">',e+="  <h1>📊 Your Learning Dashboard</h1>",e+='  <p class="exam-progress-summary">Track your Jenkins learning journey — from chapters to practice exams</p>',e+="</div>",e+='<div class="exam-combined-progress">',e+='  <div class="exam-progress-bar-wrapper" style="max-width:100%;">',e+='    <div class="exam-progress-bar-fill" id="dash-combined-bar" style="width:'+l+'%;">'+(l>15?l+"%":"")+"</div>",e+="  </div>",e+='  <p class="exam-progress-summary" style="text-align:center;margin-top:0.75rem;">'+h+" of "+d+" total items completed</p>",e+="</div>",e+='<div class="exam-stats">',e+='  <div class="exam-stat-card"><span class="stat-number">'+o.completed+'</span><span class="stat-label">of '+o.total+" Chapters</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+o.read+'</span><span class="stat-label">Chapters Read</span></div>',e+='  <div class="exam-stat-card"><span class="stat-number">'+c.completed+'</span><span class="stat-label">of '+c.total+" Tests Passed</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+l+'%</span><span class="stat-label">Overall Progress</span></div>',e+="</div>",e+='<h2 style="margin-top:2.5rem;">📚 Learning Progress</h2>',e+='<div class="exam-dashboard-grid">',m=["Foundation","Core Skills","Advanced","Production & Exam Prep","Bonus"],m.forEach(function(n){if(s=t.filter(function(e){return e.section===n}),s.length===0)return;var s,i,a=0,o=0;s.forEach(function(e){var t=u[e.id];t&&(t.read&&a++,t.completed&&o++)}),i=Math.round(o/s.length*100),e+='<div class="dashboard-section-card">',e+='  <div class="dashboard-section-header">',e+='    <span class="dashboard-section-badge">'+n+"</span>",e+='    <span class="dashboard-section-count">'+o+"/"+s.length+"</span>",e+="  </div>",e+='  <div class="dashboard-section-bar-wrapper"><div class="dashboard-section-bar-fill" style="width:'+i+'%;"></div></div>',e+='  <div class="dashboard-section-chapters">',s.forEach(function(t){var s=u[t.id]||{},n=s.completed===!0,o=s.read===!0,i=n?"✅":o?"📖":"⬜";e+='    <div class="dashboard-chapter-row'+(n?" completed":"")+'" title="'+t.title+'">',e+='      <input type="checkbox" class="dashboard-chapter-check" data-chapter-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="dashboard-chapter-status">'+i+"</span>",e+='      <span class="dashboard-chapter-title">'+t.title+"</span>",e+="    </div>"}),e+="  </div>",e+="</div>"}),e+="</div>",e+='<h2 style="margin-top:2.5rem;">📝 Practice Test Progress</h2>',e+='<div class="exam-dashboard-grid">',a.forEach(function(t){var n=f[t.id]===!0;e+='  <div class="exam-dashboard-card'+(n?" completed":"")+'">',e+="    <h3>Practice Test "+t.number+"</h3>",e+="    <p>57 questions across all domains | 60 min</p>",e+='    <div style="display:flex;align-items:center;gap:0.5rem;">',e+='      <input type="checkbox" class="exam-dashboard-check dashboard-test-check" data-test-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="card-status">'+(n?"✅ Passed":"⬜ Not yet")+"</span>",e+="    </div>",e+='    <a href="/docs/'+(17+t.number)+"-exam-practice-test-"+t.number+'/" style="display:inline-block;margin-top:0.75rem;font-size:0.85rem;">→ Open test</a>',e+="  </div>"}),e+="</div>",e+='<div style="text-align:center;margin:2.5rem 0;">',e+='  <button class="btn-reset" id="exam-reset-all">🔄 Reset All Progress</button>',e+="</div>",e}function d(){window.initExamDashboard&&window.initExamDashboard()}window.refreshSidebarProgress=function(){var t=i(),e=r();l(t,e.completed,e.total)};function h(){w(),v(),document.getElementById("exam-dashboard-app")&&initExamDashboard();var t=i(),e=r();l(t,e.completed,e.total)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <div class="book-toc-toggle">
+    <label for="toc-control" role="button" class="toc-toggle-label" title="Toggle table of contents">
+      <span class="toc-toggle-icon">▶</span>
+    </label>
+  </div>
+  <aside class="book-toc">
+    <label for="toc-control" class="book-toc-collapse-target" title="Expand table of contents" aria-label="Expand table of contents"></label>
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#21-the-masteragent-architecture">2.1 The Master/Agent Architecture</a>
+      <ul>
+        <li><a href="#master-controller">Master (Controller)</a></li>
+        <li><a href="#agents-nodes">Agents (Nodes)</a></li>
+      </ul>
+    </li>
+    <li><a href="#22-system-requirements">2.2 System Requirements</a>
+      <ul>
+        <li><a href="#master-controller-1">Master (Controller)</a></li>
+        <li><a href="#agent">Agent</a></li>
+      </ul>
+    </li>
+    <li><a href="#23-installation-methods">2.3 Installation Methods</a>
+      <ul>
+        <li><a href="#docker-compose-production-like-setup">Docker Compose (Production-Like Setup)</a></li>
+        <li><a href="#war-file">WAR File</a></li>
+        <li><a href="#kubernetes-helm">Kubernetes (Helm)</a></li>
+      </ul>
+    </li>
+    <li><a href="#24-configuring-agents">2.4 Configuring Agents</a>
+      <ul>
+        <li><a href="#adding-a-permanent-agent-ssh">Adding a Permanent Agent (SSH)</a></li>
+        <li><a href="#adding-a-permanent-agent-jnlp">Adding a Permanent Agent (JNLP)</a></li>
+      </ul>
+    </li>
+    <li><a href="#25-using-agents-in-pipelines">2.5 Using Agents in Pipelines</a>
+      <ul>
+        <li><a href="#agent-labels">Agent Labels</a></li>
+      </ul>
+    </li>
+    <li><a href="#26-cloud-agents-dynamic-provisioning">2.6 Cloud Agents (Dynamic Provisioning)</a>
+      <ul>
+        <li><a href="#kubernetes-cloud">Kubernetes Cloud</a></li>
+      </ul>
+    </li>
+    <li><a href="#27-scaling-jenkins">2.7 Scaling Jenkins</a>
+      <ul>
+        <li><a href="#vertical-scaling">Vertical Scaling</a></li>
+        <li><a href="#horizontal-scaling">Horizontal Scaling</a></li>
+        <li><a href="#best-practices">Best Practices</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

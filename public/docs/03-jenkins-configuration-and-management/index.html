@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Jenkins Configuration &amp; Management# Learning Objectives# After reading this chapter, you will be able to:
+Manage Jenkins plugins effectively Configure system settings for security and performance Set up credentials for secure access to external tools Implement role-based access control (RBAC) Create and manage Jenkins folders Back up and restore Jenkins configuration 3.1 Plugin Management# Plugins are the heart of Jenkins’ extensibility. With 1,800&#43; plugins available, you can integrate Jenkins with virtually any tool in the DevOps ecosystem.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/">
+  <meta property="og:site_name" content="Jenkins Learning Path">
+  <meta property="og:title" content="Ch 3: Configuration & Management">
+  <meta property="og:description" content="Jenkins Configuration &amp; Management# Learning Objectives# After reading this chapter, you will be able to:
+Manage Jenkins plugins effectively Configure system settings for security and performance Set up credentials for secure access to external tools Implement role-based access control (RBAC) Create and manage Jenkins folders Back up and restore Jenkins configuration 3.1 Plugin Management# Plugins are the heart of Jenkins’ extensibility. With 1,800&#43; plugins available, you can integrate Jenkins with virtually any tool in the DevOps ecosystem.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Ch 3: Configuration & Management">
+  <meta itemprop="description" content="Jenkins Configuration &amp; Management# Learning Objectives# After reading this chapter, you will be able to:
+Manage Jenkins plugins effectively Configure system settings for security and performance Set up credentials for secure access to external tools Implement role-based access control (RBAC) Create and manage Jenkins folders Back up and restore Jenkins configuration 3.1 Plugin Management# Plugins are the heart of Jenkins’ extensibility. With 1,800&#43; plugins available, you can integrate Jenkins with virtually any tool in the DevOps ecosystem.">
+  <meta itemprop="wordCount" content="945">
+
+<title>Ch 3: Configuration &amp; Management • Jenkins Learning Path</title>
+<link rel="icon" href="/complete_jenkins_notes/favicon.png" >
+<link rel="manifest" href="/complete_jenkins_notes/manifest.json">
+<link rel="canonical" href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/">
+<link rel="stylesheet" href="/complete_jenkins_notes/book.min.a65532e79bcac2f95ba4108b26cdc17b0fe6382f603d8a6b72971bfa3261bf47.css" >
+
+
+  <script defer type="module" src="/complete_jenkins_notes/en.search.min.2d25fa1fe6842b36dbd4e753f3112a465146ff5f09912883575978a46c3ff969.js" ></script>
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<div class="book-sidebar-toggle">
+  <label for="menu-control" role="button" class="sidebar-toggle-label" title="Toggle sidebar">
+    <span class="sidebar-toggle-icon">◀</span>
+  </label>
+</div>
+<aside class="book-menu">
+  <label for="menu-control" class="book-menu-collapse-target" title="Expand sidebar" aria-label="Expand sidebar"></label>
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/complete_jenkins_notes/"><span>Jenkins Learning Path</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+<div class="sidebar-progress" id="sidebar-progress">
+  <div class="sidebar-progress-header">
+    <span class="sidebar-progress-label">📊 Progress</span>
+    <span class="sidebar-progress-pct" id="sidebar-progress-pct">0%</span>
+  </div>
+  <div class="sidebar-progress-track">
+    <div class="sidebar-progress-fill" id="sidebar-progress-fill" style="width:0%;"></div>
+  </div>
+  <div class="sidebar-progress-detail" id="sidebar-progress-detail">
+    <span id="sidebar-progress-chapters">0/17 chapters</span>
+    <span id="sidebar-progress-tests">0/7 tests</span>
+  </div>
+</div>
+
+
+
+<ul><li><a href="/complete_jenkins_notes/">Home</a></li><li><a href="/complete_jenkins_notes/docs/">Documentation</a></li></ul>
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/25-progress-dashboard/" class="">
+      📊 Progress Dashboard</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/26-start-here/" class="">
+      🚀 Start Here</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="">
+      Ch 1: Introduction to CI/CD &amp; Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="">
+      Ch 2: Jenkins Architecture &amp; Installation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="active">
+      Ch 3: Configuration &amp; Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="">
+      Ch 4: Freestyle Projects &amp; Build Jobs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/" class="">
+      Ch 5: Pipeline Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/" class="">
+      Ch 6: Pipeline Syntax &amp; Steps</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/" class="">
+      Ch 7: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="">
+      Ch 8: Source Code Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/" class="">
+      Ch 9: Shared Libraries &amp; Reusability</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="">
+      Ch 10: Multi-Branch Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="">
+      Ch 11: Docker &amp; Kubernetes Integration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/" class="">
+      Ch 12: Testing, Security &amp; Compliance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="">
+      Ch 13: Jenkins Configuration as Code (JCasC)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="">
+      Ch 14: Production-Grade Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/15-exam-preparation-guide/" class="">
+      Ch 15: Exam Preparation Guide</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="">
+      Ch 16: Interview Questions &amp; Answers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="">
+      Ch 17: Real-World Scenario Questions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="">
+      📝 Practice Test 1: CI/CD Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="">
+      📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="">
+      📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="">
+      📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="">
+      📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="">
+      📝 Practice Test 6: Production Jenkins &amp; Monitoring</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="">
+      📝 Practice Test 7: DevOps &amp; Real-World Scenarios</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/complete_jenkins_notes/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Ch 3: Configuration &amp; Management</h3>
+
+  <label for="toc-control">
+    
+    <img src="/complete_jenkins_notes/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#31-plugin-management">3.1 Plugin Management</a>
+      <ul>
+        <li><a href="#essential-plugins">Essential Plugins</a></li>
+        <li><a href="#installing-plugins">Installing Plugins</a></li>
+      </ul>
+    </li>
+    <li><a href="#32-system-configuration">3.2 System Configuration</a>
+      <ul>
+        <li><a href="#configure-jenkins-url">Configure Jenkins URL</a></li>
+        <li><a href="#environment-variables">Environment Variables</a></li>
+        <li><a href="#tools-configuration">Tools Configuration</a></li>
+      </ul>
+    </li>
+    <li><a href="#33-credential-management">3.3 Credential Management</a>
+      <ul>
+        <li><a href="#credential-types">Credential Types</a></li>
+        <li><a href="#creating-credentials">Creating Credentials</a></li>
+        <li><a href="#using-credentials-in-pipelines">Using Credentials in Pipelines</a></li>
+        <li><a href="#using-withcredentials-for-sensitive-values">Using withCredentials for Sensitive Values</a></li>
+      </ul>
+    </li>
+    <li><a href="#34-security--access-control">3.4 Security &amp; Access Control</a>
+      <ul>
+        <li><a href="#authentication">Authentication</a></li>
+        <li><a href="#authorization">Authorization</a></li>
+        <li><a href="#matrix-based-security">Matrix-Based Security</a></li>
+      </ul>
+    </li>
+    <li><a href="#35-folders-views--organization">3.5 Folders, Views &amp; Organization</a>
+      <ul>
+        <li><a href="#folders">Folders</a></li>
+        <li><a href="#creating-a-folder">Creating a Folder</a></li>
+        <li><a href="#views">Views</a></li>
+      </ul>
+    </li>
+    <li><a href="#36-backup--restore">3.6 Backup &amp; Restore</a>
+      <ul>
+        <li><a href="#what-to-backup">What to Backup</a></li>
+        <li><a href="#backup-script">Backup Script</a></li>
+        <li><a href="#using-thinbackup-plugin">Using ThinBackup Plugin</a></li>
+      </ul>
+    </li>
+    <li><a href="#37-monitoring-jenkins">3.7 Monitoring Jenkins</a>
+      <ul>
+        <li><a href="#system-information">System Information</a></li>
+        <li><a href="#script-console">Script Console</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="jenkins-configuration--management">Jenkins Configuration &amp; Management<a class="anchor" href="#jenkins-configuration--management">#</a></h1>
+<h2 id="learning-objectives">Learning Objectives<a class="anchor" href="#learning-objectives">#</a></h2>
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Manage Jenkins plugins effectively</li>
+<li>Configure system settings for security and performance</li>
+<li>Set up credentials for secure access to external tools</li>
+<li>Implement role-based access control (RBAC)</li>
+<li>Create and manage Jenkins folders</li>
+<li>Back up and restore Jenkins configuration</li>
+</ul>
+<hr>
+<h2 id="31-plugin-management">3.1 Plugin Management<a class="anchor" href="#31-plugin-management">#</a></h2>
+<p>Plugins are the heart of Jenkins&rsquo; extensibility. With 1,800+ plugins available, you can integrate Jenkins with virtually any tool in the DevOps ecosystem.</p>
+<h3 id="essential-plugins">Essential Plugins<a class="anchor" href="#essential-plugins">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Plugin</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Pipeline</strong></td>
+          <td>Pipeline as code (Jenkinsfile) support</td>
+      </tr>
+      <tr>
+          <td><strong>Git</strong></td>
+          <td>Git integration for SCM</td>
+      </tr>
+      <tr>
+          <td><strong>Blue Ocean</strong></td>
+          <td>Modern UI for pipelines</td>
+      </tr>
+      <tr>
+          <td><strong>Docker Pipeline</strong></td>
+          <td>Docker build/push within pipelines</td>
+      </tr>
+      <tr>
+          <td><strong>Kubernetes</strong></td>
+          <td>Dynamic agent provisioning on K8s</td>
+      </tr>
+      <tr>
+          <td><strong>Credentials Binding</strong></td>
+          <td>Secure credential injection</td>
+      </tr>
+      <tr>
+          <td><strong>Role-based Strategy</strong></td>
+          <td>Fine-grained access control</td>
+      </tr>
+      <tr>
+          <td><strong>Configuration as Code</strong></td>
+          <td>YAML-based Jenkins configuration</td>
+      </tr>
+      <tr>
+          <td><strong>Job DSL</strong></td>
+          <td>Programmatic job creation</td>
+      </tr>
+      <tr>
+          <td><strong>Slack/Email</strong></td>
+          <td>Build notifications</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="installing-plugins">Installing Plugins<a class="anchor" href="#installing-plugins">#</a></h3>
+<p><strong>Via UI:</strong> Dashboard → Manage Jenkins → Plugins → Available</p>
+<p><strong>Via CLI:</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install plugin via Jenkins CLI</span>
+</span></span><span class="line"><span class="cl">java -jar jenkins-cli.jar -s http://localhost:8080 <span class="se">\
+</span></span></span><span class="line"><span class="cl">  install-plugin git pipeline-stage-view <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -deploy</span></span></code></pre></div><p><strong>Via JCasC (YAML):</strong></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">plugins</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">artifactId</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;git&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">artifactId</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;pipeline-stage-view&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="nt">artifactId</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;docker-workflow&#34;</span></span></span></code></pre></div><blockquote class='book-hint '>
+<p><strong>Best Practice:</strong> Pin plugin versions and test upgrades in a staging environment before applying to production Jenkins.</p>
+</blockquote><hr>
+<h2 id="32-system-configuration">3.2 System Configuration<a class="anchor" href="#32-system-configuration">#</a></h2>
+<h3 id="configure-jenkins-url">Configure Jenkins URL<a class="anchor" href="#configure-jenkins-url">#</a></h3>
+<p>Dashboard → Manage Jenkins → System → Jenkins URL</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># Set URL for proper link generation</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="l">http://jenkins.example.com:8080/</span></span></span></code></pre></div><h3 id="environment-variables">Environment Variables<a class="anchor" href="#environment-variables">#</a></h3>
+<p>Set global environment variables available to all pipelines:</p>
+<p>Dashboard → Manage Jenkins → System → Global Properties</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">KEY=JAVA_HOME
+</span></span><span class="line"><span class="cl">VALUE=/usr/lib/jvm/java-17-openjdk-amd64</span></span></code></pre></div><h3 id="tools-configuration">Tools Configuration<a class="anchor" href="#tools-configuration">#</a></h3>
+<p>Configure paths to build tools:</p>
+<p>Dashboard → Manage Jenkins → Tools</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="c"># JDK Installations</span><span class="w">
+</span></span></span><span class="line"><span class="cl">- <span class="nt">Name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;JDK 17&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">Install automatically</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">Version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;jdk-17.0.6+10&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c"># Maven Installations</span><span class="w">
+</span></span></span><span class="line"><span class="cl">- <span class="nt">Name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Maven 3.9&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">Install automatically</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">Version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;3.9.1&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="c"># Go Installations</span><span class="w">
+</span></span></span><span class="line"><span class="cl">- <span class="nt">Name</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;Go 1.21&#34;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">Install automatically</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">Version</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;1.21.0&#34;</span></span></span></code></pre></div><hr>
+<h2 id="33-credential-management">3.3 Credential Management<a class="anchor" href="#33-credential-management">#</a></h2>
+<p>Credentials allow Jenkins to authenticate with external services securely.</p>
+<h3 id="credential-types">Credential Types<a class="anchor" href="#credential-types">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Type</th>
+          <th>Usage</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Username with password</strong></td>
+          <td>Git, web services, databases</td>
+      </tr>
+      <tr>
+          <td><strong>SSH key</strong></td>
+          <td>Git repositories, remote servers</td>
+      </tr>
+      <tr>
+          <td><strong>Secret text</strong></td>
+          <td>API tokens, secret keys</td>
+      </tr>
+      <tr>
+          <td><strong>Certificate</strong></td>
+          <td>TLS/SSL certificates</td>
+      </tr>
+      <tr>
+          <td><strong>File</strong></td>
+          <td>Uploaded credential files</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="creating-credentials">Creating Credentials<a class="anchor" href="#creating-credentials">#</a></h3>
+<p>Dashboard → Manage Jenkins → Credentials → System → Global credentials → Add Credentials</p>
+<h3 id="using-credentials-in-pipelines">Using Credentials in Pipelines<a class="anchor" href="#using-credentials-in-pipelines">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">environment</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">// Bind credentials to environment variables
+</span></span></span><span class="line"><span class="cl">        <span class="n">DOCKER_CREDS</span> <span class="o">=</span> <span class="n">credentials</span><span class="o">(</span><span class="s1">&#39;docker-hub-creds&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">GIT_TOKEN</span> <span class="o">=</span> <span class="n">credentials</span><span class="o">(</span><span class="s1">&#39;github-token&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Checkout&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// Using SSH key
+</span></span></span><span class="line"><span class="cl">                <span class="n">checkout</span><span class="o">([</span><span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;GitSCM&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">branches:</span> <span class="o">[[</span><span class="nl">name:</span> <span class="s1">&#39;*/main&#39;</span><span class="o">]],</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">userRemoteConfigs:</span> <span class="o">[[</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">url:</span> <span class="s1">&#39;git@github.com:org/repo.git&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">credentialsId:</span> <span class="s1">&#39;github-ssh-key&#39;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">]]</span>
+</span></span><span class="line"><span class="cl">                <span class="o">])</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Docker Login&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s2">&#34;echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="using-withcredentials-for-sensitive-values">Using withCredentials for Sensitive Values<a class="anchor" href="#using-withcredentials-for-sensitive-values">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">withCredentials</span><span class="o">([</span><span class="n">string</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">credentialsId:</span> <span class="s1">&#39;prod-api-key&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">variable:</span> <span class="s1">&#39;API_KEY&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">)])</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sh</span> <span class="s1">&#39;deploy.sh --api-key $API_KEY&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="34-security--access-control">3.4 Security &amp; Access Control<a class="anchor" href="#34-security--access-control">#</a></h2>
+<h3 id="authentication">Authentication<a class="anchor" href="#authentication">#</a></h3>
+<p>Jenkins supports several authentication realms:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Realm</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Jenkins&rsquo; own user database</strong></td>
+          <td>Built-in, simple setup</td>
+      </tr>
+      <tr>
+          <td><strong>LDAP/Active Directory</strong></td>
+          <td>Enterprise SSO</td>
+      </tr>
+      <tr>
+          <td><strong>GitHub/GitLab OAuth</strong></td>
+          <td>Social login</td>
+      </tr>
+      <tr>
+          <td><strong>SAML/SSO</strong></td>
+          <td>Enterprise identity providers</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="authorization">Authorization<a class="anchor" href="#authorization">#</a></h3>
+<p><strong>Role-Based Strategy</strong> is the recommended authorization model:</p>
+<ol>
+<li>Install <strong>Role-based Authorization Strategy</strong> plugin</li>
+<li>Go to Dashboard → Manage Jenkins → Configure Global Security</li>
+<li>Set Authorization to &ldquo;Role-Based Strategy&rdquo;</li>
+<li>Configure roles:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Global Roles:
+</span></span><span class="line"><span class="cl">  - admin:     Full access
+</span></span><span class="line"><span class="cl">  - developer: Build jobs, read access
+</span></span><span class="line"><span class="cl">  - viewer:    Read-only
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">Project Roles:
+</span></span><span class="line"><span class="cl">  - team-alpha-dev:   Build, configure team-alpha/* jobs
+</span></span><span class="line"><span class="cl">  - team-beta-dev:    Build, configure team-beta/* jobs
+</span></span><span class="line"><span class="cl">  - team-alpha-view:  Read team-alpha/* jobs</span></span></code></pre></div><h3 id="matrix-based-security">Matrix-Based Security<a class="anchor" href="#matrix-based-security">#</a></h3>
+<p>For simpler setups, use matrix-based permissions:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Each cell grants or denies a permission
+</span></span></span><span class="line"><span class="cl"><span class="n">hudson</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">Hudson</span><span class="o">.</span><span class="na">Read</span>
+</span></span><span class="line"><span class="cl"><span class="n">hudson</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">Item</span><span class="o">.</span><span class="na">Build</span>
+</span></span><span class="line"><span class="cl"><span class="n">hudson</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">Item</span><span class="o">.</span><span class="na">Configure</span>
+</span></span><span class="line"><span class="cl"><span class="n">hudson</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">Item</span><span class="o">.</span><span class="na">Delete</span>
+</span></span><span class="line"><span class="cl"><span class="n">hudson</span><span class="o">.</span><span class="na">model</span><span class="o">.</span><span class="na">Run</span><span class="o">.</span><span class="na">Update</span></span></span></code></pre></div><hr>
+<h2 id="35-folders-views--organization">3.5 Folders, Views &amp; Organization<a class="anchor" href="#35-folders-views--organization">#</a></h2>
+<h3 id="folders">Folders<a class="anchor" href="#folders">#</a></h3>
+<p>Folders organize jobs hierarchically:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">Jenkins</span>
+</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">Team</span><span class="o">-</span><span class="n">Alpha</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">frontend</span><span class="o">-</span><span class="n">app</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="n">build</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">├──</span> <span class="n">test</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="n">deploy</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">└──</span> <span class="n">backend</span><span class="o">-</span><span class="n">api</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">├──</span> <span class="n">build</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">├──</span> <span class="n">test</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">└──</span> <span class="n">deploy</span>
+</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">Team</span><span class="o">-</span><span class="n">Beta</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">└──</span> <span class="n">mobile</span><span class="o">-</span><span class="n">app</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">├──</span> <span class="n">build</span><span class="o">-</span><span class="n">android</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">└──</span> <span class="n">build</span><span class="o">-</span><span class="n">ios</span>
+</span></span><span class="line"><span class="cl"><span class="err">└──</span> <span class="n">Shared</span>
+</span></span><span class="line"><span class="cl">    <span class="err">├──</span> <span class="n">security</span><span class="o">-</span><span class="n">scan</span>
+</span></span><span class="line"><span class="cl">    <span class="err">└──</span> <span class="n">deploy</span><span class="o">-</span><span class="n">tools</span></span></span></code></pre></div><h3 id="creating-a-folder">Creating a Folder<a class="anchor" href="#creating-a-folder">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Using Job DSL
+</span></span></span><span class="line"><span class="cl"><span class="n">folder</span><span class="o">(</span><span class="s1">&#39;Team-Alpha&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">displayName</span><span class="o">(</span><span class="s1">&#39;Team Alpha&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">description</span><span class="o">(</span><span class="s1">&#39;CI/CD pipelines for Team Alpha&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="views">Views<a class="anchor" href="#views">#</a></h3>
+<p>Views provide filtered perspectives of jobs:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// List View — simple list of jobs
+</span></span></span><span class="line"><span class="cl"><span class="n">listView</span><span class="o">(</span><span class="s1">&#39;Production Jobs&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">jobs</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">regex</span><span class="o">(</span><span class="s1">&#39;prod-.*&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">columns</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">status</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">weather</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">name</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">lastSuccess</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">lastFailure</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="36-backup--restore">3.6 Backup &amp; Restore<a class="anchor" href="#36-backup--restore">#</a></h2>
+<h3 id="what-to-backup">What to Backup<a class="anchor" href="#what-to-backup">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Component</th>
+          <th>Location</th>
+          <th>Notes</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Jenkins home</td>
+          <td><code>/var/jenkins_home</code></td>
+          <td>Config, jobs, builds</td>
+      </tr>
+      <tr>
+          <td>Jobs config</td>
+          <td><code>JENKINS_HOME/jobs/*/config.xml</code></td>
+          <td>Individual job configs</td>
+      </tr>
+      <tr>
+          <td>Plugin configs</td>
+          <td><code>JENKINS_HOME/plugins/*.jpi</code></td>
+          <td>Installed plugins</td>
+      </tr>
+      <tr>
+          <td>Secrets</td>
+          <td><code>JENKINS_HOME/secrets/</code></td>
+          <td>Credentials (encrypted)</td>
+      </tr>
+      <tr>
+          <td>Users</td>
+          <td><code>JENKINS_HOME/users/</code></td>
+          <td>User accounts</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="backup-script">Backup Script<a class="anchor" href="#backup-script">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="nv">BACKUP_DIR</span><span class="o">=</span><span class="s2">&#34;/backup/jenkins/</span><span class="k">$(</span>date +%Y%m%d_%H%M%S<span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">mkdir -p <span class="nv">$BACKUP_DIR</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Backup Jenkins home (excluding large build artifacts)</span>
+</span></span><span class="line"><span class="cl">rsync -av --exclude<span class="o">=</span><span class="s1">&#39;jobs/*/builds/*&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --exclude<span class="o">=</span><span class="s1">&#39;workspace/*&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --exclude<span class="o">=</span><span class="s1">&#39;logs/*&#39;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">  /var/jenkins_home/ <span class="nv">$BACKUP_DIR</span>/
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Archive</span>
+</span></span><span class="line"><span class="cl">tar czf <span class="s2">&#34;</span><span class="si">${</span><span class="nv">BACKUP_DIR</span><span class="si">}</span><span class="s2">.tar.gz&#34;</span> <span class="nv">$BACKUP_DIR</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Optional: Upload to S3</span>
+</span></span><span class="line"><span class="cl">aws s3 cp <span class="s2">&#34;</span><span class="si">${</span><span class="nv">BACKUP_DIR</span><span class="si">}</span><span class="s2">.tar.gz&#34;</span> s3://my-jenkins-backups/</span></span></code></pre></div><h3 id="using-thinbackup-plugin">Using ThinBackup Plugin<a class="anchor" href="#using-thinbackup-plugin">#</a></h3>
+<p>Install the <strong>ThinBackup</strong> plugin to automate backups:</p>
+<ol>
+<li>Go to Manage Jenkins → ThinBackup → Settings</li>
+<li>Configure:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">Backup</span> <span class="n">directory</span><span class="p">:</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="n">jenkins_backups</span>
+</span></span><span class="line"><span class="cl"><span class="n">Full</span> <span class="n">backup</span> <span class="n">every</span><span class="p">:</span> <span class="mi">7</span> <span class="n">days</span>
+</span></span><span class="line"><span class="cl"><span class="n">Diff</span> <span class="n">backup</span> <span class="n">every</span><span class="p">:</span> <span class="mi">1</span> <span class="n">day</span>
+</span></span><span class="line"><span class="cl"><span class="n">Max</span> <span class="n">number</span> <span class="n">of</span> <span class="n">backup</span> <span class="n">sets</span><span class="p">:</span> <span class="mi">10</span>
+</span></span><span class="line"><span class="cl"><span class="n">Files</span> <span class="n">to</span> <span class="n">exclude</span><span class="p">:</span> <span class="o">*/</span><span class="n">builds</span><span class="o">/*</span><span class="p">,</span> <span class="o">*/</span><span class="n">workspace</span><span class="o">/*</span></span></span></code></pre></div><hr>
+<h2 id="37-monitoring-jenkins">3.7 Monitoring Jenkins<a class="anchor" href="#37-monitoring-jenkins">#</a></h2>
+<h3 id="system-information">System Information<a class="anchor" href="#system-information">#</a></h3>
+<p>Dashboard → Manage Jenkins → System Information</p>
+<p>Check:</p>
+<ul>
+<li><strong>Memory usage</strong> — Heap and non-heap memory</li>
+<li><strong>Executor counts</strong> — Busy/idle executors</li>
+<li><strong>Queue length</strong> — Pending build requests</li>
+<li><strong>Agent status</strong> — Online/offline agents</li>
+</ul>
+<h3 id="script-console">Script Console<a class="anchor" href="#script-console">#</a></h3>
+<p>Dashboard → Manage Jenkins → Script Console</p>
+<p>Run Groovy scripts to inspect or modify Jenkins state:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Check queue length
+</span></span></span><span class="line"><span class="cl"><span class="n">println</span> <span class="s2">&#34;Queue length: ${Jenkins.instance.queue.items.size()}&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// List all executors
+</span></span></span><span class="line"><span class="cl"><span class="n">Jenkins</span><span class="o">.</span><span class="na">instance</span><span class="o">.</span><span class="na">computers</span><span class="o">.</span><span class="na">each</span> <span class="o">{</span> <span class="n">c</span> <span class="o">-&gt;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">println</span> <span class="s2">&#34;Node: ${c.name} - Online: ${c.online} - Busy: ${c.countBusy}&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Get memory stats
+</span></span></span><span class="line"><span class="cl"><span class="kt">def</span> <span class="n">runtime</span> <span class="o">=</span> <span class="n">Runtime</span><span class="o">.</span><span class="na">getRuntime</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">println</span> <span class="s2">&#34;Max memory: ${runtime.maxMemory() / 1024 / 1024} MB&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="n">println</span> <span class="s2">&#34;Used memory: ${(runtime.totalMemory() - runtime.freeMemory()) / 1024 / 1024} MB&#34;</span></span></span></code></pre></div><hr>
+<h2 id="key-takeaways">Key Takeaways<a class="anchor" href="#key-takeaways">#</a></h2>
+<ul>
+<li>Plugins make Jenkins extensible — manage them carefully with version pinning</li>
+<li>Credentials provide secure authentication to external services</li>
+<li>Role-Based Strategy is the recommended authorization model for teams</li>
+<li>Folders and views organize jobs at scale</li>
+<li>Regular backups of <code>JENKINS_HOME</code> are essential for disaster recovery</li>
+<li>The Script Console is a powerful tool for debugging and maintenance</li>
+</ul>
+<hr>
+<h2 id="next-steps">Next Steps<a class="anchor" href="#next-steps">#</a></h2>
+<p>→ Continue to <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/">Chapter 4: Freestyle Projects &amp; Build Jobs</a></p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="flex align-center">
+        <img src="/complete_jenkins_notes/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Ch 2: Jenkins Architecture &amp; Installation</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="flex align-center">
+        <span>Ch 4: Freestyle Projects &amp; Build Jobs</span>
+        <img src="/complete_jenkins_notes/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){"use strict";document.querySelectorAll("pre > code").forEach(function(t){var n,s=t.parentElement;if(!s||s.tagName!=="PRE")return;if(s.querySelector(".copy-button"))return;s.style.position="relative",n=document.createElement("button"),n.className="copy-button",n.textContent="Copy",n.setAttribute("aria-label","Copy code to clipboard"),n.setAttribute("type","button"),s.appendChild(n),n.addEventListener("click",function(){var s=t.textContent||"";navigator.clipboard?navigator.clipboard.writeText(s).then(function(){n.textContent="Copied!",n.classList.add("copied"),setTimeout(function(){n.textContent="Copy",n.classList.remove("copied")},2e3)}).catch(function(){e(s,n)}):e(s,n)})});function e(e,t){var n=document.createElement("textarea");n.value=e,n.style.position="fixed",n.style.opacity="0",document.body.appendChild(n),n.select();try{document.execCommand("copy"),t.textContent="Copied!",t.classList.add("copied"),setTimeout(function(){t.textContent="Copy",t.classList.remove("copied")},2e3)}catch{t.textContent="Error",setTimeout(function(){t.textContent="Copy"},2e3)}document.body.removeChild(n)}})()</script>
+  
+
+        
+  
+    <script>(function(){"use strict";var t,a,o="jenkins_exam_progress",c="jenkins_chapter_progress";function e(e){this.element=e,this.minutesDisplay=e.querySelector(".timer-minutes"),this.secondsDisplay=e.querySelector(".timer-seconds"),this.statusEl=e.querySelector(".timer-status"),this.totalSeconds=parseInt(e.dataset.minutes||"60",10)*60,this.remaining=this.totalSeconds,this.interval=null,this.running=!1,this.finished=!1;var n,s,o,i,t=this.loadState();t&&t.remaining>0&&!t.finished&&(this.remaining=t.remaining),this.updateDisplay(),n=this,s=e.querySelector(".timer-start"),o=e.querySelector(".timer-pause"),i=e.querySelector(".timer-reset"),s&&s.addEventListener("click",function(){n.start()}),o&&o.addEventListener("click",function(){n.pause()}),i&&i.addEventListener("click",function(){n.reset()}),t&&t.running&&this.start()}e.prototype.start=function(){if(this.finished)return;if(this.running)return;this.running=!0,this.element.classList.add("timer-running"),this.element.classList.remove("timer-paused");var e=this;this.interval=setInterval(function(){e.remaining--,e.updateDisplay(),e.saveState(),e.remaining<=0&&(e.remaining=0,e.updateDisplay(),e.finish())},1e3)},e.prototype.pause=function(){if(!this.running)return;this.running=!1,this.element.classList.remove("timer-running"),this.element.classList.add("timer-paused"),clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.reset=function(){this.pause(),this.remaining=this.totalSeconds,this.finished=!1,this.element.classList.remove("timer-finished"),this.element.classList.remove("timer-paused"),this.statusEl.textContent="Time Remaining",this.updateDisplay(),this.saveState(),localStorage.removeItem(this.getTimerStorageKey())},e.prototype.finish=function(){this.running=!1,this.finished=!0,this.element.classList.remove("timer-running"),this.element.classList.add("timer-finished"),this.statusEl.textContent="⏰ Time's Up!",clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.updateDisplay=function(){var e=Math.floor(this.remaining/60),t=this.remaining%60;this.minutesDisplay.textContent=String(e).padStart(2,"0"),this.secondsDisplay.textContent=String(t).padStart(2,"0"),this.remaining<=300&&this.remaining>0?this.element.classList.add("timer-warning"):this.element.classList.remove("timer-warning")},e.prototype.getTimerStorageKey=function(){return o+"_timer_"+this.element.dataset.testId},e.prototype.loadState=function(){try{var e=localStorage.getItem(this.getTimerStorageKey());return e?JSON.parse(e):null}catch{return null}},e.prototype.saveState=function(){try{var e={remaining:this.remaining,running:this.running,finished:this.finished,savedAt:Date.now()};localStorage.setItem(this.getTimerStorageKey(),JSON.stringify(e))}catch{}},document.querySelectorAll(".exam-timer").forEach(function(t){new e(t)});function f(e,t){try{var s=n();s[e]=t,localStorage.setItem(o,JSON.stringify(s)),m()}catch{}}function n(){try{var e=localStorage.getItem(o);return e?JSON.parse(e):{}}catch{return{}}}function _(){var e=n();return Object.keys(e).filter(function(t){return e[t]===!0}).length}function p(){return 7}function m(){var t=_(),e=p(),n=e>0?Math.round(t/e*100):0,a=i(),s=document.getElementById("exam-progress-bar"),o=document.getElementById("exam-progress-text");s&&(s.style.width=n+"%",s.textContent=n>15?n+"%":""),o&&(o.textContent=t+" of "+e+" tests completed"),l(a,t,e)}function l(e,t,n){var s,o,l,i=document.getElementById("sidebar-progress-fill"),a=document.getElementById("sidebar-progress-pct"),r=document.getElementById("sidebar-progress-chapters"),c=document.getElementById("sidebar-progress-tests");if(!i)return;s=e.total+n,l=e.completed+t,o=s>0?Math.round(l/s*100):0,i.style.width=o+"%",a&&(a.textContent=o+"%"),r&&(r.textContent=e.completed+"/"+e.total+" chapters"),c&&(c.textContent=t+"/"+n+" tests")}document.addEventListener("change",function(e){if(e.target&&e.target.matches(".test-complete-check")){var t=e.target.dataset.testId;t&&f(t,e.target.checked)}});function w(){var e=n();document.querySelectorAll(".test-complete-check").forEach(function(t){var n=t.dataset.testId;n&&e[n]===!0&&(t.checked=!0)}),m()}t=[{id:"01-introduction-to-ci-cd-and-jenkins",title:"Ch 1: Introduction to CI/CD & Jenkins",number:1,section:"Foundation"},{id:"02-jenkins-architecture-and-installation",title:"Ch 2: Jenkins Architecture & Installation",number:2,section:"Foundation"},{id:"03-jenkins-configuration-and-management",title:"Ch 3: Configuration & Management",number:3,section:"Foundation"},{id:"04-freestyle-projects-and-build-jobs",title:"Ch 4: Freestyle Projects & Build Jobs",number:4,section:"Foundation"},{id:"05-pipeline-fundamentals",title:"Ch 5: Pipeline Fundamentals",number:5,section:"Core Skills"},{id:"06-pipeline-syntax-and-steps",title:"Ch 6: Pipeline Syntax & Steps",number:6,section:"Core Skills"},{id:"07-agents-nodes-and-distributed-builds",title:"Ch 7: Agents, Nodes & Distributed Builds",number:7,section:"Core Skills"},{id:"08-source-code-management",title:"Ch 8: Source Code Management",number:8,section:"Core Skills"},{id:"09-shared-libraries-and-reusability",title:"Ch 9: Shared Libraries & Reusability",number:9,section:"Advanced"},{id:"10-multi-branch-pipelines",title:"Ch 10: Multi-Branch Pipelines",number:10,section:"Advanced"},{id:"11-jenkins-docker-and-kubernetes",title:"Ch 11: Docker & Kubernetes Integration",number:11,section:"Advanced"},{id:"12-testing-security-and-compliance",title:"Ch 12: Testing, Security & Compliance",number:12,section:"Advanced"},{id:"13-jenkins-configuration-as-code",title:"Ch 13: Jenkins Configuration as Code (JCasC)",number:13,section:"Production & Exam Prep"},{id:"14-production-grade-jenkins",title:"Ch 14: Production-Grade Jenkins",number:14,section:"Production & Exam Prep"},{id:"15-exam-preparation-guide",title:"Ch 15: Exam Preparation Guide",number:15,section:"Production & Exam Prep"},{id:"16-interview-questions",title:"Ch 16: Interview Questions & Answers",number:16,section:"Bonus"},{id:"17-real-world-scenarios",title:"Ch 17: Real-World Scenario Questions",number:17,section:"Bonus"}],a=[{id:"exam-test-1",title:"Practice Test 1",number:1},{id:"exam-test-2",title:"Practice Test 2",number:2},{id:"exam-test-3",title:"Practice Test 3",number:3},{id:"exam-test-4",title:"Practice Test 4",number:4},{id:"exam-test-5",title:"Practice Test 5",number:5},{id:"exam-test-6",title:"Practice Test 6",number:6},{id:"exam-test-7",title:"Practice Test 7",number:7}];function s(){try{var e=localStorage.getItem(c);return e?JSON.parse(e):{}}catch{return{}}}function u(e,t){try{var n=s();n[e]=n[e]||{},Object.keys(t).forEach(function(s){n[e][s]=t[s]}),localStorage.setItem(c,JSON.stringify(n))}catch{}}function i(){var o=s(),e=0,n=0;return t.forEach(function(t){var s=o[t.id];s&&(s.read&&e++,s.completed&&n++)}),{read:e,completed:n,total:t.length}}function r(){var t=n(),e=0;return a.forEach(function(n){t[n.id]===!0&&e++}),{completed:e,total:a.length}}function g(){var e=window.location.pathname.match(/\/docs\/(\d+-[^/]+)\//);return e?e[1]:null}function v(){var e=g(),n=e&&t.some(function(t){return t.id===e});n&&(b(e),j(e))}function b(e){var t=s();(!t[e]||!t[e].read)&&u(e,{read:!0,readAt:Date.now()})}function j(e){var t,n,i,a,r,o=document.querySelector(".book-article");if(!o)return;if(o.querySelector(".chapter-complete-check"))return;a=s(),r=a[e]||{},i=r.completed===!0,t=document.createElement("div"),t.className="chapter-complete-check",t.innerHTML='<hr><div class="chapter-progress-bar"><input type="checkbox" id="ch-cpl-'+e+'" class="chapter-complete-checkbox" data-chapter-id="'+e+'"'+(i?" checked":"")+'><label for="ch-cpl-'+e+'" class="chapter-complete-label">✓ Mark this chapter as completed</label><span class="chapter-status-badge">'+(i?"✅ Completed":"📖 Reading")+"</span></div>",o.appendChild(t),n=t.querySelector(".chapter-complete-checkbox"),n.addEventListener("change",function(){u(e,{completed:n.checked,completedAt:n.checked?Date.now():null});var s=t.querySelector(".chapter-status-badge");s.textContent=n.checked?"✅ Completed":"📖 Reading"})}window.initExamDashboard=function(){var e,t=document.getElementById("exam-dashboard-app");if(!t)return;t.innerHTML=y(),document.querySelectorAll(".dashboard-chapter-check").forEach(function(e){e.addEventListener("change",function(){u(e.dataset.chapterId,{completed:e.checked,completedAt:e.checked?Date.now():null}),d()})}),document.querySelectorAll(".dashboard-test-check").forEach(function(e){e.addEventListener("change",function(){f(e.dataset.testId,e.checked),d()})}),e=document.getElementById("exam-reset-all"),e&&e.addEventListener("click",function(){confirm("Reset ALL progress (chapters and tests)? This cannot be undone.")&&(localStorage.removeItem(o),localStorage.removeItem(c),d())})};function y(){var m,o=i(),c=r(),u=s(),f=n(),d=o.total+c.total,h=o.completed+c.completed,l=d>0?Math.round(h/d*100):0,e="";return e+='<div class="exam-dashboard-header">',e+="  <h1>📊 Your Learning Dashboard</h1>",e+='  <p class="exam-progress-summary">Track your Jenkins learning journey — from chapters to practice exams</p>',e+="</div>",e+='<div class="exam-combined-progress">',e+='  <div class="exam-progress-bar-wrapper" style="max-width:100%;">',e+='    <div class="exam-progress-bar-fill" id="dash-combined-bar" style="width:'+l+'%;">'+(l>15?l+"%":"")+"</div>",e+="  </div>",e+='  <p class="exam-progress-summary" style="text-align:center;margin-top:0.75rem;">'+h+" of "+d+" total items completed</p>",e+="</div>",e+='<div class="exam-stats">',e+='  <div class="exam-stat-card"><span class="stat-number">'+o.completed+'</span><span class="stat-label">of '+o.total+" Chapters</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+o.read+'</span><span class="stat-label">Chapters Read</span></div>',e+='  <div class="exam-stat-card"><span class="stat-number">'+c.completed+'</span><span class="stat-label">of '+c.total+" Tests Passed</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+l+'%</span><span class="stat-label">Overall Progress</span></div>',e+="</div>",e+='<h2 style="margin-top:2.5rem;">📚 Learning Progress</h2>',e+='<div class="exam-dashboard-grid">',m=["Foundation","Core Skills","Advanced","Production & Exam Prep","Bonus"],m.forEach(function(n){if(s=t.filter(function(e){return e.section===n}),s.length===0)return;var s,i,a=0,o=0;s.forEach(function(e){var t=u[e.id];t&&(t.read&&a++,t.completed&&o++)}),i=Math.round(o/s.length*100),e+='<div class="dashboard-section-card">',e+='  <div class="dashboard-section-header">',e+='    <span class="dashboard-section-badge">'+n+"</span>",e+='    <span class="dashboard-section-count">'+o+"/"+s.length+"</span>",e+="  </div>",e+='  <div class="dashboard-section-bar-wrapper"><div class="dashboard-section-bar-fill" style="width:'+i+'%;"></div></div>',e+='  <div class="dashboard-section-chapters">',s.forEach(function(t){var s=u[t.id]||{},n=s.completed===!0,o=s.read===!0,i=n?"✅":o?"📖":"⬜";e+='    <div class="dashboard-chapter-row'+(n?" completed":"")+'" title="'+t.title+'">',e+='      <input type="checkbox" class="dashboard-chapter-check" data-chapter-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="dashboard-chapter-status">'+i+"</span>",e+='      <span class="dashboard-chapter-title">'+t.title+"</span>",e+="    </div>"}),e+="  </div>",e+="</div>"}),e+="</div>",e+='<h2 style="margin-top:2.5rem;">📝 Practice Test Progress</h2>',e+='<div class="exam-dashboard-grid">',a.forEach(function(t){var n=f[t.id]===!0;e+='  <div class="exam-dashboard-card'+(n?" completed":"")+'">',e+="    <h3>Practice Test "+t.number+"</h3>",e+="    <p>57 questions across all domains | 60 min</p>",e+='    <div style="display:flex;align-items:center;gap:0.5rem;">',e+='      <input type="checkbox" class="exam-dashboard-check dashboard-test-check" data-test-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="card-status">'+(n?"✅ Passed":"⬜ Not yet")+"</span>",e+="    </div>",e+='    <a href="/docs/'+(17+t.number)+"-exam-practice-test-"+t.number+'/" style="display:inline-block;margin-top:0.75rem;font-size:0.85rem;">→ Open test</a>',e+="  </div>"}),e+="</div>",e+='<div style="text-align:center;margin:2.5rem 0;">',e+='  <button class="btn-reset" id="exam-reset-all">🔄 Reset All Progress</button>',e+="</div>",e}function d(){window.initExamDashboard&&window.initExamDashboard()}window.refreshSidebarProgress=function(){var t=i(),e=r();l(t,e.completed,e.total)};function h(){w(),v(),document.getElementById("exam-dashboard-app")&&initExamDashboard();var t=i(),e=r();l(t,e.completed,e.total)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <div class="book-toc-toggle">
+    <label for="toc-control" role="button" class="toc-toggle-label" title="Toggle table of contents">
+      <span class="toc-toggle-icon">▶</span>
+    </label>
+  </div>
+  <aside class="book-toc">
+    <label for="toc-control" class="book-toc-collapse-target" title="Expand table of contents" aria-label="Expand table of contents"></label>
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#31-plugin-management">3.1 Plugin Management</a>
+      <ul>
+        <li><a href="#essential-plugins">Essential Plugins</a></li>
+        <li><a href="#installing-plugins">Installing Plugins</a></li>
+      </ul>
+    </li>
+    <li><a href="#32-system-configuration">3.2 System Configuration</a>
+      <ul>
+        <li><a href="#configure-jenkins-url">Configure Jenkins URL</a></li>
+        <li><a href="#environment-variables">Environment Variables</a></li>
+        <li><a href="#tools-configuration">Tools Configuration</a></li>
+      </ul>
+    </li>
+    <li><a href="#33-credential-management">3.3 Credential Management</a>
+      <ul>
+        <li><a href="#credential-types">Credential Types</a></li>
+        <li><a href="#creating-credentials">Creating Credentials</a></li>
+        <li><a href="#using-credentials-in-pipelines">Using Credentials in Pipelines</a></li>
+        <li><a href="#using-withcredentials-for-sensitive-values">Using withCredentials for Sensitive Values</a></li>
+      </ul>
+    </li>
+    <li><a href="#34-security--access-control">3.4 Security &amp; Access Control</a>
+      <ul>
+        <li><a href="#authentication">Authentication</a></li>
+        <li><a href="#authorization">Authorization</a></li>
+        <li><a href="#matrix-based-security">Matrix-Based Security</a></li>
+      </ul>
+    </li>
+    <li><a href="#35-folders-views--organization">3.5 Folders, Views &amp; Organization</a>
+      <ul>
+        <li><a href="#folders">Folders</a></li>
+        <li><a href="#creating-a-folder">Creating a Folder</a></li>
+        <li><a href="#views">Views</a></li>
+      </ul>
+    </li>
+    <li><a href="#36-backup--restore">3.6 Backup &amp; Restore</a>
+      <ul>
+        <li><a href="#what-to-backup">What to Backup</a></li>
+        <li><a href="#backup-script">Backup Script</a></li>
+        <li><a href="#using-thinbackup-plugin">Using ThinBackup Plugin</a></li>
+      </ul>
+    </li>
+    <li><a href="#37-monitoring-jenkins">3.7 Monitoring Jenkins</a>
+      <ul>
+        <li><a href="#system-information">System Information</a></li>
+        <li><a href="#script-console">Script Console</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

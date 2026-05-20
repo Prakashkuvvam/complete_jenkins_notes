@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Testing, Security &amp; Compliance# Learning Objectives# After reading this chapter, you will be able to:
+Integrate automated testing into Jenkins pipelines Implement security scanning in CI/CD Manage secrets and credentials securely Configure role-based access control (RBAC) Implement audit logging and compliance tracking Use security plugins for vulnerability detection 12.1 Automated Testing in Pipelines# Unit Tests# pipeline { agent any stages { stage(&#39;Unit Tests&#39;) { steps { sh &#39;mvn test&#39; } post { always { junit &#39;target/surefire-reports/*.xml&#39; } } } } }Integration Tests# stage(&#39;Integration Tests&#39;) { steps { sh &#39;mvn verify -Pintegration-test&#39; } post { always { junit &#39;target/failsafe-reports/*.xml&#39; publishHTML(target: [ reportName: &#39;Integration Report&#39;, reportDir: &#39;target/site/failsafe-report&#39;, reportFiles: &#39;index.html&#39; ]) } } }Code Quality Analysis# stage(&#39;Code Quality&#39;) { tools { maven &#39;Maven 3.9&#39; } steps { sh &#39;mvn checkstyle:checkstyle pmd:pmd spotbugs:spotbugs&#39; } post { always { // Publish reports checkstyle pattern: &#39;target/checkstyle-result.xml&#39; pmd pattern: &#39;target/pmd.xml&#39; spotbugs pattern: &#39;target/spotbugsXml.xml&#39; // Quality gates recordIssues( tools: [checkStyle(), pmdParser(), spotBugs()], qualityGates: [ [threshold: 1, type: &#39;NEW&#39;, unstable: true], [threshold: 100, type: &#39;TOTAL&#39;, severity: &#39;WARNING&#39;] ] ) } } } 12.2 Security Scanning# SAST (Static Analysis)# stage(&#39;Security Scan - SAST&#39;) { steps { script { // Using SpotBugs for Java sh &#39;mvn com.github.spotbugs:spotbugs-maven-plugin:spotbugs&#39; // Using Trivy for filesystem scan sh &#39;&#39;&#39; trivy filesystem --severity HIGH,CRITICAL --exit-code 0 \\ --format sarif --output trivy-fs.sarif . &#39;&#39;&#39; } } post { always { publishIssues( issues: [scanForIssues(tool: spotBugs())], qualityGates: [ [threshold: 1, type: &#39;NEW&#39;, severity: &#39;HIGH&#39;, unstable: true] ] ) } } }Dependency Scanning# stage(&#39;Dependency Check&#39;) { steps { script { // OWASP Dependency Check dependencyCheck( odcInstallation: &#39;OWASP-DC&#39;, path: &#39;.&#39;, formats: [&#39;HTML&#39;, &#39;JSON&#39;], failBuildOnCVSS: 7, suppressionFile: &#39;dependency-check-suppression.xml&#39; ) } } post { always { dependencyCheckPublisher( pattern: &#39;dependency-check-report.xml&#39; ) } } }Container Scanning# stage(&#39;Container Security&#39;) { steps { script { docker.build(&#39;myapp:latest&#39;) // Scan with Trivy sh &#39;&#39;&#39; trivy image --severity HIGH,CRITICAL \\ --exit-code 1 \\ --format sarif \\ --output container-scan.sarif \\ myapp:latest &#39;&#39;&#39; } } } 12.3 Secrets Management# Using withCredentials# pipeline { agent any stages { stage(&#39;Deploy&#39;) { steps { withCredentials([ // Secret text (API keys, tokens) string(credentialsId: &#39;api-key&#39;, variable: &#39;API_KEY&#39;), // Username/password usernamePassword( credentialsId: &#39;db-creds&#39;, usernameVariable: &#39;DB_USER&#39;, passwordVariable: &#39;DB_PASS&#39; ), // SSH key sshUserPrivateKey( credentialsId: &#39;deploy-key&#39;, keyFileVariable: &#39;SSH_KEY&#39;, passphraseVariable: &#39;SSH_PASSPHRASE&#39;, usernameVariable: &#39;SSH_USER&#39; ) ]) { sh &#39;&#39;&#39; # Use credentials securely deploy.sh \\ --api-key &#34;$API_KEY&#34; \\ --db-host &#34;$DB_HOST&#34; \\ --db-user &#34;$DB_USER&#34; \\ --db-pass &#34;$DB_PASS&#34; &#39;&#39;&#39; } } } } }Masking Secrets in Logs# stage(&#39;Mask Secret&#39;) { steps { script { // Wrap commands that output secrets wrap([$class: &#39;MaskPasswordsBuildWrapper&#39;, varPasswordPairs: [ password: &#39;my-secret-api-key-12345&#39; ] ]) { sh &#39;&#39;&#39; # The secret value will be masked in logs echo &#34;Using API key: my-secret-api-key-12345&#34; # Output: Using API key: **** &#39;&#39;&#39; } } } }HashiCorp Vault Integration# stage(&#39;Vault Secrets&#39;) { steps { withVault( configuration: [ vaultUrl: &#39;https://vault.example.com&#39;, vaultCredentialId: &#39;vault-token&#39;, engineVersion: 2 ], vaultSecrets: [ [ path: &#39;secret/data/myapp/prod&#39;, engineVersion: 2, secretValues: [ [envVar: &#39;DB_PASSWORD&#39;, vaultKey: &#39;db_password&#39;], [envVar: &#39;API_KEY&#39;, vaultKey: &#39;api_key&#39;] ] ] ] ) { sh &#39;&#39;&#39; echo &#34;Using DB from Vault&#34; deploy.sh --db-pass &#34;$DB_PASSWORD&#34; &#39;&#39;&#39; } } } 12.4 Credential Management Best Practices# Practice Description Least privilege Grant only the permissions needed Rotate regularly Change credentials on schedule or on breach Scope credentials Use folder-level credentials, not global Audit credential usage Monitor which jobs use which credentials Never hard-code Always use credentialsId in Jenkins Use short-lived tokens Prefer temporary tokens over long-lived keys Encrypt at rest Jenkins encrypts credentials in config files 12.5 Role-Based Access Control (RBAC)# Global Roles# Role Permissions admin Full system access developer Build jobs, view system, view agents viewer Read-only access to everything operator Build jobs, view agents Project Roles# // Project roles limit access to specific jobs/folders Role: team-alpha-developer Pattern: team-alpha/* Permissions: - Job: Build, Read, Discover - Run: Update, Delete - SCML: Tag - Credentials: View Role: team-alpha-viewer Pattern: team-alpha/* Permissions: - Job: Read - Run: ViewImplementing RBAC# Install Role-based Authorization Strategy plugin Dashboard → Manage Jenkins → Configure Global Security Authorization: Role-Based Strategy Manage and Assign Roles: Manage Roles: Global roles: - admin: All permissions - engineer: Overall.Read, Job.*, Run.* - viewer: Overall.Read, Job.Read, Run.View Project roles: - team-alpha: Pattern: team-alpha/* Permissions: Job.Build, Job.Read, Run.View - prod-deploy: Pattern: */main, */release/* Permissions: Job.Build, Run.Update 12.6 Audit Logging# Enable Job History# // Jenkins configuration to enable detailed audit // Dashboard → Manage Jenkins → Configure System ☑ Enable Job History History file path: /var/jenkins_home/jobhistory ☐ Enable permission-based history eventsAudit Trail Plugin# Install Audit Trail plugin Configure: Logger name: AuditTrail Log File: /var/log/jenkins/audit.log ☑ Log user authentication events ☑ Log job configuration changes ☑ Log system configuration changes ☑ Log credential changes ☑ Log agent connection/disconnection ☑ Log build queue eventsSample Audit Log# 2024-01-15 10:23:45 UTC - admin - CONFIGURE - Job &#39;myapp/main&#39; 2024-01-15 10:23:46 UTC - admin - BUILD - Job &#39;myapp/main&#39; #1024 2024-01-15 10:30:00 UTC - admin - DELETE - Run &#39;myapp/main&#39; #1000 2024-01-15 11:00:00 UTC - jenkins - LOGIN - System user login 2024-01-15 11:15:30 UTC - deploy-bot - TRIGGER - Job &#39;deploy/production&#39; 12.7 Compliance &amp; Governance# Pipeline Compliance Checks# pipeline { agent any stages { stage(&#39;Compliance Checks&#39;) { steps { script { // Check branch policies if (env.BRANCH_NAME == &#39;main&#39;) { // Require PR approval def hasApproval = sh( script: &#39;gh pr view --json approvals&#39;, returnStdout: true ).contains(&#39;&#34;approvals&#34;&#39;) if (!hasApproval) { error(&#34;Main branch requires PR approval&#34;) } } // Check signed commits def commits = sh( script: &#39;git log -1 --pretty=format:&#34;%G?&#34;&#39;, returnStdout: true ).trim() if (commits != &#39;G&#39;) { // G = Good signature error(&#34;Commit must be signed with a verified GPG key&#34;) } // Check license headers sh &#39;mvn license:check&#39; } } } stage(&#39;SBOM Generation&#39;) { steps { sh &#39;&#39;&#39; # Generate Software Bill of Materials mvn org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom &#39;&#39;&#39; post { always { archiveArtifacts artifacts: &#39;target/**/*.xml&#39; } } } } } }Compliance Reports# stage(&#39;Compliance Report&#39;) { steps { script { def report = &#34;&#34;&#34; Compliance Report - ${env.JOB_NAME} #${env.BUILD_NUMBER} ======================================================== Date: ${new Date().format(&#39;yyyy-MM-dd HH:mm:ss&#39;)} Branch: ${env.BRANCH_NAME} Commit: ${env.GIT_COMMIT} Checks: ✓ PR approval: Required for main ✓ Signed commits: Enforced ✓ License headers: Verified ✓ Dependency scan: ${env.DEPENDENCY_CHECK_RESULT} ✓ Container scan: ${env.CONTAINER_SCAN_RESULT} ✓ SAST scan: ${env.SAST_RESULT} Build: ${env.JOB_URL}${env.BUILD_NUMBER} &#34;&#34;&#34; writeFile file: &#39;compliance-report.txt&#39;, text: report archiveArtifacts artifacts: &#39;compliance-report.txt&#39; } } } Key Takeaways# Integrate unit, integration, and security tests at every pipeline stage Use withCredentials for secure secret injection — never hard-code secrets SAST, dependency scanning, and container scanning catch vulnerabilities early RBAC with folder-level patterns enforces least privilege across teams Audit logging provides traceability for compliance requirements Generate SBOM and compliance reports for regulatory needs Next Steps# → Continue to Chapter 13: JCasC — Configuration as Code
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/complete_jenkins_notes/docs/12-testing-security-and-compliance/">
+  <meta property="og:site_name" content="Jenkins Learning Path">
+  <meta property="og:title" content="Ch 12: Testing, Security & Compliance">
+  <meta property="og:description" content="Testing, Security &amp; Compliance# Learning Objectives# After reading this chapter, you will be able to:
+Integrate automated testing into Jenkins pipelines Implement security scanning in CI/CD Manage secrets and credentials securely Configure role-based access control (RBAC) Implement audit logging and compliance tracking Use security plugins for vulnerability detection 12.1 Automated Testing in Pipelines# Unit Tests# pipeline { agent any stages { stage(&#39;Unit Tests&#39;) { steps { sh &#39;mvn test&#39; } post { always { junit &#39;target/surefire-reports/*.xml&#39; } } } } }Integration Tests# stage(&#39;Integration Tests&#39;) { steps { sh &#39;mvn verify -Pintegration-test&#39; } post { always { junit &#39;target/failsafe-reports/*.xml&#39; publishHTML(target: [ reportName: &#39;Integration Report&#39;, reportDir: &#39;target/site/failsafe-report&#39;, reportFiles: &#39;index.html&#39; ]) } } }Code Quality Analysis# stage(&#39;Code Quality&#39;) { tools { maven &#39;Maven 3.9&#39; } steps { sh &#39;mvn checkstyle:checkstyle pmd:pmd spotbugs:spotbugs&#39; } post { always { // Publish reports checkstyle pattern: &#39;target/checkstyle-result.xml&#39; pmd pattern: &#39;target/pmd.xml&#39; spotbugs pattern: &#39;target/spotbugsXml.xml&#39; // Quality gates recordIssues( tools: [checkStyle(), pmdParser(), spotBugs()], qualityGates: [ [threshold: 1, type: &#39;NEW&#39;, unstable: true], [threshold: 100, type: &#39;TOTAL&#39;, severity: &#39;WARNING&#39;] ] ) } } } 12.2 Security Scanning# SAST (Static Analysis)# stage(&#39;Security Scan - SAST&#39;) { steps { script { // Using SpotBugs for Java sh &#39;mvn com.github.spotbugs:spotbugs-maven-plugin:spotbugs&#39; // Using Trivy for filesystem scan sh &#39;&#39;&#39; trivy filesystem --severity HIGH,CRITICAL --exit-code 0 \\ --format sarif --output trivy-fs.sarif . &#39;&#39;&#39; } } post { always { publishIssues( issues: [scanForIssues(tool: spotBugs())], qualityGates: [ [threshold: 1, type: &#39;NEW&#39;, severity: &#39;HIGH&#39;, unstable: true] ] ) } } }Dependency Scanning# stage(&#39;Dependency Check&#39;) { steps { script { // OWASP Dependency Check dependencyCheck( odcInstallation: &#39;OWASP-DC&#39;, path: &#39;.&#39;, formats: [&#39;HTML&#39;, &#39;JSON&#39;], failBuildOnCVSS: 7, suppressionFile: &#39;dependency-check-suppression.xml&#39; ) } } post { always { dependencyCheckPublisher( pattern: &#39;dependency-check-report.xml&#39; ) } } }Container Scanning# stage(&#39;Container Security&#39;) { steps { script { docker.build(&#39;myapp:latest&#39;) // Scan with Trivy sh &#39;&#39;&#39; trivy image --severity HIGH,CRITICAL \\ --exit-code 1 \\ --format sarif \\ --output container-scan.sarif \\ myapp:latest &#39;&#39;&#39; } } } 12.3 Secrets Management# Using withCredentials# pipeline { agent any stages { stage(&#39;Deploy&#39;) { steps { withCredentials([ // Secret text (API keys, tokens) string(credentialsId: &#39;api-key&#39;, variable: &#39;API_KEY&#39;), // Username/password usernamePassword( credentialsId: &#39;db-creds&#39;, usernameVariable: &#39;DB_USER&#39;, passwordVariable: &#39;DB_PASS&#39; ), // SSH key sshUserPrivateKey( credentialsId: &#39;deploy-key&#39;, keyFileVariable: &#39;SSH_KEY&#39;, passphraseVariable: &#39;SSH_PASSPHRASE&#39;, usernameVariable: &#39;SSH_USER&#39; ) ]) { sh &#39;&#39;&#39; # Use credentials securely deploy.sh \\ --api-key &#34;$API_KEY&#34; \\ --db-host &#34;$DB_HOST&#34; \\ --db-user &#34;$DB_USER&#34; \\ --db-pass &#34;$DB_PASS&#34; &#39;&#39;&#39; } } } } }Masking Secrets in Logs# stage(&#39;Mask Secret&#39;) { steps { script { // Wrap commands that output secrets wrap([$class: &#39;MaskPasswordsBuildWrapper&#39;, varPasswordPairs: [ password: &#39;my-secret-api-key-12345&#39; ] ]) { sh &#39;&#39;&#39; # The secret value will be masked in logs echo &#34;Using API key: my-secret-api-key-12345&#34; # Output: Using API key: **** &#39;&#39;&#39; } } } }HashiCorp Vault Integration# stage(&#39;Vault Secrets&#39;) { steps { withVault( configuration: [ vaultUrl: &#39;https://vault.example.com&#39;, vaultCredentialId: &#39;vault-token&#39;, engineVersion: 2 ], vaultSecrets: [ [ path: &#39;secret/data/myapp/prod&#39;, engineVersion: 2, secretValues: [ [envVar: &#39;DB_PASSWORD&#39;, vaultKey: &#39;db_password&#39;], [envVar: &#39;API_KEY&#39;, vaultKey: &#39;api_key&#39;] ] ] ] ) { sh &#39;&#39;&#39; echo &#34;Using DB from Vault&#34; deploy.sh --db-pass &#34;$DB_PASSWORD&#34; &#39;&#39;&#39; } } } 12.4 Credential Management Best Practices# Practice Description Least privilege Grant only the permissions needed Rotate regularly Change credentials on schedule or on breach Scope credentials Use folder-level credentials, not global Audit credential usage Monitor which jobs use which credentials Never hard-code Always use credentialsId in Jenkins Use short-lived tokens Prefer temporary tokens over long-lived keys Encrypt at rest Jenkins encrypts credentials in config files 12.5 Role-Based Access Control (RBAC)# Global Roles# Role Permissions admin Full system access developer Build jobs, view system, view agents viewer Read-only access to everything operator Build jobs, view agents Project Roles# // Project roles limit access to specific jobs/folders Role: team-alpha-developer Pattern: team-alpha/* Permissions: - Job: Build, Read, Discover - Run: Update, Delete - SCML: Tag - Credentials: View Role: team-alpha-viewer Pattern: team-alpha/* Permissions: - Job: Read - Run: ViewImplementing RBAC# Install Role-based Authorization Strategy plugin Dashboard → Manage Jenkins → Configure Global Security Authorization: Role-Based Strategy Manage and Assign Roles: Manage Roles: Global roles: - admin: All permissions - engineer: Overall.Read, Job.*, Run.* - viewer: Overall.Read, Job.Read, Run.View Project roles: - team-alpha: Pattern: team-alpha/* Permissions: Job.Build, Job.Read, Run.View - prod-deploy: Pattern: */main, */release/* Permissions: Job.Build, Run.Update 12.6 Audit Logging# Enable Job History# // Jenkins configuration to enable detailed audit // Dashboard → Manage Jenkins → Configure System ☑ Enable Job History History file path: /var/jenkins_home/jobhistory ☐ Enable permission-based history eventsAudit Trail Plugin# Install Audit Trail plugin Configure: Logger name: AuditTrail Log File: /var/log/jenkins/audit.log ☑ Log user authentication events ☑ Log job configuration changes ☑ Log system configuration changes ☑ Log credential changes ☑ Log agent connection/disconnection ☑ Log build queue eventsSample Audit Log# 2024-01-15 10:23:45 UTC - admin - CONFIGURE - Job &#39;myapp/main&#39; 2024-01-15 10:23:46 UTC - admin - BUILD - Job &#39;myapp/main&#39; #1024 2024-01-15 10:30:00 UTC - admin - DELETE - Run &#39;myapp/main&#39; #1000 2024-01-15 11:00:00 UTC - jenkins - LOGIN - System user login 2024-01-15 11:15:30 UTC - deploy-bot - TRIGGER - Job &#39;deploy/production&#39; 12.7 Compliance &amp; Governance# Pipeline Compliance Checks# pipeline { agent any stages { stage(&#39;Compliance Checks&#39;) { steps { script { // Check branch policies if (env.BRANCH_NAME == &#39;main&#39;) { // Require PR approval def hasApproval = sh( script: &#39;gh pr view --json approvals&#39;, returnStdout: true ).contains(&#39;&#34;approvals&#34;&#39;) if (!hasApproval) { error(&#34;Main branch requires PR approval&#34;) } } // Check signed commits def commits = sh( script: &#39;git log -1 --pretty=format:&#34;%G?&#34;&#39;, returnStdout: true ).trim() if (commits != &#39;G&#39;) { // G = Good signature error(&#34;Commit must be signed with a verified GPG key&#34;) } // Check license headers sh &#39;mvn license:check&#39; } } } stage(&#39;SBOM Generation&#39;) { steps { sh &#39;&#39;&#39; # Generate Software Bill of Materials mvn org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom &#39;&#39;&#39; post { always { archiveArtifacts artifacts: &#39;target/**/*.xml&#39; } } } } } }Compliance Reports# stage(&#39;Compliance Report&#39;) { steps { script { def report = &#34;&#34;&#34; Compliance Report - ${env.JOB_NAME} #${env.BUILD_NUMBER} ======================================================== Date: ${new Date().format(&#39;yyyy-MM-dd HH:mm:ss&#39;)} Branch: ${env.BRANCH_NAME} Commit: ${env.GIT_COMMIT} Checks: ✓ PR approval: Required for main ✓ Signed commits: Enforced ✓ License headers: Verified ✓ Dependency scan: ${env.DEPENDENCY_CHECK_RESULT} ✓ Container scan: ${env.CONTAINER_SCAN_RESULT} ✓ SAST scan: ${env.SAST_RESULT} Build: ${env.JOB_URL}${env.BUILD_NUMBER} &#34;&#34;&#34; writeFile file: &#39;compliance-report.txt&#39;, text: report archiveArtifacts artifacts: &#39;compliance-report.txt&#39; } } } Key Takeaways# Integrate unit, integration, and security tests at every pipeline stage Use withCredentials for secure secret injection — never hard-code secrets SAST, dependency scanning, and container scanning catch vulnerabilities early RBAC with folder-level patterns enforces least privilege across teams Audit logging provides traceability for compliance requirements Generate SBOM and compliance reports for regulatory needs Next Steps# → Continue to Chapter 13: JCasC — Configuration as Code">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Ch 12: Testing, Security & Compliance">
+  <meta itemprop="description" content="Testing, Security &amp; Compliance# Learning Objectives# After reading this chapter, you will be able to:
+Integrate automated testing into Jenkins pipelines Implement security scanning in CI/CD Manage secrets and credentials securely Configure role-based access control (RBAC) Implement audit logging and compliance tracking Use security plugins for vulnerability detection 12.1 Automated Testing in Pipelines# Unit Tests# pipeline { agent any stages { stage(&#39;Unit Tests&#39;) { steps { sh &#39;mvn test&#39; } post { always { junit &#39;target/surefire-reports/*.xml&#39; } } } } }Integration Tests# stage(&#39;Integration Tests&#39;) { steps { sh &#39;mvn verify -Pintegration-test&#39; } post { always { junit &#39;target/failsafe-reports/*.xml&#39; publishHTML(target: [ reportName: &#39;Integration Report&#39;, reportDir: &#39;target/site/failsafe-report&#39;, reportFiles: &#39;index.html&#39; ]) } } }Code Quality Analysis# stage(&#39;Code Quality&#39;) { tools { maven &#39;Maven 3.9&#39; } steps { sh &#39;mvn checkstyle:checkstyle pmd:pmd spotbugs:spotbugs&#39; } post { always { // Publish reports checkstyle pattern: &#39;target/checkstyle-result.xml&#39; pmd pattern: &#39;target/pmd.xml&#39; spotbugs pattern: &#39;target/spotbugsXml.xml&#39; // Quality gates recordIssues( tools: [checkStyle(), pmdParser(), spotBugs()], qualityGates: [ [threshold: 1, type: &#39;NEW&#39;, unstable: true], [threshold: 100, type: &#39;TOTAL&#39;, severity: &#39;WARNING&#39;] ] ) } } } 12.2 Security Scanning# SAST (Static Analysis)# stage(&#39;Security Scan - SAST&#39;) { steps { script { // Using SpotBugs for Java sh &#39;mvn com.github.spotbugs:spotbugs-maven-plugin:spotbugs&#39; // Using Trivy for filesystem scan sh &#39;&#39;&#39; trivy filesystem --severity HIGH,CRITICAL --exit-code 0 \\ --format sarif --output trivy-fs.sarif . &#39;&#39;&#39; } } post { always { publishIssues( issues: [scanForIssues(tool: spotBugs())], qualityGates: [ [threshold: 1, type: &#39;NEW&#39;, severity: &#39;HIGH&#39;, unstable: true] ] ) } } }Dependency Scanning# stage(&#39;Dependency Check&#39;) { steps { script { // OWASP Dependency Check dependencyCheck( odcInstallation: &#39;OWASP-DC&#39;, path: &#39;.&#39;, formats: [&#39;HTML&#39;, &#39;JSON&#39;], failBuildOnCVSS: 7, suppressionFile: &#39;dependency-check-suppression.xml&#39; ) } } post { always { dependencyCheckPublisher( pattern: &#39;dependency-check-report.xml&#39; ) } } }Container Scanning# stage(&#39;Container Security&#39;) { steps { script { docker.build(&#39;myapp:latest&#39;) // Scan with Trivy sh &#39;&#39;&#39; trivy image --severity HIGH,CRITICAL \\ --exit-code 1 \\ --format sarif \\ --output container-scan.sarif \\ myapp:latest &#39;&#39;&#39; } } } 12.3 Secrets Management# Using withCredentials# pipeline { agent any stages { stage(&#39;Deploy&#39;) { steps { withCredentials([ // Secret text (API keys, tokens) string(credentialsId: &#39;api-key&#39;, variable: &#39;API_KEY&#39;), // Username/password usernamePassword( credentialsId: &#39;db-creds&#39;, usernameVariable: &#39;DB_USER&#39;, passwordVariable: &#39;DB_PASS&#39; ), // SSH key sshUserPrivateKey( credentialsId: &#39;deploy-key&#39;, keyFileVariable: &#39;SSH_KEY&#39;, passphraseVariable: &#39;SSH_PASSPHRASE&#39;, usernameVariable: &#39;SSH_USER&#39; ) ]) { sh &#39;&#39;&#39; # Use credentials securely deploy.sh \\ --api-key &#34;$API_KEY&#34; \\ --db-host &#34;$DB_HOST&#34; \\ --db-user &#34;$DB_USER&#34; \\ --db-pass &#34;$DB_PASS&#34; &#39;&#39;&#39; } } } } }Masking Secrets in Logs# stage(&#39;Mask Secret&#39;) { steps { script { // Wrap commands that output secrets wrap([$class: &#39;MaskPasswordsBuildWrapper&#39;, varPasswordPairs: [ password: &#39;my-secret-api-key-12345&#39; ] ]) { sh &#39;&#39;&#39; # The secret value will be masked in logs echo &#34;Using API key: my-secret-api-key-12345&#34; # Output: Using API key: **** &#39;&#39;&#39; } } } }HashiCorp Vault Integration# stage(&#39;Vault Secrets&#39;) { steps { withVault( configuration: [ vaultUrl: &#39;https://vault.example.com&#39;, vaultCredentialId: &#39;vault-token&#39;, engineVersion: 2 ], vaultSecrets: [ [ path: &#39;secret/data/myapp/prod&#39;, engineVersion: 2, secretValues: [ [envVar: &#39;DB_PASSWORD&#39;, vaultKey: &#39;db_password&#39;], [envVar: &#39;API_KEY&#39;, vaultKey: &#39;api_key&#39;] ] ] ] ) { sh &#39;&#39;&#39; echo &#34;Using DB from Vault&#34; deploy.sh --db-pass &#34;$DB_PASSWORD&#34; &#39;&#39;&#39; } } } 12.4 Credential Management Best Practices# Practice Description Least privilege Grant only the permissions needed Rotate regularly Change credentials on schedule or on breach Scope credentials Use folder-level credentials, not global Audit credential usage Monitor which jobs use which credentials Never hard-code Always use credentialsId in Jenkins Use short-lived tokens Prefer temporary tokens over long-lived keys Encrypt at rest Jenkins encrypts credentials in config files 12.5 Role-Based Access Control (RBAC)# Global Roles# Role Permissions admin Full system access developer Build jobs, view system, view agents viewer Read-only access to everything operator Build jobs, view agents Project Roles# // Project roles limit access to specific jobs/folders Role: team-alpha-developer Pattern: team-alpha/* Permissions: - Job: Build, Read, Discover - Run: Update, Delete - SCML: Tag - Credentials: View Role: team-alpha-viewer Pattern: team-alpha/* Permissions: - Job: Read - Run: ViewImplementing RBAC# Install Role-based Authorization Strategy plugin Dashboard → Manage Jenkins → Configure Global Security Authorization: Role-Based Strategy Manage and Assign Roles: Manage Roles: Global roles: - admin: All permissions - engineer: Overall.Read, Job.*, Run.* - viewer: Overall.Read, Job.Read, Run.View Project roles: - team-alpha: Pattern: team-alpha/* Permissions: Job.Build, Job.Read, Run.View - prod-deploy: Pattern: */main, */release/* Permissions: Job.Build, Run.Update 12.6 Audit Logging# Enable Job History# // Jenkins configuration to enable detailed audit // Dashboard → Manage Jenkins → Configure System ☑ Enable Job History History file path: /var/jenkins_home/jobhistory ☐ Enable permission-based history eventsAudit Trail Plugin# Install Audit Trail plugin Configure: Logger name: AuditTrail Log File: /var/log/jenkins/audit.log ☑ Log user authentication events ☑ Log job configuration changes ☑ Log system configuration changes ☑ Log credential changes ☑ Log agent connection/disconnection ☑ Log build queue eventsSample Audit Log# 2024-01-15 10:23:45 UTC - admin - CONFIGURE - Job &#39;myapp/main&#39; 2024-01-15 10:23:46 UTC - admin - BUILD - Job &#39;myapp/main&#39; #1024 2024-01-15 10:30:00 UTC - admin - DELETE - Run &#39;myapp/main&#39; #1000 2024-01-15 11:00:00 UTC - jenkins - LOGIN - System user login 2024-01-15 11:15:30 UTC - deploy-bot - TRIGGER - Job &#39;deploy/production&#39; 12.7 Compliance &amp; Governance# Pipeline Compliance Checks# pipeline { agent any stages { stage(&#39;Compliance Checks&#39;) { steps { script { // Check branch policies if (env.BRANCH_NAME == &#39;main&#39;) { // Require PR approval def hasApproval = sh( script: &#39;gh pr view --json approvals&#39;, returnStdout: true ).contains(&#39;&#34;approvals&#34;&#39;) if (!hasApproval) { error(&#34;Main branch requires PR approval&#34;) } } // Check signed commits def commits = sh( script: &#39;git log -1 --pretty=format:&#34;%G?&#34;&#39;, returnStdout: true ).trim() if (commits != &#39;G&#39;) { // G = Good signature error(&#34;Commit must be signed with a verified GPG key&#34;) } // Check license headers sh &#39;mvn license:check&#39; } } } stage(&#39;SBOM Generation&#39;) { steps { sh &#39;&#39;&#39; # Generate Software Bill of Materials mvn org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom &#39;&#39;&#39; post { always { archiveArtifacts artifacts: &#39;target/**/*.xml&#39; } } } } } }Compliance Reports# stage(&#39;Compliance Report&#39;) { steps { script { def report = &#34;&#34;&#34; Compliance Report - ${env.JOB_NAME} #${env.BUILD_NUMBER} ======================================================== Date: ${new Date().format(&#39;yyyy-MM-dd HH:mm:ss&#39;)} Branch: ${env.BRANCH_NAME} Commit: ${env.GIT_COMMIT} Checks: ✓ PR approval: Required for main ✓ Signed commits: Enforced ✓ License headers: Verified ✓ Dependency scan: ${env.DEPENDENCY_CHECK_RESULT} ✓ Container scan: ${env.CONTAINER_SCAN_RESULT} ✓ SAST scan: ${env.SAST_RESULT} Build: ${env.JOB_URL}${env.BUILD_NUMBER} &#34;&#34;&#34; writeFile file: &#39;compliance-report.txt&#39;, text: report archiveArtifacts artifacts: &#39;compliance-report.txt&#39; } } } Key Takeaways# Integrate unit, integration, and security tests at every pipeline stage Use withCredentials for secure secret injection — never hard-code secrets SAST, dependency scanning, and container scanning catch vulnerabilities early RBAC with folder-level patterns enforces least privilege across teams Audit logging provides traceability for compliance requirements Generate SBOM and compliance reports for regulatory needs Next Steps# → Continue to Chapter 13: JCasC — Configuration as Code">
+  <meta itemprop="wordCount" content="1082">
+
+<title>Ch 12: Testing, Security &amp; Compliance • Jenkins Learning Path</title>
+<link rel="icon" href="/complete_jenkins_notes/favicon.png" >
+<link rel="manifest" href="/complete_jenkins_notes/manifest.json">
+<link rel="canonical" href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/">
+<link rel="stylesheet" href="/complete_jenkins_notes/book.min.a65532e79bcac2f95ba4108b26cdc17b0fe6382f603d8a6b72971bfa3261bf47.css" >
+
+
+  <script defer type="module" src="/complete_jenkins_notes/en.search.min.2d25fa1fe6842b36dbd4e753f3112a465146ff5f09912883575978a46c3ff969.js" ></script>
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<div class="book-sidebar-toggle">
+  <label for="menu-control" role="button" class="sidebar-toggle-label" title="Toggle sidebar">
+    <span class="sidebar-toggle-icon">◀</span>
+  </label>
+</div>
+<aside class="book-menu">
+  <label for="menu-control" class="book-menu-collapse-target" title="Expand sidebar" aria-label="Expand sidebar"></label>
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/complete_jenkins_notes/"><span>Jenkins Learning Path</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+<div class="sidebar-progress" id="sidebar-progress">
+  <div class="sidebar-progress-header">
+    <span class="sidebar-progress-label">📊 Progress</span>
+    <span class="sidebar-progress-pct" id="sidebar-progress-pct">0%</span>
+  </div>
+  <div class="sidebar-progress-track">
+    <div class="sidebar-progress-fill" id="sidebar-progress-fill" style="width:0%;"></div>
+  </div>
+  <div class="sidebar-progress-detail" id="sidebar-progress-detail">
+    <span id="sidebar-progress-chapters">0/17 chapters</span>
+    <span id="sidebar-progress-tests">0/7 tests</span>
+  </div>
+</div>
+
+
+
+<ul><li><a href="/complete_jenkins_notes/">Home</a></li><li><a href="/complete_jenkins_notes/docs/">Documentation</a></li></ul>
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/25-progress-dashboard/" class="">
+      📊 Progress Dashboard</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/26-start-here/" class="">
+      🚀 Start Here</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="">
+      Ch 1: Introduction to CI/CD &amp; Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="">
+      Ch 2: Jenkins Architecture &amp; Installation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="">
+      Ch 3: Configuration &amp; Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="">
+      Ch 4: Freestyle Projects &amp; Build Jobs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/" class="">
+      Ch 5: Pipeline Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/" class="">
+      Ch 6: Pipeline Syntax &amp; Steps</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/" class="">
+      Ch 7: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="">
+      Ch 8: Source Code Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/" class="">
+      Ch 9: Shared Libraries &amp; Reusability</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="">
+      Ch 10: Multi-Branch Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="">
+      Ch 11: Docker &amp; Kubernetes Integration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/" class="active">
+      Ch 12: Testing, Security &amp; Compliance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="">
+      Ch 13: Jenkins Configuration as Code (JCasC)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="">
+      Ch 14: Production-Grade Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/15-exam-preparation-guide/" class="">
+      Ch 15: Exam Preparation Guide</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="">
+      Ch 16: Interview Questions &amp; Answers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="">
+      Ch 17: Real-World Scenario Questions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="">
+      📝 Practice Test 1: CI/CD Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="">
+      📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="">
+      📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="">
+      📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="">
+      📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="">
+      📝 Practice Test 6: Production Jenkins &amp; Monitoring</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="">
+      📝 Practice Test 7: DevOps &amp; Real-World Scenarios</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/complete_jenkins_notes/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Ch 12: Testing, Security &amp; Compliance</h3>
+
+  <label for="toc-control">
+    
+    <img src="/complete_jenkins_notes/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#121-automated-testing-in-pipelines">12.1 Automated Testing in Pipelines</a>
+      <ul>
+        <li><a href="#unit-tests">Unit Tests</a></li>
+        <li><a href="#integration-tests">Integration Tests</a></li>
+        <li><a href="#code-quality-analysis">Code Quality Analysis</a></li>
+      </ul>
+    </li>
+    <li><a href="#122-security-scanning">12.2 Security Scanning</a>
+      <ul>
+        <li><a href="#sast-static-analysis">SAST (Static Analysis)</a></li>
+        <li><a href="#dependency-scanning">Dependency Scanning</a></li>
+        <li><a href="#container-scanning">Container Scanning</a></li>
+      </ul>
+    </li>
+    <li><a href="#123-secrets-management">12.3 Secrets Management</a>
+      <ul>
+        <li><a href="#using-withcredentials">Using withCredentials</a></li>
+        <li><a href="#masking-secrets-in-logs">Masking Secrets in Logs</a></li>
+        <li><a href="#hashicorp-vault-integration">HashiCorp Vault Integration</a></li>
+      </ul>
+    </li>
+    <li><a href="#124-credential-management-best-practices">12.4 Credential Management Best Practices</a></li>
+    <li><a href="#125-role-based-access-control-rbac">12.5 Role-Based Access Control (RBAC)</a>
+      <ul>
+        <li><a href="#global-roles">Global Roles</a></li>
+        <li><a href="#project-roles">Project Roles</a></li>
+        <li><a href="#implementing-rbac">Implementing RBAC</a></li>
+      </ul>
+    </li>
+    <li><a href="#126-audit-logging">12.6 Audit Logging</a>
+      <ul>
+        <li><a href="#enable-job-history">Enable Job History</a></li>
+        <li><a href="#audit-trail-plugin">Audit Trail Plugin</a></li>
+        <li><a href="#sample-audit-log">Sample Audit Log</a></li>
+      </ul>
+    </li>
+    <li><a href="#127-compliance--governance">12.7 Compliance &amp; Governance</a>
+      <ul>
+        <li><a href="#pipeline-compliance-checks">Pipeline Compliance Checks</a></li>
+        <li><a href="#compliance-reports">Compliance Reports</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="testing-security--compliance">Testing, Security &amp; Compliance<a class="anchor" href="#testing-security--compliance">#</a></h1>
+<h2 id="learning-objectives">Learning Objectives<a class="anchor" href="#learning-objectives">#</a></h2>
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Integrate automated testing into Jenkins pipelines</li>
+<li>Implement security scanning in CI/CD</li>
+<li>Manage secrets and credentials securely</li>
+<li>Configure role-based access control (RBAC)</li>
+<li>Implement audit logging and compliance tracking</li>
+<li>Use security plugins for vulnerability detection</li>
+</ul>
+<hr>
+<h2 id="121-automated-testing-in-pipelines">12.1 Automated Testing in Pipelines<a class="anchor" href="#121-automated-testing-in-pipelines">#</a></h2>
+<h3 id="unit-tests">Unit Tests<a class="anchor" href="#unit-tests">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Unit Tests&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;mvn test&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">always</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">junit</span> <span class="s1">&#39;target/surefire-reports/*.xml&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="integration-tests">Integration Tests<a class="anchor" href="#integration-tests">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Integration Tests&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sh</span> <span class="s1">&#39;mvn verify -Pintegration-test&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">always</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">junit</span> <span class="s1">&#39;target/failsafe-reports/*.xml&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">publishHTML</span><span class="o">(</span><span class="nl">target:</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">reportName:</span> <span class="s1">&#39;Integration Report&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">reportDir:</span> <span class="s1">&#39;target/site/failsafe-report&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">reportFiles:</span> <span class="s1">&#39;index.html&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">])</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="code-quality-analysis">Code Quality Analysis<a class="anchor" href="#code-quality-analysis">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Code Quality&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">tools</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">maven</span> <span class="s1">&#39;Maven 3.9&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">sh</span> <span class="s1">&#39;mvn checkstyle:checkstyle pmd:pmd spotbugs:spotbugs&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">always</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Publish reports
+</span></span></span><span class="line"><span class="cl">            <span class="n">checkstyle</span> <span class="nl">pattern:</span> <span class="s1">&#39;target/checkstyle-result.xml&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">pmd</span> <span class="nl">pattern:</span> <span class="s1">&#39;target/pmd.xml&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">spotbugs</span> <span class="nl">pattern:</span> <span class="s1">&#39;target/spotbugsXml.xml&#39;</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1">// Quality gates
+</span></span></span><span class="line"><span class="cl">            <span class="n">recordIssues</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">tools:</span> <span class="o">[</span><span class="n">checkStyle</span><span class="o">(),</span> <span class="n">pmdParser</span><span class="o">(),</span> <span class="n">spotBugs</span><span class="o">()],</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">qualityGates:</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">[</span><span class="nl">threshold:</span> <span class="mi">1</span><span class="o">,</span> <span class="nl">type:</span> <span class="s1">&#39;NEW&#39;</span><span class="o">,</span> <span class="nl">unstable:</span> <span class="kc">true</span><span class="o">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">[</span><span class="nl">threshold:</span> <span class="mi">100</span><span class="o">,</span> <span class="nl">type:</span> <span class="s1">&#39;TOTAL&#39;</span><span class="o">,</span> <span class="nl">severity:</span> <span class="s1">&#39;WARNING&#39;</span><span class="o">]</span>
+</span></span><span class="line"><span class="cl">                <span class="o">]</span>
+</span></span><span class="line"><span class="cl">            <span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="122-security-scanning">12.2 Security Scanning<a class="anchor" href="#122-security-scanning">#</a></h2>
+<h3 id="sast-static-analysis">SAST (Static Analysis)<a class="anchor" href="#sast-static-analysis">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Security Scan - SAST&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Using SpotBugs for Java
+</span></span></span><span class="line"><span class="cl">            <span class="n">sh</span> <span class="s1">&#39;mvn com.github.spotbugs:spotbugs-maven-plugin:spotbugs&#39;</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1">// Using Trivy for filesystem scan
+</span></span></span><span class="line"><span class="cl">            <span class="n">sh</span> <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                trivy filesystem --severity HIGH,CRITICAL --exit-code 0 \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    --format sarif --output trivy-fs.sarif .
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">always</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">publishIssues</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">issues:</span> <span class="o">[</span><span class="n">scanForIssues</span><span class="o">(</span><span class="nl">tool:</span> <span class="n">spotBugs</span><span class="o">())],</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">qualityGates:</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">[</span><span class="nl">threshold:</span> <span class="mi">1</span><span class="o">,</span> <span class="nl">type:</span> <span class="s1">&#39;NEW&#39;</span><span class="o">,</span> <span class="nl">severity:</span> <span class="s1">&#39;HIGH&#39;</span><span class="o">,</span> <span class="nl">unstable:</span> <span class="kc">true</span><span class="o">]</span>
+</span></span><span class="line"><span class="cl">                <span class="o">]</span>
+</span></span><span class="line"><span class="cl">            <span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="dependency-scanning">Dependency Scanning<a class="anchor" href="#dependency-scanning">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Dependency Check&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// OWASP Dependency Check
+</span></span></span><span class="line"><span class="cl">            <span class="n">dependencyCheck</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">odcInstallation:</span> <span class="s1">&#39;OWASP-DC&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">path:</span> <span class="s1">&#39;.&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">formats:</span> <span class="o">[</span><span class="s1">&#39;HTML&#39;</span><span class="o">,</span> <span class="s1">&#39;JSON&#39;</span><span class="o">],</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">failBuildOnCVSS:</span> <span class="mi">7</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">suppressionFile:</span> <span class="s1">&#39;dependency-check-suppression.xml&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">always</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">dependencyCheckPublisher</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">pattern:</span> <span class="s1">&#39;dependency-check-report.xml&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="container-scanning">Container Scanning<a class="anchor" href="#container-scanning">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Container Security&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">docker</span><span class="o">.</span><span class="na">build</span><span class="o">(</span><span class="s1">&#39;myapp:latest&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1">// Scan with Trivy
+</span></span></span><span class="line"><span class="cl">            <span class="n">sh</span> <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                trivy image --severity HIGH,CRITICAL \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    --exit-code 1 \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    --format sarif \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    --output container-scan.sarif \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    myapp:latest
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="123-secrets-management">12.3 Secrets Management<a class="anchor" href="#123-secrets-management">#</a></h2>
+<h3 id="using-withcredentials">Using withCredentials<a class="anchor" href="#using-withcredentials">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">withCredentials</span><span class="o">([</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Secret text (API keys, tokens)
+</span></span></span><span class="line"><span class="cl">                    <span class="n">string</span><span class="o">(</span><span class="nl">credentialsId:</span> <span class="s1">&#39;api-key&#39;</span><span class="o">,</span> <span class="nl">variable:</span> <span class="s1">&#39;API_KEY&#39;</span><span class="o">),</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Username/password
+</span></span></span><span class="line"><span class="cl">                    <span class="n">usernamePassword</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">credentialsId:</span> <span class="s1">&#39;db-creds&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">usernameVariable:</span> <span class="s1">&#39;DB_USER&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">passwordVariable:</span> <span class="s1">&#39;DB_PASS&#39;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">),</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="c1">// SSH key
+</span></span></span><span class="line"><span class="cl">                    <span class="n">sshUserPrivateKey</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">credentialsId:</span> <span class="s1">&#39;deploy-key&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">keyFileVariable:</span> <span class="s1">&#39;SSH_KEY&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">passphraseVariable:</span> <span class="s1">&#39;SSH_PASSPHRASE&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">usernameVariable:</span> <span class="s1">&#39;SSH_USER&#39;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">)</span>
+</span></span><span class="line"><span class="cl">                <span class="o">])</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        # Use credentials securely
+</span></span></span><span class="line"><span class="cl"><span class="s1">                        deploy.sh \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            --api-key &#34;$API_KEY&#34; \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            --db-host &#34;$DB_HOST&#34; \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            --db-user &#34;$DB_USER&#34; \\
+</span></span></span><span class="line"><span class="cl"><span class="s1">                            --db-pass &#34;$DB_PASS&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="masking-secrets-in-logs">Masking Secrets in Logs<a class="anchor" href="#masking-secrets-in-logs">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Mask Secret&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">// Wrap commands that output secrets
+</span></span></span><span class="line"><span class="cl">            <span class="n">wrap</span><span class="o">([</span><span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;MaskPasswordsBuildWrapper&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">varPasswordPairs:</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">password:</span> <span class="s1">&#39;my-secret-api-key-12345&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">]</span>
+</span></span><span class="line"><span class="cl">            <span class="o">])</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    # The secret value will be masked in logs
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    echo &#34;Using API key: my-secret-api-key-12345&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    # Output: Using API key: ****
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="hashicorp-vault-integration">HashiCorp Vault Integration<a class="anchor" href="#hashicorp-vault-integration">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Vault Secrets&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">withVault</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">configuration:</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">vaultUrl:</span> <span class="s1">&#39;https://vault.example.com&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">vaultCredentialId:</span> <span class="s1">&#39;vault-token&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nl">engineVersion:</span> <span class="mi">2</span>
+</span></span><span class="line"><span class="cl">            <span class="o">],</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">vaultSecrets:</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">path:</span> <span class="s1">&#39;secret/data/myapp/prod&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">engineVersion:</span> <span class="mi">2</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">secretValues:</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">[</span><span class="nl">envVar:</span> <span class="s1">&#39;DB_PASSWORD&#39;</span><span class="o">,</span> <span class="nl">vaultKey:</span> <span class="s1">&#39;db_password&#39;</span><span class="o">],</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">[</span><span class="nl">envVar:</span> <span class="s1">&#39;API_KEY&#39;</span><span class="o">,</span> <span class="nl">vaultKey:</span> <span class="s1">&#39;api_key&#39;</span><span class="o">]</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">]</span>
+</span></span><span class="line"><span class="cl">                <span class="o">]</span>
+</span></span><span class="line"><span class="cl">            <span class="o">]</span>
+</span></span><span class="line"><span class="cl">        <span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">sh</span> <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                echo &#34;Using DB from Vault&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                deploy.sh --db-pass &#34;$DB_PASSWORD&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s1">            &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="124-credential-management-best-practices">12.4 Credential Management Best Practices<a class="anchor" href="#124-credential-management-best-practices">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Practice</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Least privilege</strong></td>
+          <td>Grant only the permissions needed</td>
+      </tr>
+      <tr>
+          <td><strong>Rotate regularly</strong></td>
+          <td>Change credentials on schedule or on breach</td>
+      </tr>
+      <tr>
+          <td><strong>Scope credentials</strong></td>
+          <td>Use folder-level credentials, not global</td>
+      </tr>
+      <tr>
+          <td><strong>Audit credential usage</strong></td>
+          <td>Monitor which jobs use which credentials</td>
+      </tr>
+      <tr>
+          <td><strong>Never hard-code</strong></td>
+          <td>Always use credentialsId in Jenkins</td>
+      </tr>
+      <tr>
+          <td><strong>Use short-lived tokens</strong></td>
+          <td>Prefer temporary tokens over long-lived keys</td>
+      </tr>
+      <tr>
+          <td><strong>Encrypt at rest</strong></td>
+          <td>Jenkins encrypts credentials in config files</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="125-role-based-access-control-rbac">12.5 Role-Based Access Control (RBAC)<a class="anchor" href="#125-role-based-access-control-rbac">#</a></h2>
+<h3 id="global-roles">Global Roles<a class="anchor" href="#global-roles">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Role</th>
+          <th>Permissions</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>admin</strong></td>
+          <td>Full system access</td>
+      </tr>
+      <tr>
+          <td><strong>developer</strong></td>
+          <td>Build jobs, view system, view agents</td>
+      </tr>
+      <tr>
+          <td><strong>viewer</strong></td>
+          <td>Read-only access to everything</td>
+      </tr>
+      <tr>
+          <td><strong>operator</strong></td>
+          <td>Build jobs, view agents</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="project-roles">Project Roles<a class="anchor" href="#project-roles">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Project roles limit access to specific jobs/folders
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nl">Role:</span> <span class="n">team</span><span class="o">-</span><span class="n">alpha</span><span class="o">-</span><span class="n">developer</span>
+</span></span><span class="line"><span class="cl"><span class="nl">Pattern:</span> <span class="n">team</span><span class="o">-</span><span class="n">alpha</span><span class="s">/*
+</span></span></span><span class="line"><span class="cl"><span class="s">Permissions:
+</span></span></span><span class="line"><span class="cl"><span class="s">  - Job: Build, Read, Discover
+</span></span></span><span class="line"><span class="cl"><span class="s">  - Run: Update, Delete
+</span></span></span><span class="line"><span class="cl"><span class="s">  - SCML: Tag
+</span></span></span><span class="line"><span class="cl"><span class="s">  - Credentials: View
+</span></span></span><span class="line"><span class="cl"><span class="s">
+</span></span></span><span class="line"><span class="cl"><span class="s">Role: team-alpha-viewer
+</span></span></span><span class="line"><span class="cl"><span class="s">Pattern: team-alpha/</span><span class="o">*</span>
+</span></span><span class="line"><span class="cl"><span class="nl">Permissions:</span>
+</span></span><span class="line"><span class="cl">  <span class="o">-</span> <span class="nl">Job:</span> <span class="n">Read</span>
+</span></span><span class="line"><span class="cl">  <span class="o">-</span> <span class="nl">Run:</span> <span class="n">View</span></span></span></code></pre></div><h3 id="implementing-rbac">Implementing RBAC<a class="anchor" href="#implementing-rbac">#</a></h3>
+<ol>
+<li>Install <strong>Role-based Authorization Strategy</strong> plugin</li>
+<li>Dashboard → Manage Jenkins → Configure Global Security</li>
+<li>Authorization: <strong>Role-Based Strategy</strong></li>
+<li>Manage and Assign Roles:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Manage Roles:
+</span></span><span class="line"><span class="cl">  Global roles:
+</span></span><span class="line"><span class="cl">    - admin:     All permissions
+</span></span><span class="line"><span class="cl">    - engineer:  Overall.Read, Job.*, Run.*
+</span></span><span class="line"><span class="cl">    - viewer:    Overall.Read, Job.Read, Run.View
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  Project roles:
+</span></span><span class="line"><span class="cl">    - team-alpha:   Pattern: team-alpha/*
+</span></span><span class="line"><span class="cl">                    Permissions: Job.Build, Job.Read, Run.View
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    - prod-deploy:  Pattern: */main, */release/*
+</span></span><span class="line"><span class="cl">                    Permissions: Job.Build, Run.Update</span></span></code></pre></div><hr>
+<h2 id="126-audit-logging">12.6 Audit Logging<a class="anchor" href="#126-audit-logging">#</a></h2>
+<h3 id="enable-job-history">Enable Job History<a class="anchor" href="#enable-job-history">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Jenkins configuration to enable detailed audit
+</span></span></span><span class="line"><span class="cl"><span class="c1">// Dashboard → Manage Jenkins → Configure System
+</span></span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">☑</span> <span class="n">Enable</span> <span class="n">Job</span> <span class="n">History</span>
+</span></span><span class="line"><span class="cl">  <span class="n">History</span> <span class="n">file</span> <span class="nl">path:</span> <span class="s">/var/</span><span class="n">jenkins_home</span><span class="o">/</span><span class="n">jobhistory</span>
+</span></span><span class="line"><span class="cl">  <span class="err">☐</span> <span class="n">Enable</span> <span class="n">permission</span><span class="o">-</span><span class="n">based</span> <span class="n">history</span> <span class="n">events</span></span></span></code></pre></div><h3 id="audit-trail-plugin">Audit Trail Plugin<a class="anchor" href="#audit-trail-plugin">#</a></h3>
+<ol>
+<li>Install <strong>Audit Trail</strong> plugin</li>
+<li>Configure:</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">Logger</span> <span class="n">name</span><span class="p">:</span> <span class="n">AuditTrail</span>
+</span></span><span class="line"><span class="cl"><span class="n">Log</span> <span class="ne">File</span><span class="p">:</span> <span class="o">/</span><span class="k">var</span><span class="o">/</span><span class="nb">log</span><span class="o">/</span><span class="n">jenkins</span><span class="o">/</span><span class="n">audit</span><span class="o">.</span><span class="n">log</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="err">☑</span> <span class="n">Log</span> <span class="n">user</span> <span class="n">authentication</span> <span class="n">events</span>
+</span></span><span class="line"><span class="cl"><span class="err">☑</span> <span class="n">Log</span> <span class="n">job</span> <span class="n">configuration</span> <span class="n">changes</span>
+</span></span><span class="line"><span class="cl"><span class="err">☑</span> <span class="n">Log</span> <span class="n">system</span> <span class="n">configuration</span> <span class="n">changes</span>
+</span></span><span class="line"><span class="cl"><span class="err">☑</span> <span class="n">Log</span> <span class="n">credential</span> <span class="n">changes</span>
+</span></span><span class="line"><span class="cl"><span class="err">☑</span> <span class="n">Log</span> <span class="n">agent</span> <span class="n">connection</span><span class="o">/</span><span class="n">disconnection</span>
+</span></span><span class="line"><span class="cl"><span class="err">☑</span> <span class="n">Log</span> <span class="n">build</span> <span class="n">queue</span> <span class="n">events</span></span></span></code></pre></div><h3 id="sample-audit-log">Sample Audit Log<a class="anchor" href="#sample-audit-log">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">2024-01-15 10:23:45 UTC - admin - CONFIGURE - Job &#39;myapp/main&#39;
+</span></span><span class="line"><span class="cl">2024-01-15 10:23:46 UTC - admin - BUILD - Job &#39;myapp/main&#39; #1024
+</span></span><span class="line"><span class="cl">2024-01-15 10:30:00 UTC - admin - DELETE - Run &#39;myapp/main&#39; #1000
+</span></span><span class="line"><span class="cl">2024-01-15 11:00:00 UTC - jenkins - LOGIN - System user login
+</span></span><span class="line"><span class="cl">2024-01-15 11:15:30 UTC - deploy-bot - TRIGGER - Job &#39;deploy/production&#39;</span></span></code></pre></div><hr>
+<h2 id="127-compliance--governance">12.7 Compliance &amp; Governance<a class="anchor" href="#127-compliance--governance">#</a></h2>
+<h3 id="pipeline-compliance-checks">Pipeline Compliance Checks<a class="anchor" href="#pipeline-compliance-checks">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Compliance Checks&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Check branch policies
+</span></span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="o">(</span><span class="n">env</span><span class="o">.</span><span class="na">BRANCH_NAME</span> <span class="o">==</span> <span class="s1">&#39;main&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="c1">// Require PR approval
+</span></span></span><span class="line"><span class="cl">                        <span class="kt">def</span> <span class="n">hasApproval</span> <span class="o">=</span> <span class="n">sh</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                            <span class="nl">script:</span> <span class="s1">&#39;gh pr view --json approvals&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                            <span class="nl">returnStdout:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">).</span><span class="na">contains</span><span class="o">(</span><span class="s1">&#39;&#34;approvals&#34;&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                        
+</span></span><span class="line"><span class="cl">                        <span class="k">if</span> <span class="o">(!</span><span class="n">hasApproval</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                            <span class="n">error</span><span class="o">(</span><span class="s2">&#34;Main branch requires PR approval&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Check signed commits
+</span></span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">commits</span> <span class="o">=</span> <span class="n">sh</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">script:</span> <span class="s1">&#39;git log -1 --pretty=format:&#34;%G?&#34;&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nl">returnStdout:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">).</span><span class="na">trim</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="o">(</span><span class="n">commits</span> <span class="o">!=</span> <span class="s1">&#39;G&#39;</span><span class="o">)</span> <span class="o">{</span> <span class="c1">// G = Good signature
+</span></span></span><span class="line"><span class="cl">                        <span class="n">error</span><span class="o">(</span><span class="s2">&#34;Commit must be signed with a verified GPG key&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Check license headers
+</span></span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s1">&#39;mvn license:check&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;SBOM Generation&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sh</span> <span class="s1">&#39;&#39;&#39;
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    # Generate Software Bill of Materials
+</span></span></span><span class="line"><span class="cl"><span class="s1">                    mvn org.cyclonedx:cyclonedx-maven-plugin:makeAggregateBom
+</span></span></span><span class="line"><span class="cl"><span class="s1">                &#39;&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">always</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">archiveArtifacts</span> <span class="nl">artifacts:</span> <span class="s1">&#39;target/**/*.xml&#39;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="compliance-reports">Compliance Reports<a class="anchor" href="#compliance-reports">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Compliance Report&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="kt">def</span> <span class="n">report</span> <span class="o">=</span> <span class="s2">&#34;&#34;&#34;
+</span></span></span><span class="line"><span class="cl"><span class="s2">Compliance Report - ${env.JOB_NAME} #${env.BUILD_NUMBER}
+</span></span></span><span class="line"><span class="cl"><span class="s2">========================================================
+</span></span></span><span class="line"><span class="cl"><span class="s2">Date: ${new Date().format(&#39;yyyy-MM-dd HH:mm:ss&#39;)}
+</span></span></span><span class="line"><span class="cl"><span class="s2">Branch: ${env.BRANCH_NAME}
+</span></span></span><span class="line"><span class="cl"><span class="s2">Commit: ${env.GIT_COMMIT}
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Checks:
+</span></span></span><span class="line"><span class="cl"><span class="s2">  ✓ PR approval: Required for main
+</span></span></span><span class="line"><span class="cl"><span class="s2">  ✓ Signed commits: Enforced
+</span></span></span><span class="line"><span class="cl"><span class="s2">  ✓ License headers: Verified
+</span></span></span><span class="line"><span class="cl"><span class="s2">  ✓ Dependency scan: ${env.DEPENDENCY_CHECK_RESULT}
+</span></span></span><span class="line"><span class="cl"><span class="s2">  ✓ Container scan: ${env.CONTAINER_SCAN_RESULT}
+</span></span></span><span class="line"><span class="cl"><span class="s2">  ✓ SAST scan: ${env.SAST_RESULT}
+</span></span></span><span class="line"><span class="cl"><span class="s2">
+</span></span></span><span class="line"><span class="cl"><span class="s2">Build: ${env.JOB_URL}${env.BUILD_NUMBER}
+</span></span></span><span class="line"><span class="cl"><span class="s2">&#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">writeFile</span> <span class="nl">file:</span> <span class="s1">&#39;compliance-report.txt&#39;</span><span class="o">,</span> <span class="nl">text:</span> <span class="n">report</span>
+</span></span><span class="line"><span class="cl">            <span class="n">archiveArtifacts</span> <span class="nl">artifacts:</span> <span class="s1">&#39;compliance-report.txt&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="key-takeaways">Key Takeaways<a class="anchor" href="#key-takeaways">#</a></h2>
+<ul>
+<li>Integrate unit, integration, and security tests at every pipeline stage</li>
+<li>Use <code>withCredentials</code> for secure secret injection — never hard-code secrets</li>
+<li>SAST, dependency scanning, and container scanning catch vulnerabilities early</li>
+<li>RBAC with folder-level patterns enforces least privilege across teams</li>
+<li>Audit logging provides traceability for compliance requirements</li>
+<li>Generate SBOM and compliance reports for regulatory needs</li>
+</ul>
+<hr>
+<h2 id="next-steps">Next Steps<a class="anchor" href="#next-steps">#</a></h2>
+<p>→ Continue to <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/">Chapter 13: JCasC — Configuration as Code</a></p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="flex align-center">
+        <img src="/complete_jenkins_notes/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Ch 11: Docker &amp; Kubernetes Integration</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="flex align-center">
+        <span>Ch 13: Jenkins Configuration as Code (JCasC)</span>
+        <img src="/complete_jenkins_notes/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){"use strict";document.querySelectorAll("pre > code").forEach(function(t){var n,s=t.parentElement;if(!s||s.tagName!=="PRE")return;if(s.querySelector(".copy-button"))return;s.style.position="relative",n=document.createElement("button"),n.className="copy-button",n.textContent="Copy",n.setAttribute("aria-label","Copy code to clipboard"),n.setAttribute("type","button"),s.appendChild(n),n.addEventListener("click",function(){var s=t.textContent||"";navigator.clipboard?navigator.clipboard.writeText(s).then(function(){n.textContent="Copied!",n.classList.add("copied"),setTimeout(function(){n.textContent="Copy",n.classList.remove("copied")},2e3)}).catch(function(){e(s,n)}):e(s,n)})});function e(e,t){var n=document.createElement("textarea");n.value=e,n.style.position="fixed",n.style.opacity="0",document.body.appendChild(n),n.select();try{document.execCommand("copy"),t.textContent="Copied!",t.classList.add("copied"),setTimeout(function(){t.textContent="Copy",t.classList.remove("copied")},2e3)}catch{t.textContent="Error",setTimeout(function(){t.textContent="Copy"},2e3)}document.body.removeChild(n)}})()</script>
+  
+
+        
+  
+    <script>(function(){"use strict";var t,a,o="jenkins_exam_progress",c="jenkins_chapter_progress";function e(e){this.element=e,this.minutesDisplay=e.querySelector(".timer-minutes"),this.secondsDisplay=e.querySelector(".timer-seconds"),this.statusEl=e.querySelector(".timer-status"),this.totalSeconds=parseInt(e.dataset.minutes||"60",10)*60,this.remaining=this.totalSeconds,this.interval=null,this.running=!1,this.finished=!1;var n,s,o,i,t=this.loadState();t&&t.remaining>0&&!t.finished&&(this.remaining=t.remaining),this.updateDisplay(),n=this,s=e.querySelector(".timer-start"),o=e.querySelector(".timer-pause"),i=e.querySelector(".timer-reset"),s&&s.addEventListener("click",function(){n.start()}),o&&o.addEventListener("click",function(){n.pause()}),i&&i.addEventListener("click",function(){n.reset()}),t&&t.running&&this.start()}e.prototype.start=function(){if(this.finished)return;if(this.running)return;this.running=!0,this.element.classList.add("timer-running"),this.element.classList.remove("timer-paused");var e=this;this.interval=setInterval(function(){e.remaining--,e.updateDisplay(),e.saveState(),e.remaining<=0&&(e.remaining=0,e.updateDisplay(),e.finish())},1e3)},e.prototype.pause=function(){if(!this.running)return;this.running=!1,this.element.classList.remove("timer-running"),this.element.classList.add("timer-paused"),clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.reset=function(){this.pause(),this.remaining=this.totalSeconds,this.finished=!1,this.element.classList.remove("timer-finished"),this.element.classList.remove("timer-paused"),this.statusEl.textContent="Time Remaining",this.updateDisplay(),this.saveState(),localStorage.removeItem(this.getTimerStorageKey())},e.prototype.finish=function(){this.running=!1,this.finished=!0,this.element.classList.remove("timer-running"),this.element.classList.add("timer-finished"),this.statusEl.textContent="⏰ Time's Up!",clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.updateDisplay=function(){var e=Math.floor(this.remaining/60),t=this.remaining%60;this.minutesDisplay.textContent=String(e).padStart(2,"0"),this.secondsDisplay.textContent=String(t).padStart(2,"0"),this.remaining<=300&&this.remaining>0?this.element.classList.add("timer-warning"):this.element.classList.remove("timer-warning")},e.prototype.getTimerStorageKey=function(){return o+"_timer_"+this.element.dataset.testId},e.prototype.loadState=function(){try{var e=localStorage.getItem(this.getTimerStorageKey());return e?JSON.parse(e):null}catch{return null}},e.prototype.saveState=function(){try{var e={remaining:this.remaining,running:this.running,finished:this.finished,savedAt:Date.now()};localStorage.setItem(this.getTimerStorageKey(),JSON.stringify(e))}catch{}},document.querySelectorAll(".exam-timer").forEach(function(t){new e(t)});function f(e,t){try{var s=n();s[e]=t,localStorage.setItem(o,JSON.stringify(s)),m()}catch{}}function n(){try{var e=localStorage.getItem(o);return e?JSON.parse(e):{}}catch{return{}}}function _(){var e=n();return Object.keys(e).filter(function(t){return e[t]===!0}).length}function p(){return 7}function m(){var t=_(),e=p(),n=e>0?Math.round(t/e*100):0,a=i(),s=document.getElementById("exam-progress-bar"),o=document.getElementById("exam-progress-text");s&&(s.style.width=n+"%",s.textContent=n>15?n+"%":""),o&&(o.textContent=t+" of "+e+" tests completed"),l(a,t,e)}function l(e,t,n){var s,o,l,i=document.getElementById("sidebar-progress-fill"),a=document.getElementById("sidebar-progress-pct"),r=document.getElementById("sidebar-progress-chapters"),c=document.getElementById("sidebar-progress-tests");if(!i)return;s=e.total+n,l=e.completed+t,o=s>0?Math.round(l/s*100):0,i.style.width=o+"%",a&&(a.textContent=o+"%"),r&&(r.textContent=e.completed+"/"+e.total+" chapters"),c&&(c.textContent=t+"/"+n+" tests")}document.addEventListener("change",function(e){if(e.target&&e.target.matches(".test-complete-check")){var t=e.target.dataset.testId;t&&f(t,e.target.checked)}});function w(){var e=n();document.querySelectorAll(".test-complete-check").forEach(function(t){var n=t.dataset.testId;n&&e[n]===!0&&(t.checked=!0)}),m()}t=[{id:"01-introduction-to-ci-cd-and-jenkins",title:"Ch 1: Introduction to CI/CD & Jenkins",number:1,section:"Foundation"},{id:"02-jenkins-architecture-and-installation",title:"Ch 2: Jenkins Architecture & Installation",number:2,section:"Foundation"},{id:"03-jenkins-configuration-and-management",title:"Ch 3: Configuration & Management",number:3,section:"Foundation"},{id:"04-freestyle-projects-and-build-jobs",title:"Ch 4: Freestyle Projects & Build Jobs",number:4,section:"Foundation"},{id:"05-pipeline-fundamentals",title:"Ch 5: Pipeline Fundamentals",number:5,section:"Core Skills"},{id:"06-pipeline-syntax-and-steps",title:"Ch 6: Pipeline Syntax & Steps",number:6,section:"Core Skills"},{id:"07-agents-nodes-and-distributed-builds",title:"Ch 7: Agents, Nodes & Distributed Builds",number:7,section:"Core Skills"},{id:"08-source-code-management",title:"Ch 8: Source Code Management",number:8,section:"Core Skills"},{id:"09-shared-libraries-and-reusability",title:"Ch 9: Shared Libraries & Reusability",number:9,section:"Advanced"},{id:"10-multi-branch-pipelines",title:"Ch 10: Multi-Branch Pipelines",number:10,section:"Advanced"},{id:"11-jenkins-docker-and-kubernetes",title:"Ch 11: Docker & Kubernetes Integration",number:11,section:"Advanced"},{id:"12-testing-security-and-compliance",title:"Ch 12: Testing, Security & Compliance",number:12,section:"Advanced"},{id:"13-jenkins-configuration-as-code",title:"Ch 13: Jenkins Configuration as Code (JCasC)",number:13,section:"Production & Exam Prep"},{id:"14-production-grade-jenkins",title:"Ch 14: Production-Grade Jenkins",number:14,section:"Production & Exam Prep"},{id:"15-exam-preparation-guide",title:"Ch 15: Exam Preparation Guide",number:15,section:"Production & Exam Prep"},{id:"16-interview-questions",title:"Ch 16: Interview Questions & Answers",number:16,section:"Bonus"},{id:"17-real-world-scenarios",title:"Ch 17: Real-World Scenario Questions",number:17,section:"Bonus"}],a=[{id:"exam-test-1",title:"Practice Test 1",number:1},{id:"exam-test-2",title:"Practice Test 2",number:2},{id:"exam-test-3",title:"Practice Test 3",number:3},{id:"exam-test-4",title:"Practice Test 4",number:4},{id:"exam-test-5",title:"Practice Test 5",number:5},{id:"exam-test-6",title:"Practice Test 6",number:6},{id:"exam-test-7",title:"Practice Test 7",number:7}];function s(){try{var e=localStorage.getItem(c);return e?JSON.parse(e):{}}catch{return{}}}function u(e,t){try{var n=s();n[e]=n[e]||{},Object.keys(t).forEach(function(s){n[e][s]=t[s]}),localStorage.setItem(c,JSON.stringify(n))}catch{}}function i(){var o=s(),e=0,n=0;return t.forEach(function(t){var s=o[t.id];s&&(s.read&&e++,s.completed&&n++)}),{read:e,completed:n,total:t.length}}function r(){var t=n(),e=0;return a.forEach(function(n){t[n.id]===!0&&e++}),{completed:e,total:a.length}}function g(){var e=window.location.pathname.match(/\/docs\/(\d+-[^/]+)\//);return e?e[1]:null}function v(){var e=g(),n=e&&t.some(function(t){return t.id===e});n&&(b(e),j(e))}function b(e){var t=s();(!t[e]||!t[e].read)&&u(e,{read:!0,readAt:Date.now()})}function j(e){var t,n,i,a,r,o=document.querySelector(".book-article");if(!o)return;if(o.querySelector(".chapter-complete-check"))return;a=s(),r=a[e]||{},i=r.completed===!0,t=document.createElement("div"),t.className="chapter-complete-check",t.innerHTML='<hr><div class="chapter-progress-bar"><input type="checkbox" id="ch-cpl-'+e+'" class="chapter-complete-checkbox" data-chapter-id="'+e+'"'+(i?" checked":"")+'><label for="ch-cpl-'+e+'" class="chapter-complete-label">✓ Mark this chapter as completed</label><span class="chapter-status-badge">'+(i?"✅ Completed":"📖 Reading")+"</span></div>",o.appendChild(t),n=t.querySelector(".chapter-complete-checkbox"),n.addEventListener("change",function(){u(e,{completed:n.checked,completedAt:n.checked?Date.now():null});var s=t.querySelector(".chapter-status-badge");s.textContent=n.checked?"✅ Completed":"📖 Reading"})}window.initExamDashboard=function(){var e,t=document.getElementById("exam-dashboard-app");if(!t)return;t.innerHTML=y(),document.querySelectorAll(".dashboard-chapter-check").forEach(function(e){e.addEventListener("change",function(){u(e.dataset.chapterId,{completed:e.checked,completedAt:e.checked?Date.now():null}),d()})}),document.querySelectorAll(".dashboard-test-check").forEach(function(e){e.addEventListener("change",function(){f(e.dataset.testId,e.checked),d()})}),e=document.getElementById("exam-reset-all"),e&&e.addEventListener("click",function(){confirm("Reset ALL progress (chapters and tests)? This cannot be undone.")&&(localStorage.removeItem(o),localStorage.removeItem(c),d())})};function y(){var m,o=i(),c=r(),u=s(),f=n(),d=o.total+c.total,h=o.completed+c.completed,l=d>0?Math.round(h/d*100):0,e="";return e+='<div class="exam-dashboard-header">',e+="  <h1>📊 Your Learning Dashboard</h1>",e+='  <p class="exam-progress-summary">Track your Jenkins learning journey — from chapters to practice exams</p>',e+="</div>",e+='<div class="exam-combined-progress">',e+='  <div class="exam-progress-bar-wrapper" style="max-width:100%;">',e+='    <div class="exam-progress-bar-fill" id="dash-combined-bar" style="width:'+l+'%;">'+(l>15?l+"%":"")+"</div>",e+="  </div>",e+='  <p class="exam-progress-summary" style="text-align:center;margin-top:0.75rem;">'+h+" of "+d+" total items completed</p>",e+="</div>",e+='<div class="exam-stats">',e+='  <div class="exam-stat-card"><span class="stat-number">'+o.completed+'</span><span class="stat-label">of '+o.total+" Chapters</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+o.read+'</span><span class="stat-label">Chapters Read</span></div>',e+='  <div class="exam-stat-card"><span class="stat-number">'+c.completed+'</span><span class="stat-label">of '+c.total+" Tests Passed</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+l+'%</span><span class="stat-label">Overall Progress</span></div>',e+="</div>",e+='<h2 style="margin-top:2.5rem;">📚 Learning Progress</h2>',e+='<div class="exam-dashboard-grid">',m=["Foundation","Core Skills","Advanced","Production & Exam Prep","Bonus"],m.forEach(function(n){if(s=t.filter(function(e){return e.section===n}),s.length===0)return;var s,i,a=0,o=0;s.forEach(function(e){var t=u[e.id];t&&(t.read&&a++,t.completed&&o++)}),i=Math.round(o/s.length*100),e+='<div class="dashboard-section-card">',e+='  <div class="dashboard-section-header">',e+='    <span class="dashboard-section-badge">'+n+"</span>",e+='    <span class="dashboard-section-count">'+o+"/"+s.length+"</span>",e+="  </div>",e+='  <div class="dashboard-section-bar-wrapper"><div class="dashboard-section-bar-fill" style="width:'+i+'%;"></div></div>',e+='  <div class="dashboard-section-chapters">',s.forEach(function(t){var s=u[t.id]||{},n=s.completed===!0,o=s.read===!0,i=n?"✅":o?"📖":"⬜";e+='    <div class="dashboard-chapter-row'+(n?" completed":"")+'" title="'+t.title+'">',e+='      <input type="checkbox" class="dashboard-chapter-check" data-chapter-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="dashboard-chapter-status">'+i+"</span>",e+='      <span class="dashboard-chapter-title">'+t.title+"</span>",e+="    </div>"}),e+="  </div>",e+="</div>"}),e+="</div>",e+='<h2 style="margin-top:2.5rem;">📝 Practice Test Progress</h2>',e+='<div class="exam-dashboard-grid">',a.forEach(function(t){var n=f[t.id]===!0;e+='  <div class="exam-dashboard-card'+(n?" completed":"")+'">',e+="    <h3>Practice Test "+t.number+"</h3>",e+="    <p>57 questions across all domains | 60 min</p>",e+='    <div style="display:flex;align-items:center;gap:0.5rem;">',e+='      <input type="checkbox" class="exam-dashboard-check dashboard-test-check" data-test-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="card-status">'+(n?"✅ Passed":"⬜ Not yet")+"</span>",e+="    </div>",e+='    <a href="/docs/'+(17+t.number)+"-exam-practice-test-"+t.number+'/" style="display:inline-block;margin-top:0.75rem;font-size:0.85rem;">→ Open test</a>',e+="  </div>"}),e+="</div>",e+='<div style="text-align:center;margin:2.5rem 0;">',e+='  <button class="btn-reset" id="exam-reset-all">🔄 Reset All Progress</button>',e+="</div>",e}function d(){window.initExamDashboard&&window.initExamDashboard()}window.refreshSidebarProgress=function(){var t=i(),e=r();l(t,e.completed,e.total)};function h(){w(),v(),document.getElementById("exam-dashboard-app")&&initExamDashboard();var t=i(),e=r();l(t,e.completed,e.total)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <div class="book-toc-toggle">
+    <label for="toc-control" role="button" class="toc-toggle-label" title="Toggle table of contents">
+      <span class="toc-toggle-icon">▶</span>
+    </label>
+  </div>
+  <aside class="book-toc">
+    <label for="toc-control" class="book-toc-collapse-target" title="Expand table of contents" aria-label="Expand table of contents"></label>
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#121-automated-testing-in-pipelines">12.1 Automated Testing in Pipelines</a>
+      <ul>
+        <li><a href="#unit-tests">Unit Tests</a></li>
+        <li><a href="#integration-tests">Integration Tests</a></li>
+        <li><a href="#code-quality-analysis">Code Quality Analysis</a></li>
+      </ul>
+    </li>
+    <li><a href="#122-security-scanning">12.2 Security Scanning</a>
+      <ul>
+        <li><a href="#sast-static-analysis">SAST (Static Analysis)</a></li>
+        <li><a href="#dependency-scanning">Dependency Scanning</a></li>
+        <li><a href="#container-scanning">Container Scanning</a></li>
+      </ul>
+    </li>
+    <li><a href="#123-secrets-management">12.3 Secrets Management</a>
+      <ul>
+        <li><a href="#using-withcredentials">Using withCredentials</a></li>
+        <li><a href="#masking-secrets-in-logs">Masking Secrets in Logs</a></li>
+        <li><a href="#hashicorp-vault-integration">HashiCorp Vault Integration</a></li>
+      </ul>
+    </li>
+    <li><a href="#124-credential-management-best-practices">12.4 Credential Management Best Practices</a></li>
+    <li><a href="#125-role-based-access-control-rbac">12.5 Role-Based Access Control (RBAC)</a>
+      <ul>
+        <li><a href="#global-roles">Global Roles</a></li>
+        <li><a href="#project-roles">Project Roles</a></li>
+        <li><a href="#implementing-rbac">Implementing RBAC</a></li>
+      </ul>
+    </li>
+    <li><a href="#126-audit-logging">12.6 Audit Logging</a>
+      <ul>
+        <li><a href="#enable-job-history">Enable Job History</a></li>
+        <li><a href="#audit-trail-plugin">Audit Trail Plugin</a></li>
+        <li><a href="#sample-audit-log">Sample Audit Log</a></li>
+      </ul>
+    </li>
+    <li><a href="#127-compliance--governance">12.7 Compliance &amp; Governance</a>
+      <ul>
+        <li><a href="#pipeline-compliance-checks">Pipeline Compliance Checks</a></li>
+        <li><a href="#compliance-reports">Compliance Reports</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

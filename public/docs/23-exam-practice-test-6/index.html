@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Practice Test 6: Production Jenkins &amp; Monitoring# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: Production-grade Jenkins, monitoring, high availability, backup, pipeline optimization
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/complete_jenkins_notes/docs/23-exam-practice-test-6/">
+  <meta property="og:site_name" content="Jenkins Learning Path">
+  <meta property="og:title" content="📝 Practice Test 6: Production Jenkins & Monitoring">
+  <meta property="og:description" content="Practice Test 6: Production Jenkins &amp; Monitoring# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: Production-grade Jenkins, monitoring, high availability, backup, pipeline optimization">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="📝 Practice Test 6: Production Jenkins & Monitoring">
+  <meta itemprop="description" content="Practice Test 6: Production Jenkins &amp; Monitoring# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: Production-grade Jenkins, monitoring, high availability, backup, pipeline optimization">
+  <meta itemprop="wordCount" content="4042">
+
+<title>📝 Practice Test 6: Production Jenkins &amp; Monitoring • Jenkins Learning Path</title>
+<link rel="icon" href="/complete_jenkins_notes/favicon.png" >
+<link rel="manifest" href="/complete_jenkins_notes/manifest.json">
+<link rel="canonical" href="/complete_jenkins_notes/docs/23-exam-practice-test-6/">
+<link rel="stylesheet" href="/complete_jenkins_notes/book.min.a65532e79bcac2f95ba4108b26cdc17b0fe6382f603d8a6b72971bfa3261bf47.css" >
+
+
+  <script defer type="module" src="/complete_jenkins_notes/en.search.min.2d25fa1fe6842b36dbd4e753f3112a465146ff5f09912883575978a46c3ff969.js" ></script>
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<div class="book-sidebar-toggle">
+  <label for="menu-control" role="button" class="sidebar-toggle-label" title="Toggle sidebar">
+    <span class="sidebar-toggle-icon">◀</span>
+  </label>
+</div>
+<aside class="book-menu">
+  <label for="menu-control" class="book-menu-collapse-target" title="Expand sidebar" aria-label="Expand sidebar"></label>
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/complete_jenkins_notes/"><span>Jenkins Learning Path</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+<div class="sidebar-progress" id="sidebar-progress">
+  <div class="sidebar-progress-header">
+    <span class="sidebar-progress-label">📊 Progress</span>
+    <span class="sidebar-progress-pct" id="sidebar-progress-pct">0%</span>
+  </div>
+  <div class="sidebar-progress-track">
+    <div class="sidebar-progress-fill" id="sidebar-progress-fill" style="width:0%;"></div>
+  </div>
+  <div class="sidebar-progress-detail" id="sidebar-progress-detail">
+    <span id="sidebar-progress-chapters">0/17 chapters</span>
+    <span id="sidebar-progress-tests">0/7 tests</span>
+  </div>
+</div>
+
+
+
+<ul><li><a href="/complete_jenkins_notes/">Home</a></li><li><a href="/complete_jenkins_notes/docs/">Documentation</a></li></ul>
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/25-progress-dashboard/" class="">
+      📊 Progress Dashboard</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/26-start-here/" class="">
+      🚀 Start Here</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="">
+      Ch 1: Introduction to CI/CD &amp; Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="">
+      Ch 2: Jenkins Architecture &amp; Installation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="">
+      Ch 3: Configuration &amp; Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="">
+      Ch 4: Freestyle Projects &amp; Build Jobs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/" class="">
+      Ch 5: Pipeline Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/" class="">
+      Ch 6: Pipeline Syntax &amp; Steps</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/" class="">
+      Ch 7: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="">
+      Ch 8: Source Code Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/" class="">
+      Ch 9: Shared Libraries &amp; Reusability</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="">
+      Ch 10: Multi-Branch Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="">
+      Ch 11: Docker &amp; Kubernetes Integration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/" class="">
+      Ch 12: Testing, Security &amp; Compliance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="">
+      Ch 13: Jenkins Configuration as Code (JCasC)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="">
+      Ch 14: Production-Grade Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/15-exam-preparation-guide/" class="">
+      Ch 15: Exam Preparation Guide</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="">
+      Ch 16: Interview Questions &amp; Answers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="">
+      Ch 17: Real-World Scenario Questions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="">
+      📝 Practice Test 1: CI/CD Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="">
+      📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="">
+      📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="">
+      📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="">
+      📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="active">
+      📝 Practice Test 6: Production Jenkins &amp; Monitoring</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="">
+      📝 Practice Test 7: DevOps &amp; Real-World Scenarios</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/complete_jenkins_notes/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>📝 Practice Test 6: Production Jenkins &amp; Monitoring</h3>
+
+  <label for="toc-control">
+    
+  </label>
+</div>
+
+
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="practice-test-6-production-jenkins--monitoring">Practice Test 6: Production Jenkins &amp; Monitoring<a class="anchor" href="#practice-test-6-production-jenkins--monitoring">#</a></h1>
+<blockquote class='book-hint '>
+<p><strong>Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.</strong></p>
+</blockquote><hr>
+<h2 id="-exam-instructions">📋 Exam Instructions<a class="anchor" href="#-exam-instructions">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Detail</th>
+          <th>Value</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Questions</strong></td>
+          <td>57</td>
+      </tr>
+      <tr>
+          <td><strong>Time Limit</strong></td>
+          <td>60 minutes</td>
+      </tr>
+      <tr>
+          <td><strong>Passing Score</strong></td>
+          <td>~70% (40/57 correct)</td>
+      </tr>
+      <tr>
+          <td><strong>Format</strong></td>
+          <td>Multiple choice</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<div class="exam-controls">
+  <div class="exam-timer" data-minutes="60" data-test-id="exam-test-6">
+    <div class="timer-face">
+      <span class="timer-minutes">60</span>
+      <span class="timer-separator">:</span>
+      <span class="timer-seconds">00</span>
+    </div>
+    <div class="timer-controls">
+      <button class="timer-btn timer-start">▶ Start</button>
+      <button class="timer-btn timer-pause">⏸ Pause</button>
+      <button class="timer-btn timer-reset">↺ Reset</button>
+    </div>
+    <span class="timer-status">Time Remaining</span>
+  </div>
+  <div class="exam-progress-check">
+    <input type="checkbox" class="test-complete-check" id="test-complete-6" data-test-id="exam-test-6">
+    <label for="test-complete-6">✓ Mark test as completed</label>
+  </div>
+</div>
+<p><strong>57 Questions | Duration: 60 minutes | Focus: Production-grade Jenkins, monitoring, high availability, backup, pipeline optimization</strong></p>
+<hr>
+<h2 id="questions">Questions<a class="anchor" href="#questions">#</a></h2>
+<p><strong>1. What is the recommended Jenkins backup strategy?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Backup only job configurations</li>
+<li><input disabled="" type="checkbox"> Backup JENKINS_HOME directory regularly</li>
+<li><input disabled="" type="checkbox"> Backup only plugins</li>
+<li><input disabled="" type="checkbox"> Backup is not necessary</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Backup JENKINS_HOME directory regularly**
+<p>The complete JENKINS_HOME directory should be backed up regularly, including job configurations, build logs, plugins, credentials, and system configuration. Automated scripts or backup plugins can handle this process.</p>
+</details>
+<hr>
+<p><strong>2. What is the most critical component to backup in JENKINS_HOME?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> plugins/</li>
+<li><input disabled="" type="checkbox"> jobs/</li>
+<li><input disabled="" type="checkbox"> secrets/ (master.key and hudson.util.Secret)</li>
+<li><input disabled="" type="checkbox"> workspace/</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**secrets/ (master.key and hudson.util.Secret)**
+<p>The <code>secrets/</code> directory containing <code>master.key</code> and <code>hudson.util.Secret</code> is critical because these files encrypt all stored credentials. Without them, credentials cannot be decrypted and are lost forever.</p>
+</details>
+<hr>
+<p><strong>3. What is the purpose of the ThinBackup plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To perform automated, configurable backups of JENKINS_HOME</li>
+<li><input disabled="" type="checkbox"> To compress build artifacts</li>
+<li><input disabled="" type="checkbox"> To reduce Jenkins memory usage</li>
+<li><input disabled="" type="checkbox"> To clean up old builds</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To perform automated, configurable backups of JENKINS_HOME**
+<p>The ThinBackup plugin automates Jenkins backups, supporting scheduled backups, backup rotation, and selective backup of specific directories. It can back up to local or network storage locations.</p>
+</details>
+<hr>
+<p><strong>4. How do you monitor Jenkins health?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using the Jenkins Monitoring plugin</li>
+<li><input disabled="" type="checkbox"> Using external monitoring tools (Prometheus, Grafana)</li>
+<li><input disabled="" type="checkbox"> Using Jenkins built-in health check URL</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Jenkins health can be monitored through the Monitoring plugin (resource usage dashboard), external tools like Prometheus/Grafana (using the Prometheus plugin), and the built-in health check URL (<code>/oops</code> or <code>/login</code> endpoint).</p>
+</details>
+<hr>
+<p><strong>5. What is a Jenkins health check URL?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>/health</code> — returns Jenkins server health status</li>
+<li><input disabled="" type="checkbox"> <code>/oops</code> or <code>/&lt;any-url&gt;</code> — Jenkins returns error pages for unhealthy states</li>
+<li><input disabled="" type="checkbox"> <code>/monitoring</code> — monitoring dashboard</li>
+<li><input disabled="" type="checkbox"> <code>/status</code> — server status page</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`/oops` or `/<any-url>` — Jenkins returns error pages for unhealthy states**
+<p>Jenkins doesn&rsquo;t have a dedicated health endpoint by default. A common health check approach is to check any URL — a healthy Jenkins returns 200 OK on valid pages, while an unhealthy one may return error pages. The <code>/oops</code> endpoint shows error details.</p>
+</details>
+<hr>
+<p><strong>6. What does the Jenkins Monitoring plugin track?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> CPU, memory, and disk usage of the Jenkins controller</li>
+<li><input disabled="" type="checkbox"> Build queue length and build durations</li>
+<li><input disabled="" type="checkbox"> System load averages</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>The Monitoring plugin tracks system resources (CPU, memory, swap, disk), Jenkins-specific metrics (build queue size, executor counts, job durations), and provides historical graphs and alerts.</p>
+</details>
+<hr>
+<p><strong>7. What is the Jenkins Prometheus plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A plugin that exposes Jenkins metrics in Prometheus format</li>
+<li><input disabled="" type="checkbox"> A plugin for creating Prometheus dashboards</li>
+<li><input disabled="" type="checkbox"> A plugin for managing Prometheus alerts</li>
+<li><input disabled="" type="checkbox"> A plugin for Prometheus job scheduling</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A plugin that exposes Jenkins metrics in Prometheus format**
+<p>The Prometheus plugin exposes Jenkins metrics (build counts, queue sizes, executor counts, job durations) in Prometheus-compatible format, allowing integration with standard monitoring stacks like Grafana.</p>
+</details>
+<hr>
+<p><strong>8. What is a common Jenkins performance issue?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Too many jobs consuming controller resources</li>
+<li><input disabled="" type="checkbox"> Long pipeline queue times due to insufficient executors</li>
+<li><input disabled="" type="checkbox"> Frequent full garbage collection in the JVM</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Common Jenkins performance issues include heavy resource usage from many concurrent jobs, build queue backlog from insufficient agent capacity, and JVM GC issues from memory pressure (especially with many plugins and jobs).</p>
+</details>
+<hr>
+<p><strong>9. How do you improve Jenkins pipeline performance?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Use parallel stages for independent tasks</li>
+<li><input disabled="" type="checkbox"> Optimize Docker image build caching</li>
+<li><input disabled="" type="checkbox"> Minimize agent workspace cleanups</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Pipeline performance can be improved by: running independent tasks in parallel, leveraging Docker layer caching for builds, reducing unnecessary workspace cleanup, using shallow Git clones, and caching dependencies between builds.</p>
+</details>
+<hr>
+<p><strong>10. What is the purpose of the Pipeline Graph Analysis plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To visualize pipeline execution and identify bottlenecks</li>
+<li><input disabled="" type="checkbox"> To create pipeline diagrams</li>
+<li><input disabled="" type="checkbox"> To monitor pipeline resources</li>
+<li><input disabled="" type="checkbox"> To generate pipeline reports</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To visualize pipeline execution and identify bottlenecks**
+<p>The Pipeline Graph Analysis plugin provides visual representations of pipeline execution, showing stage durations, parallel branches, and overall pipeline flow. This helps identify performance bottlenecks and optimize pipeline structure.</p>
+</details>
+<hr>
+<p><strong>11. What is the recommended approach for handling large Jenkins instances?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Use a single large controller</li>
+<li><input disabled="" type="checkbox"> Implement vertical scaling (bigger server)</li>
+<li><input disabled="" type="checkbox"> Implement horizontal scaling and best practices</li>
+<li><input disabled="" type="checkbox"> Monitor and scale as needed</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Implement horizontal scaling and best practices**
+<p>For large instances, best practices include: using a controller with 0 executors, offloading work to agents, using Jenkins Operations Center or a team-managed controller model, implementing JCasC for reproducibility, and regular maintenance.</p>
+</details>
+<hr>
+<p><strong>12. What is the Jenkins build queue?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A queue of builds waiting for an available executor</li>
+<li><input disabled="" type="checkbox"> A queue of build artifacts</li>
+<li><input disabled="" type="checkbox"> A queue of Jenkins users</li>
+<li><input disabled="" type="checkbox"> A queue of plugin updates</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A queue of builds waiting for an available executor**
+<p>The build queue holds jobs that have been triggered but cannot run because no suitable agent/executor is available. Builds in the queue are displayed on the Jenkins dashboard with their position and estimated wait time.</p>
+</details>
+<hr>
+<p><strong>13. What causes a long build queue in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Insufficient agent capacity or configuration</li>
+<li><input disabled="" type="checkbox"> Too many concurrent build triggers</li>
+<li><input disabled="" type="checkbox"> Pipeline stages blocking executors</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Long build queues can result from insufficient agents or executors, a high rate of build triggers, long-running builds occupying executors, or misconfigured agent labels preventing job-to-agent matching.</p>
+</details>
+<hr>
+<p><strong>14. What is the purpose of the <code>disableConcurrentBuilds</code> option?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To prevent multiple builds of the same job from running simultaneously</li>
+<li><input disabled="" type="checkbox"> To disable all concurrent building</li>
+<li><input disabled="" type="checkbox"> To reduce server load</li>
+<li><input disabled="" type="checkbox"> To improve build stability</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To prevent multiple builds of the same job from running simultaneously**
+<p><code>disableConcurrentBuilds</code> ensures that only one build of a job runs at a time. If a new build is triggered while another is running, it is queued until the running build completes. This is useful for deployments or resource-intensive jobs.</p>
+</details>
+<hr>
+<p><strong>15. What is build discarder configuration?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A setting to automatically delete old builds based on count or age</li>
+<li><input disabled="" type="checkbox"> A setting to discard build artifacts</li>
+<li><input disabled="" type="checkbox"> A setting to delete failed builds</li>
+<li><input disabled="" type="checkbox"> A setting to archive build history</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A setting to automatically delete old builds based on count or age**
+<p>The build discarder automatically removes old builds to manage disk space. It can be configured by maximum number of builds to keep, maximum age, or both. This prevents JENKINS_HOME from growing indefinitely.</p>
+</details>
+<hr>
+<p><strong>16. What is the purpose of the <code>logRotator</code> in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To rotate and compress build logs</li>
+<li><input disabled="" type="checkbox"> To delete old logs</li>
+<li><input disabled="" type="checkbox"> To archive logs to external storage</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To rotate and compress build logs**
+<p>The <code>logRotator</code> manages build log retention by specifying the number of builds to keep and the number of days to retain logs. It&rsquo;s configured in the job&rsquo;s post-build actions or in the pipeline&rsquo;s <code>options</code> directive.</p>
+</details>
+<hr>
+<p><strong>17. What is the best practice for managing JENKINS_HOME disk space?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Set up build discarders on all jobs</li>
+<li><input disabled="" type="checkbox"> Clean up old workspaces</li>
+<li><input disabled="" type="checkbox"> Archive artifacts to external storage</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Managing disk space requires a multi-pronged approach: configure build discarders on all jobs, implement workspace cleanup (especially on ephemeral agents), archive important artifacts externally (S3, Nexus, Artifactory), and monitor disk usage.</p>
+</details>
+<hr>
+<p><strong>18. What is the purpose of the <code>workspace-cleanup</code> plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To delete workspace directories after builds</li>
+<li><input disabled="" type="checkbox"> To organize workspace directories</li>
+<li><input disabled="" type="checkbox"> To compress workspace files</li>
+<li><input disabled="" type="checkbox"> To back up workspace files</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To delete workspace directories after builds**
+<p>The Workspace Cleanup plugin provides the <code>cleanWs()</code> step to delete workspace directories. It runs in post-build actions or <code>post { always { cleanWs() } }</code> in pipelines, freeing disk space on agents.</p>
+</details>
+<hr>
+<p><strong>19. How do you handle Jenkins controller failover?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using Jenkins high availability configurations</li>
+<li><input disabled="" type="checkbox"> By maintaining a warm standby controller</li>
+<li><input disabled="" type="checkbox"> Using shared storage for JENKINS_HOME</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Jenkins failover strategies include: maintaining a standby controller with synchronized JENKINS_HOME (using shared storage like NFS), using external databases for job data, and implementing automated failover processes with DNS/load balancer switching.</p>
+</details>
+<hr>
+<p><strong>20. Does Jenkins support true high availability?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> No, Jenkins does not natively support multi-controller HA</li>
+<li><input disabled="" type="checkbox"> Yes, through clustering</li>
+<li><input disabled="" type="checkbox"> Yes, through replication</li>
+<li><input disabled="" type="checkbox"> Yes, through load balancing</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**No, Jenkins does not natively support multi-controller HA**
+<p>Jenkins does not natively support active-active high availability. The recommended approach is to use active-passive with a warm standby, implement regular backups, and use CloudBees CI for enterprise HA requirements.</p>
+</details>
+<hr>
+<p><strong>21. What is the Jenkins Operations Center (CloudBees CI)?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A management layer for multiple Jenkins controllers</li>
+<li><input disabled="" type="checkbox"> A monitoring tool</li>
+<li><input disabled="" type="checkbox"> A job scheduler</li>
+<li><input disabled="" type="checkbox"> A backup tool</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A management layer for multiple Jenkins controllers**
+<p>CloudBees CI (formerly Jenkins Operations Center) provides a centralized management platform for multiple Jenkins controllers. It offers HA, disaster recovery, workload management, and governance across a fleet of controllers.</p>
+</details>
+<hr>
+<p><strong>22. What is the command to restart Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>sudo systemctl restart jenkins</code></li>
+<li><input disabled="" type="checkbox"> <code>http://jenkins-url/restart</code></li>
+<li><input disabled="" type="checkbox"> <code>jenkins restart</code></li>
+<li><input disabled="" type="checkbox"> Both A and B</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Both A and B**
+<p>Jenkins can be restarted via the OS service manager (<code>systemctl restart jenkins</code> on Linux, <code>net stop jenkins &amp;&amp; net start jenkins</code> on Windows) or through the Jenkins UI at <code>/restart</code> (if the user has admin permissions).</p>
+</details>
+<hr>
+<p><strong>23. What is the purpose of Jenkins safe restart?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To restart after all running builds complete</li>
+<li><input disabled="" type="checkbox"> To restart immediately regardless of running builds</li>
+<li><input disabled="" type="checkbox"> To restart only the UI</li>
+<li><input disabled="" type="checkbox"> To restart only plugins</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To restart after all running builds complete**
+<p>A safe restart (<code>/safeRestart</code>) waits for all currently running builds to complete before restarting Jenkins. This ensures ongoing builds are not interrupted. Running builds must finish or be manually stopped.</p>
+</details>
+<hr>
+<p><strong>24. What is the Jenkins JVM configuration?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Configuration of Java Virtual Machine memory and options for Jenkins</li>
+<li><input disabled="" type="checkbox"> Configuration of Jenkins plugins</li>
+<li><input disabled="" type="checkbox"> Configuration of build agents</li>
+<li><input disabled="" type="checkbox"> Configuration of Jenkins UI</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Configuration of Java Virtual Machine memory and options for Jenkins**
+<p>JVM configuration involves setting Java heap size (<code>-Xms</code>, <code>-Xmx</code>), GC options, and other JVM parameters to optimize Jenkins performance. These are typically set in the Jenkins service configuration or startup scripts.</p>
+</details>
+<hr>
+<p><strong>25. What is the recommended JVM heap size for a medium Jenkins instance?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> 256 MB</li>
+<li><input disabled="" type="checkbox"> 512 MB - 1 GB</li>
+<li><input disabled="" type="checkbox"> 2 GB - 8 GB</li>
+<li><input disabled="" type="checkbox"> 32 GB</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**2 GB - 8 GB**
+<p>For a medium Jenkins instance (50-200 jobs, several agents), 2-8 GB of heap is typical. The exact size depends on the number of jobs, plugins, concurrent builds, and build history. Starting at 4 GB and monitoring is recommended.</p>
+</details>
+<hr>
+<p><strong>26. What is the purpose of the <code>-Dhudson.model.ParametersAction.keepUndefinedParameters=true</code> JVM option?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To keep undefined parameters in parameterized builds</li>
+<li><input disabled="" type="checkbox"> To allow passing undefined parameters to pipelines</li>
+<li><input disabled="" type="checkbox"> To suppress parameter validation warnings</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To allow passing undefined parameters to pipelines**
+<p>This JVM option controls whether Jenkins allows passing parameters that are not defined in the job configuration. Setting it to <code>true</code> allows passing extra parameters, useful when integrating with external systems.</p>
+</details>
+<hr>
+<p><strong>27. What is the purpose of the Jenkins <code>/administrativeMonitor/</code> URL?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To view and manage Jenkins administrative monitors</li>
+<li><input disabled="" type="checkbox"> To monitor administrative users</li>
+<li><input disabled="" type="checkbox"> To manage administrative plugins</li>
+<li><input disabled="" type="checkbox"> To view agent status</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To view and manage Jenkins administrative monitors**
+<p>The <code>/administrativeMonitor/</code> URL shows Jenkins&rsquo; built-in health checks and warnings: outdated plugins, disk space low, security issues, upgrade recommendations, and other administrative concerns.</p>
+</details>
+<hr>
+<p><strong>28. What is the Jenkins log level configuration?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A setting to control the verbosity of Jenkins logging</li>
+<li><input disabled="" type="checkbox"> A setting to disable logging</li>
+<li><input disabled="" type="checkbox"> A setting to encrypt logs</li>
+<li><input disabled="" type="checkbox"> A setting to archive logs</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A setting to control the verbosity of Jenkins logging**
+<p>Jenkins log levels (FINE, FINER, FINEST for DEBUG, WARNING, SEVERE for ERROR) can be configured per logger (package or class) through the UI at <code>/log</code> or <code>/manage/log</code>. This helps debug specific issues without overwhelming logs.</p>
+</details>
+<hr>
+<p><strong>29. What is the purpose of the Jenkins <code>/script</code> URL?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To run Groovy scripts on the Jenkins controller</li>
+<li><input disabled="" type="checkbox"> To manage Pipeline scripts</li>
+<li><input disabled="" type="checkbox"> To install scripts</li>
+<li><input disabled="" type="checkbox"> To view build scripts</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To run Groovy scripts on the Jenkins controller**
+<p>The <code>/script</code> endpoint (Script Console) allows administrators to run arbitrary Groovy scripts on the Jenkins controller. This is a powerful debugging and administration tool but should be restricted to administrators due to security implications.</p>
+</details>
+<hr>
+<p><strong>30. What is the Jenkins Groovy Script Console used for?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Running ad-hoc administration commands</li>
+<li><input disabled="" type="checkbox"> Debugging Jenkins issues</li>
+<li><input disabled="" type="checkbox"> Automating bulk operations</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>The Script Console is used for: running ad-hoc administration (creating users, modifying jobs), debugging (inspecting variables, testing configurations), and automating bulk operations (mass job updates, credential management).</p>
+</details>
+<hr>
+<p><strong>31. What is the purpose of the <code>queue</code> command in the Jenkins Script Console?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To inspect the build queue</li>
+<li><input disabled="" type="checkbox"> To cancel queued builds</li>
+<li><input disabled="" type="checkbox"> To reorder the build queue</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>The <code>Jenkins.instance.queue</code> object in Script Console provides methods to inspect, cancel, and reorder items in the build queue. This is useful for managing long queues and debugging queue-related issues.</p>
+</details>
+<hr>
+<p><strong>32. What is the Jenkins Update Center?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A repository of Jenkins plugins and their metadata</li>
+<li><input disabled="" type="checkbox"> A system update tool</li>
+<li><input disabled="" type="checkbox"> A release management portal</li>
+<li><input disabled="" type="checkbox"> A plugin development platform</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A repository of Jenkins plugins and their metadata**
+<p>The Update Center is the central repository that provides plugin installation and update information to Jenkins instances. It contains metadata about available plugins, versions, dependencies, and compatibility information.</p>
+</details>
+<hr>
+<p><strong>33. Why should you keep Jenkins plugins updated?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Security fixes for known vulnerabilities</li>
+<li><input disabled="" type="checkbox"> Bug fixes and performance improvements</li>
+<li><input disabled="" type="checkbox"> New features and compatibility</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Regular plugin updates are critical for: security (many vulnerabilities are reported and fixed in plugins), stability (bug fixes), performance improvements, and compatibility with newer Jenkins core versions.</p>
+</details>
+<hr>
+<p><strong>34. What is the Plugin Manager&rsquo;s &ldquo;Advanced&rdquo; tab used for?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To manually upload plugin files (.hpi or .jpi)</li>
+<li><input disabled="" type="checkbox"> To configure update center URLs</li>
+<li><input disabled="" type="checkbox"> To view plugin release history</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>The Advanced tab in Plugin Manager provides: manual plugin upload (for offline installations), update center URL configuration (for proxies or mirrors), and plugin release history and dependency information.</p>
+</details>
+<hr>
+<p><strong>35. What is the purpose of the Jenkins CLI over SSH?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To manage Jenkins via SSH commands</li>
+<li><input disabled="" type="checkbox"> To connect agents via SSH</li>
+<li><input disabled="" type="checkbox"> To configure SSH credentials</li>
+<li><input disabled="" type="checkbox"> To encrypt Jenkins traffic</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To manage Jenkins via SSH commands**
+<p>The Jenkins CLI over SSH allows running Jenkins CLI commands through an SSH connection. This provides authenticated, encrypted access for administrative operations without exposing the HTTP CLI port.</p>
+</details>
+<hr>
+<p><strong>36. How do you configure Jenkins to use an external database?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> By installing the Database plugin and configuring the JDBC connection</li>
+<li><input disabled="" type="checkbox"> By editing the Jenkins configuration file</li>
+<li><input disabled="" type="checkbox"> By setting environment variables</li>
+<li><input disabled="" type="checkbox"> External databases are not supported</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**By installing the Database plugin and configuring the JDBC connection**
+<p>Jenkins can use external databases for specific purposes (like storing build data) through the Database plugin. The plugin is configured with JDBC connection details. General Jenkins configuration is not database-backed.</p>
+</details>
+<hr>
+<p><strong>37. What is the purpose of the <code>git-forensics</code> plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To analyze Git history for code quality and change trends</li>
+<li><input disabled="" type="checkbox"> To track Git commits in builds</li>
+<li><input disabled="" type="checkbox"> To monitor Git server health</li>
+<li><input disabled="" type="checkbox"> To optimize Git operations</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To analyze Git history for code quality and change trends**
+<p>The Git Forensics plugin analyzes Git repository history to provide insights on code quality trends, file change frequencies, author statistics, and code churn metrics. This helps teams understand their development patterns.</p>
+</details>
+<hr>
+<p><strong>38. What is Jenkins performance signature?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A signature analysis of pipeline performance</li>
+<li><input disabled="" type="checkbox"> A benchmarking tool for Jenkins</li>
+<li><input disabled="" type="checkbox"> A plugin that tests Jenkins performance</li>
+<li><input disabled="" type="checkbox"> A method for optimizing build performance</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A signature analysis of pipeline performance**
+<p>Performance signatures track build duration trends over time, enabling detection of performance regressions. If a build takes significantly longer than its historical signature, Jenkins can flag it for investigation.</p>
+</details>
+<hr>
+<p><strong>39. What is the purpose of an incident response plan for Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To provide procedures for responding to Jenkins failures</li>
+<li><input disabled="" type="checkbox"> To document recovery steps</li>
+<li><input disabled="" type="checkbox"> To outline communication protocols</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>An incident response plan for Jenkins should document: procedures for responding to controller failures, agent connectivity issues, build failures, security incidents, performance degradation, and the communication and escalation process.</p>
+</details>
+<hr>
+<p><strong>40. What is the SCM retry count in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> The number of times Jenkins retries SCM operations on failure</li>
+<li><input disabled="" type="checkbox"> The number of SCM polling attempts</li>
+<li><input disabled="" type="checkbox"> The number of Git clone retries</li>
+<li><input disabled="" type="checkbox"> The number of plugin download retries</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**The number of times Jenkins retries SCM operations on failure**
+<p>The SCM retry count (in job configuration) specifies how many times Jenkins retries SCM checkout operations if they fail due to network issues or transient errors. This improves build reliability.</p>
+</details>
+<hr>
+<p><strong>41. What is the purpose of the <code>quiet period</code> in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A delay before starting a build to allow more commits to accumulate</li>
+<li><input disabled="" type="checkbox"> A period when builds are paused</li>
+<li><input disabled="" type="checkbox"> A maintenance window</li>
+<li><input disabled="" type="checkbox"> A backup window</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A delay before starting a build to allow more commits to accumulate**
+<p>The quiet period is a configurable delay between when a build is triggered and when it actually starts. This allows developers to push multiple commits that are grouped into a single build, reducing build volume and improving efficiency.</p>
+</details>
+<hr>
+<p><strong>42. What is the Jenkins block build when upstream/downstream is building?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> An option to prevent concurrent builds when dependencies are building</li>
+<li><input disabled="" type="checkbox"> An option to block all building</li>
+<li><input disabled="" type="checkbox"> An option to pause job scheduling</li>
+<li><input disabled="" type="checkbox"> An option to delay builds</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**An option to prevent concurrent builds when dependencies are building**
+<p>This option prevents a job from starting a new build if an upstream (triggering) or downstream (triggered) job is currently building. This helps maintain build ordering and prevent conflicts.</p>
+</details>
+<hr>
+<p><strong>43. What is the best practice for Jenkins security patches?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Apply patches immediately after testing</li>
+<li><input disabled="" type="checkbox"> Wait for major releases</li>
+<li><input disabled="" type="checkbox"> Only patch when vulnerabilities are announced</li>
+<li><input disabled="" type="checkbox"> Never patch running Jenkins instances</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Apply patches immediately after testing**
+<p>Security patches should be applied as soon as possible after testing them in a non-production environment. Jenkins and its plugins have frequent security advisories, and timely patching is critical for security.</p>
+</details>
+<hr>
+<p><strong>44. What is the purpose of the Jenkins security advisories page?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To announce Jenkins security vulnerabilities and fixes</li>
+<li><input disabled="" type="checkbox"> To provide security best practices</li>
+<li><input disabled="" type="checkbox"> To list secure plugin versions</li>
+<li><input disabled="" type="checkbox"> To report security incidents</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To announce Jenkins security vulnerabilities and fixes**
+<p>The Jenkins project maintains a security advisory page that announces security vulnerabilities, affected versions, and fix versions. Administrators should monitor this page to stay informed about security patches.</p>
+</details>
+<hr>
+<p><strong>45. What is the purpose of the <code>configuration-as-code-groovy</code> plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To allow using Groovy scripts in JCasC configurations</li>
+<li><input disabled="" type="checkbox"> To replace JCasC with Groovy</li>
+<li><input disabled="" type="checkbox"> To convert YAML to Groovy</li>
+<li><input disabled="" type="checkbox"> To validate JCasC configurations</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To allow using Groovy scripts in JCasC configurations**
+<p>The Configuration as Code Groovy plugin allows embedding Groovy scripts within JCasC YAML configurations. This enables configuration steps that cannot be expressed purely in YAML, while maintaining version control and reproducibility.</p>
+</details>
+<hr>
+<p><strong>46. What is the <code>support-core</code> plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A plugin for generating Jenkins support bundles</li>
+<li><input disabled="" type="checkbox"> A plugin for managing support requests</li>
+<li><input disabled="" type="checkbox"> A plugin for troubleshooting Jenkins</li>
+<li><input disabled="" type="checkbox"> A plugin for user support</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A plugin for generating Jenkins support bundles**
+<p>The Support Core plugin generates comprehensive support bundles containing Jenkins configuration, logs, system information, and plugin details. These bundles are useful when seeking help from the Jenkins community or support team.</p>
+</details>
+<hr>
+<p><strong>47. What is the purpose of the <code>instance-identity</code> plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To generate a unique identifier for the Jenkins instance</li>
+<li><input disabled="" type="checkbox"> To identify Jenkins agents</li>
+<li><input disabled="" type="checkbox"> To manage Jenkins users</li>
+<li><input disabled="" type="checkbox"> To authenticate Jenkins instances</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To generate a unique identifier for the Jenkins instance**
+<p>The Instance Identity plugin generates a cryptographic key pair and certificate that uniquely identifies the Jenkins instance. This is used for agent connections, CLI authentication, and securing inter-Jenkins communications.</p>
+</details>
+<hr>
+<p><strong>48. What is the recommended monitoring threshold for Jenkins disk space?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Alert when disk space falls below 20%</li>
+<li><input disabled="" type="checkbox"> Alert when disk space falls below 1 GB</li>
+<li><input disabled="" type="checkbox"> Alert when disk space falls below 5 GB</li>
+<li><input disabled="" type="checkbox"> Both A and C depending on instance size</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Both A and C depending on instance size**
+<p>Monitoring thresholds should be set based on instance size: alert when disk space is below 20% or when it falls below a specific threshold (e.g., 5 GB for smaller instances). Jenkins itself warns when disk space is low via administrative monitors.</p>
+</details>
+<hr>
+<p><strong>49. What is a Jenkins regression build?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A build that runs all previous tests to detect regressions</li>
+<li><input disabled="" type="checkbox"> A build that reverts changes</li>
+<li><input disabled="" type="checkbox"> A build that runs on older code</li>
+<li><input disabled="" type="checkbox"> A build that tests performance</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A build that runs all previous tests to detect regressions**
+<p>A regression build runs a comprehensive set of tests to check whether recent changes have broken previously working functionality. Jenkins can compare test results across builds using the JUnit plugin&rsquo;s trend reporting.</p>
+</details>
+<hr>
+<p><strong>50. What is the purpose of the <code>testng</code> plugin in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To publish TestNG test results and reports</li>
+<li><input disabled="" type="checkbox"> To run TestNG tests within Jenkins</li>
+<li><input disabled="" type="checkbox"> To configure TestNG settings</li>
+<li><input disabled="" type="checkbox"> To generate TestNG test data</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To publish TestNG test results and reports**
+<p>The TestNG plugin publishes TestNG test reports in Jenkins, providing detailed test results, failure analysis, and historical trends for TestNG-based test frameworks.</p>
+</details>
+<hr>
+<p><strong>51. What is the purpose of the <code>warnings-ng</code> plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To collect and display compiler warnings and static analysis results</li>
+<li><input disabled="" type="checkbox"> To generate warning notifications</li>
+<li><input disabled="" type="checkbox"> To configure warning thresholds</li>
+<li><input disabled="" type="checkbox"> To monitor warning trends</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To collect and display compiler warnings and static analysis results**
+<p>The Warnings Next Generation plugin collects warnings from compilers, linters, and static analysis tools. It provides trend graphs, quality gates, and detailed warning information.</p>
+</details>
+<hr>
+<p><strong>52. What is the purpose of the <code>performance</code> plugin in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To collect and display performance test results (JMeter, Gatling, etc.)</li>
+<li><input disabled="" type="checkbox"> To monitor Jenkins performance</li>
+<li><input disabled="" type="checkbox"> To optimize build performance</li>
+<li><input disabled="" type="checkbox"> To benchmark Jenkins</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To collect and display performance test results (JMeter, Gatling, etc.)**
+<p>The Performance Plugin collects and displays performance test reports from tools like JMeter, Gatling, and Taurus. It provides trend graphs, performance thresholds, and failure analysis.</p>
+</details>
+<hr>
+<p><strong>53. What is the best practice for Jenkins access logs?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Enable Jenkins access logging and rotate logs</li>
+<li><input disabled="" type="checkbox"> Disable access logging for performance</li>
+<li><input disabled="" type="checkbox"> Store access logs in memory</li>
+<li><input disabled="" type="checkbox"> Access logs are not needed</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Enable Jenkins access logging and rotate logs**
+<p>Access logging should be enabled to track user activity, API usage, and security events. Logs should be rotated to manage disk space and archived for audit purposes. The audit trail plugin can provide detailed access logs.</p>
+</details>
+<hr>
+<p><strong>54. What is the purpose of the <code>audit-trail</code> plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To track user actions and configuration changes in Jenkins</li>
+<li><input disabled="" type="checkbox"> To audit build logs</li>
+<li><input disabled="" type="checkbox"> To monitor system performance</li>
+<li><input disabled="" type="checkbox"> To track plugin usage</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To track user actions and configuration changes in Jenkins**
+<p>The Audit Trail plugin logs user actions such as job creation/deletion, configuration changes, plugin operations, and system administration activities. This provides accountability and helps with compliance requirements.</p>
+</details>
+<hr>
+<p><strong>55. What is the purpose of the <code>PrioritySorter</code> plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To prioritize builds in the build queue</li>
+<li><input disabled="" type="checkbox"> To sort build artifacts</li>
+<li><input disabled="" type="checkbox"> To organize jobs by priority</li>
+<li><input disabled="" type="checkbox"> To prioritize agent selection</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To prioritize builds in the build queue**
+<p>The Priority Sorter plugin allows assigning priority values to jobs, influencing the order in which queued builds are assigned to executors. Higher priority jobs are dispatched before lower priority ones.</p>
+</details>
+<hr>
+<p><strong>56. What is the ESAPI (Enterprise Security API) in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A security framework used by Jenkins for input validation</li>
+<li><input disabled="" type="checkbox"> A plugin for security scanning</li>
+<li><input disabled="" type="checkbox"> A cryptography library</li>
+<li><input disabled="" type="checkbox"> An authentication provider</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A security framework used by Jenkins for input validation**
+<p>Jenkins uses the OWASP ESAPI library for input validation, output encoding, and other security functions. It helps prevent cross-site scripting (XSS) and other injection attacks in the Jenkins UI.</p>
+</details>
+<hr>
+<p><strong>57. What is the recommended approach for Jenkins capacity planning?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Monitor current usage and plan for growth</li>
+<li><input disabled="" type="checkbox"> Estimate based on number of users and jobs</li>
+<li><input disabled="" type="checkbox"> Plan for peak-load scenarios</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Capacity planning for Jenkins involves: monitoring current resource usage (CPU, memory, disk, agents), estimating growth in users, jobs, and build frequency, planning for peak loads (release days, sprint end), and proactively scaling resources.</p>
+</details>
+<hr>
+<blockquote class='book-hint '>
+<p><strong>Pro tip:</strong> After completing this test, check your score per topic. If you scored below 70% in any area, review the corresponding chapters in this guide before attempting the next practice test.</p>
+</blockquote></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="flex align-center">
+        <img src="/complete_jenkins_notes/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="flex align-center">
+        <span>📝 Practice Test 7: DevOps &amp; Real-World Scenarios</span>
+        <img src="/complete_jenkins_notes/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){"use strict";document.querySelectorAll("pre > code").forEach(function(t){var n,s=t.parentElement;if(!s||s.tagName!=="PRE")return;if(s.querySelector(".copy-button"))return;s.style.position="relative",n=document.createElement("button"),n.className="copy-button",n.textContent="Copy",n.setAttribute("aria-label","Copy code to clipboard"),n.setAttribute("type","button"),s.appendChild(n),n.addEventListener("click",function(){var s=t.textContent||"";navigator.clipboard?navigator.clipboard.writeText(s).then(function(){n.textContent="Copied!",n.classList.add("copied"),setTimeout(function(){n.textContent="Copy",n.classList.remove("copied")},2e3)}).catch(function(){e(s,n)}):e(s,n)})});function e(e,t){var n=document.createElement("textarea");n.value=e,n.style.position="fixed",n.style.opacity="0",document.body.appendChild(n),n.select();try{document.execCommand("copy"),t.textContent="Copied!",t.classList.add("copied"),setTimeout(function(){t.textContent="Copy",t.classList.remove("copied")},2e3)}catch{t.textContent="Error",setTimeout(function(){t.textContent="Copy"},2e3)}document.body.removeChild(n)}})()</script>
+  
+
+        
+  
+    <script>(function(){"use strict";var t,a,o="jenkins_exam_progress",c="jenkins_chapter_progress";function e(e){this.element=e,this.minutesDisplay=e.querySelector(".timer-minutes"),this.secondsDisplay=e.querySelector(".timer-seconds"),this.statusEl=e.querySelector(".timer-status"),this.totalSeconds=parseInt(e.dataset.minutes||"60",10)*60,this.remaining=this.totalSeconds,this.interval=null,this.running=!1,this.finished=!1;var n,s,o,i,t=this.loadState();t&&t.remaining>0&&!t.finished&&(this.remaining=t.remaining),this.updateDisplay(),n=this,s=e.querySelector(".timer-start"),o=e.querySelector(".timer-pause"),i=e.querySelector(".timer-reset"),s&&s.addEventListener("click",function(){n.start()}),o&&o.addEventListener("click",function(){n.pause()}),i&&i.addEventListener("click",function(){n.reset()}),t&&t.running&&this.start()}e.prototype.start=function(){if(this.finished)return;if(this.running)return;this.running=!0,this.element.classList.add("timer-running"),this.element.classList.remove("timer-paused");var e=this;this.interval=setInterval(function(){e.remaining--,e.updateDisplay(),e.saveState(),e.remaining<=0&&(e.remaining=0,e.updateDisplay(),e.finish())},1e3)},e.prototype.pause=function(){if(!this.running)return;this.running=!1,this.element.classList.remove("timer-running"),this.element.classList.add("timer-paused"),clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.reset=function(){this.pause(),this.remaining=this.totalSeconds,this.finished=!1,this.element.classList.remove("timer-finished"),this.element.classList.remove("timer-paused"),this.statusEl.textContent="Time Remaining",this.updateDisplay(),this.saveState(),localStorage.removeItem(this.getTimerStorageKey())},e.prototype.finish=function(){this.running=!1,this.finished=!0,this.element.classList.remove("timer-running"),this.element.classList.add("timer-finished"),this.statusEl.textContent="⏰ Time's Up!",clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.updateDisplay=function(){var e=Math.floor(this.remaining/60),t=this.remaining%60;this.minutesDisplay.textContent=String(e).padStart(2,"0"),this.secondsDisplay.textContent=String(t).padStart(2,"0"),this.remaining<=300&&this.remaining>0?this.element.classList.add("timer-warning"):this.element.classList.remove("timer-warning")},e.prototype.getTimerStorageKey=function(){return o+"_timer_"+this.element.dataset.testId},e.prototype.loadState=function(){try{var e=localStorage.getItem(this.getTimerStorageKey());return e?JSON.parse(e):null}catch{return null}},e.prototype.saveState=function(){try{var e={remaining:this.remaining,running:this.running,finished:this.finished,savedAt:Date.now()};localStorage.setItem(this.getTimerStorageKey(),JSON.stringify(e))}catch{}},document.querySelectorAll(".exam-timer").forEach(function(t){new e(t)});function f(e,t){try{var s=n();s[e]=t,localStorage.setItem(o,JSON.stringify(s)),m()}catch{}}function n(){try{var e=localStorage.getItem(o);return e?JSON.parse(e):{}}catch{return{}}}function _(){var e=n();return Object.keys(e).filter(function(t){return e[t]===!0}).length}function p(){return 7}function m(){var t=_(),e=p(),n=e>0?Math.round(t/e*100):0,a=i(),s=document.getElementById("exam-progress-bar"),o=document.getElementById("exam-progress-text");s&&(s.style.width=n+"%",s.textContent=n>15?n+"%":""),o&&(o.textContent=t+" of "+e+" tests completed"),l(a,t,e)}function l(e,t,n){var s,o,l,i=document.getElementById("sidebar-progress-fill"),a=document.getElementById("sidebar-progress-pct"),r=document.getElementById("sidebar-progress-chapters"),c=document.getElementById("sidebar-progress-tests");if(!i)return;s=e.total+n,l=e.completed+t,o=s>0?Math.round(l/s*100):0,i.style.width=o+"%",a&&(a.textContent=o+"%"),r&&(r.textContent=e.completed+"/"+e.total+" chapters"),c&&(c.textContent=t+"/"+n+" tests")}document.addEventListener("change",function(e){if(e.target&&e.target.matches(".test-complete-check")){var t=e.target.dataset.testId;t&&f(t,e.target.checked)}});function w(){var e=n();document.querySelectorAll(".test-complete-check").forEach(function(t){var n=t.dataset.testId;n&&e[n]===!0&&(t.checked=!0)}),m()}t=[{id:"01-introduction-to-ci-cd-and-jenkins",title:"Ch 1: Introduction to CI/CD & Jenkins",number:1,section:"Foundation"},{id:"02-jenkins-architecture-and-installation",title:"Ch 2: Jenkins Architecture & Installation",number:2,section:"Foundation"},{id:"03-jenkins-configuration-and-management",title:"Ch 3: Configuration & Management",number:3,section:"Foundation"},{id:"04-freestyle-projects-and-build-jobs",title:"Ch 4: Freestyle Projects & Build Jobs",number:4,section:"Foundation"},{id:"05-pipeline-fundamentals",title:"Ch 5: Pipeline Fundamentals",number:5,section:"Core Skills"},{id:"06-pipeline-syntax-and-steps",title:"Ch 6: Pipeline Syntax & Steps",number:6,section:"Core Skills"},{id:"07-agents-nodes-and-distributed-builds",title:"Ch 7: Agents, Nodes & Distributed Builds",number:7,section:"Core Skills"},{id:"08-source-code-management",title:"Ch 8: Source Code Management",number:8,section:"Core Skills"},{id:"09-shared-libraries-and-reusability",title:"Ch 9: Shared Libraries & Reusability",number:9,section:"Advanced"},{id:"10-multi-branch-pipelines",title:"Ch 10: Multi-Branch Pipelines",number:10,section:"Advanced"},{id:"11-jenkins-docker-and-kubernetes",title:"Ch 11: Docker & Kubernetes Integration",number:11,section:"Advanced"},{id:"12-testing-security-and-compliance",title:"Ch 12: Testing, Security & Compliance",number:12,section:"Advanced"},{id:"13-jenkins-configuration-as-code",title:"Ch 13: Jenkins Configuration as Code (JCasC)",number:13,section:"Production & Exam Prep"},{id:"14-production-grade-jenkins",title:"Ch 14: Production-Grade Jenkins",number:14,section:"Production & Exam Prep"},{id:"15-exam-preparation-guide",title:"Ch 15: Exam Preparation Guide",number:15,section:"Production & Exam Prep"},{id:"16-interview-questions",title:"Ch 16: Interview Questions & Answers",number:16,section:"Bonus"},{id:"17-real-world-scenarios",title:"Ch 17: Real-World Scenario Questions",number:17,section:"Bonus"}],a=[{id:"exam-test-1",title:"Practice Test 1",number:1},{id:"exam-test-2",title:"Practice Test 2",number:2},{id:"exam-test-3",title:"Practice Test 3",number:3},{id:"exam-test-4",title:"Practice Test 4",number:4},{id:"exam-test-5",title:"Practice Test 5",number:5},{id:"exam-test-6",title:"Practice Test 6",number:6},{id:"exam-test-7",title:"Practice Test 7",number:7}];function s(){try{var e=localStorage.getItem(c);return e?JSON.parse(e):{}}catch{return{}}}function u(e,t){try{var n=s();n[e]=n[e]||{},Object.keys(t).forEach(function(s){n[e][s]=t[s]}),localStorage.setItem(c,JSON.stringify(n))}catch{}}function i(){var o=s(),e=0,n=0;return t.forEach(function(t){var s=o[t.id];s&&(s.read&&e++,s.completed&&n++)}),{read:e,completed:n,total:t.length}}function r(){var t=n(),e=0;return a.forEach(function(n){t[n.id]===!0&&e++}),{completed:e,total:a.length}}function g(){var e=window.location.pathname.match(/\/docs\/(\d+-[^/]+)\//);return e?e[1]:null}function v(){var e=g(),n=e&&t.some(function(t){return t.id===e});n&&(b(e),j(e))}function b(e){var t=s();(!t[e]||!t[e].read)&&u(e,{read:!0,readAt:Date.now()})}function j(e){var t,n,i,a,r,o=document.querySelector(".book-article");if(!o)return;if(o.querySelector(".chapter-complete-check"))return;a=s(),r=a[e]||{},i=r.completed===!0,t=document.createElement("div"),t.className="chapter-complete-check",t.innerHTML='<hr><div class="chapter-progress-bar"><input type="checkbox" id="ch-cpl-'+e+'" class="chapter-complete-checkbox" data-chapter-id="'+e+'"'+(i?" checked":"")+'><label for="ch-cpl-'+e+'" class="chapter-complete-label">✓ Mark this chapter as completed</label><span class="chapter-status-badge">'+(i?"✅ Completed":"📖 Reading")+"</span></div>",o.appendChild(t),n=t.querySelector(".chapter-complete-checkbox"),n.addEventListener("change",function(){u(e,{completed:n.checked,completedAt:n.checked?Date.now():null});var s=t.querySelector(".chapter-status-badge");s.textContent=n.checked?"✅ Completed":"📖 Reading"})}window.initExamDashboard=function(){var e,t=document.getElementById("exam-dashboard-app");if(!t)return;t.innerHTML=y(),document.querySelectorAll(".dashboard-chapter-check").forEach(function(e){e.addEventListener("change",function(){u(e.dataset.chapterId,{completed:e.checked,completedAt:e.checked?Date.now():null}),d()})}),document.querySelectorAll(".dashboard-test-check").forEach(function(e){e.addEventListener("change",function(){f(e.dataset.testId,e.checked),d()})}),e=document.getElementById("exam-reset-all"),e&&e.addEventListener("click",function(){confirm("Reset ALL progress (chapters and tests)? This cannot be undone.")&&(localStorage.removeItem(o),localStorage.removeItem(c),d())})};function y(){var m,o=i(),c=r(),u=s(),f=n(),d=o.total+c.total,h=o.completed+c.completed,l=d>0?Math.round(h/d*100):0,e="";return e+='<div class="exam-dashboard-header">',e+="  <h1>📊 Your Learning Dashboard</h1>",e+='  <p class="exam-progress-summary">Track your Jenkins learning journey — from chapters to practice exams</p>',e+="</div>",e+='<div class="exam-combined-progress">',e+='  <div class="exam-progress-bar-wrapper" style="max-width:100%;">',e+='    <div class="exam-progress-bar-fill" id="dash-combined-bar" style="width:'+l+'%;">'+(l>15?l+"%":"")+"</div>",e+="  </div>",e+='  <p class="exam-progress-summary" style="text-align:center;margin-top:0.75rem;">'+h+" of "+d+" total items completed</p>",e+="</div>",e+='<div class="exam-stats">',e+='  <div class="exam-stat-card"><span class="stat-number">'+o.completed+'</span><span class="stat-label">of '+o.total+" Chapters</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+o.read+'</span><span class="stat-label">Chapters Read</span></div>',e+='  <div class="exam-stat-card"><span class="stat-number">'+c.completed+'</span><span class="stat-label">of '+c.total+" Tests Passed</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+l+'%</span><span class="stat-label">Overall Progress</span></div>',e+="</div>",e+='<h2 style="margin-top:2.5rem;">📚 Learning Progress</h2>',e+='<div class="exam-dashboard-grid">',m=["Foundation","Core Skills","Advanced","Production & Exam Prep","Bonus"],m.forEach(function(n){if(s=t.filter(function(e){return e.section===n}),s.length===0)return;var s,i,a=0,o=0;s.forEach(function(e){var t=u[e.id];t&&(t.read&&a++,t.completed&&o++)}),i=Math.round(o/s.length*100),e+='<div class="dashboard-section-card">',e+='  <div class="dashboard-section-header">',e+='    <span class="dashboard-section-badge">'+n+"</span>",e+='    <span class="dashboard-section-count">'+o+"/"+s.length+"</span>",e+="  </div>",e+='  <div class="dashboard-section-bar-wrapper"><div class="dashboard-section-bar-fill" style="width:'+i+'%;"></div></div>',e+='  <div class="dashboard-section-chapters">',s.forEach(function(t){var s=u[t.id]||{},n=s.completed===!0,o=s.read===!0,i=n?"✅":o?"📖":"⬜";e+='    <div class="dashboard-chapter-row'+(n?" completed":"")+'" title="'+t.title+'">',e+='      <input type="checkbox" class="dashboard-chapter-check" data-chapter-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="dashboard-chapter-status">'+i+"</span>",e+='      <span class="dashboard-chapter-title">'+t.title+"</span>",e+="    </div>"}),e+="  </div>",e+="</div>"}),e+="</div>",e+='<h2 style="margin-top:2.5rem;">📝 Practice Test Progress</h2>',e+='<div class="exam-dashboard-grid">',a.forEach(function(t){var n=f[t.id]===!0;e+='  <div class="exam-dashboard-card'+(n?" completed":"")+'">',e+="    <h3>Practice Test "+t.number+"</h3>",e+="    <p>57 questions across all domains | 60 min</p>",e+='    <div style="display:flex;align-items:center;gap:0.5rem;">',e+='      <input type="checkbox" class="exam-dashboard-check dashboard-test-check" data-test-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="card-status">'+(n?"✅ Passed":"⬜ Not yet")+"</span>",e+="    </div>",e+='    <a href="/docs/'+(17+t.number)+"-exam-practice-test-"+t.number+'/" style="display:inline-block;margin-top:0.75rem;font-size:0.85rem;">→ Open test</a>',e+="  </div>"}),e+="</div>",e+='<div style="text-align:center;margin:2.5rem 0;">',e+='  <button class="btn-reset" id="exam-reset-all">🔄 Reset All Progress</button>',e+="</div>",e}function d(){window.initExamDashboard&&window.initExamDashboard()}window.refreshSidebarProgress=function(){var t=i(),e=r();l(t,e.completed,e.total)};function h(){w(),v(),document.getElementById("exam-dashboard-app")&&initExamDashboard();var t=i(),e=r();l(t,e.completed,e.total)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

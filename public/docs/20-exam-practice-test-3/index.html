@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Practice Test 3: SCM, Build Triggers &amp; Credentials# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: Source code management, build triggers, credentials management
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/complete_jenkins_notes/docs/20-exam-practice-test-3/">
+  <meta property="og:site_name" content="Jenkins Learning Path">
+  <meta property="og:title" content="📝 Practice Test 3: SCM, Build Triggers & Credentials">
+  <meta property="og:description" content="Practice Test 3: SCM, Build Triggers &amp; Credentials# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: Source code management, build triggers, credentials management">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="📝 Practice Test 3: SCM, Build Triggers & Credentials">
+  <meta itemprop="description" content="Practice Test 3: SCM, Build Triggers &amp; Credentials# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: Source code management, build triggers, credentials management">
+  <meta itemprop="wordCount" content="4320">
+
+<title>📝 Practice Test 3: SCM, Build Triggers &amp; Credentials • Jenkins Learning Path</title>
+<link rel="icon" href="/complete_jenkins_notes/favicon.png" >
+<link rel="manifest" href="/complete_jenkins_notes/manifest.json">
+<link rel="canonical" href="/complete_jenkins_notes/docs/20-exam-practice-test-3/">
+<link rel="stylesheet" href="/complete_jenkins_notes/book.min.a65532e79bcac2f95ba4108b26cdc17b0fe6382f603d8a6b72971bfa3261bf47.css" >
+
+
+  <script defer type="module" src="/complete_jenkins_notes/en.search.min.2d25fa1fe6842b36dbd4e753f3112a465146ff5f09912883575978a46c3ff969.js" ></script>
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<div class="book-sidebar-toggle">
+  <label for="menu-control" role="button" class="sidebar-toggle-label" title="Toggle sidebar">
+    <span class="sidebar-toggle-icon">◀</span>
+  </label>
+</div>
+<aside class="book-menu">
+  <label for="menu-control" class="book-menu-collapse-target" title="Expand sidebar" aria-label="Expand sidebar"></label>
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/complete_jenkins_notes/"><span>Jenkins Learning Path</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+<div class="sidebar-progress" id="sidebar-progress">
+  <div class="sidebar-progress-header">
+    <span class="sidebar-progress-label">📊 Progress</span>
+    <span class="sidebar-progress-pct" id="sidebar-progress-pct">0%</span>
+  </div>
+  <div class="sidebar-progress-track">
+    <div class="sidebar-progress-fill" id="sidebar-progress-fill" style="width:0%;"></div>
+  </div>
+  <div class="sidebar-progress-detail" id="sidebar-progress-detail">
+    <span id="sidebar-progress-chapters">0/17 chapters</span>
+    <span id="sidebar-progress-tests">0/7 tests</span>
+  </div>
+</div>
+
+
+
+<ul><li><a href="/complete_jenkins_notes/">Home</a></li><li><a href="/complete_jenkins_notes/docs/">Documentation</a></li></ul>
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/25-progress-dashboard/" class="">
+      📊 Progress Dashboard</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/26-start-here/" class="">
+      🚀 Start Here</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="">
+      Ch 1: Introduction to CI/CD &amp; Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="">
+      Ch 2: Jenkins Architecture &amp; Installation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="">
+      Ch 3: Configuration &amp; Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="">
+      Ch 4: Freestyle Projects &amp; Build Jobs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/" class="">
+      Ch 5: Pipeline Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/" class="">
+      Ch 6: Pipeline Syntax &amp; Steps</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/" class="">
+      Ch 7: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="">
+      Ch 8: Source Code Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/" class="">
+      Ch 9: Shared Libraries &amp; Reusability</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="">
+      Ch 10: Multi-Branch Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="">
+      Ch 11: Docker &amp; Kubernetes Integration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/" class="">
+      Ch 12: Testing, Security &amp; Compliance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="">
+      Ch 13: Jenkins Configuration as Code (JCasC)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="">
+      Ch 14: Production-Grade Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/15-exam-preparation-guide/" class="">
+      Ch 15: Exam Preparation Guide</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="">
+      Ch 16: Interview Questions &amp; Answers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="">
+      Ch 17: Real-World Scenario Questions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="">
+      📝 Practice Test 1: CI/CD Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="">
+      📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="active">
+      📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="">
+      📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="">
+      📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="">
+      📝 Practice Test 6: Production Jenkins &amp; Monitoring</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="">
+      📝 Practice Test 7: DevOps &amp; Real-World Scenarios</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/complete_jenkins_notes/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</h3>
+
+  <label for="toc-control">
+    
+  </label>
+</div>
+
+
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="practice-test-3-scm-build-triggers--credentials">Practice Test 3: SCM, Build Triggers &amp; Credentials<a class="anchor" href="#practice-test-3-scm-build-triggers--credentials">#</a></h1>
+<blockquote class='book-hint '>
+<p><strong>Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.</strong></p>
+</blockquote><hr>
+<h2 id="-exam-instructions">📋 Exam Instructions<a class="anchor" href="#-exam-instructions">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Detail</th>
+          <th>Value</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Questions</strong></td>
+          <td>57</td>
+      </tr>
+      <tr>
+          <td><strong>Time Limit</strong></td>
+          <td>60 minutes</td>
+      </tr>
+      <tr>
+          <td><strong>Passing Score</strong></td>
+          <td>~70% (40/57 correct)</td>
+      </tr>
+      <tr>
+          <td><strong>Format</strong></td>
+          <td>Multiple choice</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<div class="exam-controls">
+  <div class="exam-timer" data-minutes="60" data-test-id="exam-test-3">
+    <div class="timer-face">
+      <span class="timer-minutes">60</span>
+      <span class="timer-separator">:</span>
+      <span class="timer-seconds">00</span>
+    </div>
+    <div class="timer-controls">
+      <button class="timer-btn timer-start">▶ Start</button>
+      <button class="timer-btn timer-pause">⏸ Pause</button>
+      <button class="timer-btn timer-reset">↺ Reset</button>
+    </div>
+    <span class="timer-status">Time Remaining</span>
+  </div>
+  <div class="exam-progress-check">
+    <input type="checkbox" class="test-complete-check" id="test-complete-3" data-test-id="exam-test-3">
+    <label for="test-complete-3">✓ Mark test as completed</label>
+  </div>
+</div>
+<p><strong>57 Questions | Duration: 60 minutes | Focus: Source code management, build triggers, credentials management</strong></p>
+<hr>
+<h2 id="questions">Questions<a class="anchor" href="#questions">#</a></h2>
+<p><strong>1. Which SCM systems does Jenkins natively support?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Git, SVN, Mercurial</li>
+<li><input disabled="" type="checkbox"> Git only</li>
+<li><input disabled="" type="checkbox"> Git, SVN, CVS</li>
+<li><input disabled="" type="checkbox"> SVN only</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Git, SVN, CVS**
+<p>Jenkins natively supports Git, Subversion (SVN), and CVS through built-in plugins. Additional SCM plugins are available for Mercurial, Perforce, TFS, and others.</p>
+</details>
+<hr>
+<p><strong>2. What is SCM polling in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A system where Jenkins checks the SCM at regular intervals for changes</li>
+<li><input disabled="" type="checkbox"> A voting system for code changes</li>
+<li><input disabled="" type="checkbox"> A manual code review process</li>
+<li><input disabled="" type="checkbox"> A deployment approval mechanism</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A system where Jenkins checks the SCM at regular intervals for changes**
+<p>SCM polling is a trigger mechanism where Jenkins periodically checks the source code repository for changes. If new commits are detected, Jenkins triggers a build. This is less efficient than webhooks.</p>
+</details>
+<hr>
+<p><strong>3. What is the H in a Jenkins cron expression <code>H */4 * * *</code>?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Hourly trigger</li>
+<li><input disabled="" type="checkbox"> Hash symbol for distributed scheduling</li>
+<li><input disabled="" type="checkbox"> High priority</li>
+<li><input disabled="" type="checkbox"> Half-hour</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Hash symbol for distributed scheduling**
+<p>The <code>H</code> (hash) symbol in Jenkins cron expressions distributes job execution across the specified time period. Instead of all jobs starting at exactly the same minute, each job&rsquo;s start time is hashed based on its name, reducing load spikes.</p>
+</details>
+<hr>
+<p><strong>4. What is the purpose of a GitHub webhook in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To send Jenkins build status to GitHub</li>
+<li><input disabled="" type="checkbox"> To trigger Jenkins builds when GitHub events (like pushes) occur</li>
+<li><input disabled="" type="checkbox"> To synchronize Jenkins and GitHub users</li>
+<li><input disabled="" type="checkbox"> To backup Jenkins to GitHub</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To trigger Jenkins builds when GitHub events (like pushes) occur**
+<p>GitHub webhooks send HTTP POST requests to Jenkins when configured events occur (push, pull request, release). Jenkins receives the webhook and triggers builds automatically. This is more efficient than SCM polling as builds start immediately.</p>
+</details>
+<hr>
+<p><strong>5. What are the main credential types in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Username/password, SSH keys, secret text, certificate</li>
+<li><input disabled="" type="checkbox"> Only passwords</li>
+<li><input disabled="" type="checkbox"> Only SSH keys</li>
+<li><input disabled="" type="checkbox"> Only API tokens</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Username/password, SSH keys, secret text, certificate**
+<p>Jenkins supports multiple credential types: Username with password, SSH keys (private key), Secret text (API tokens), Secret file (X.509 certificates), and more. These are stored encrypted in the Jenkins credential store.</p>
+</details>
+<hr>
+<p><strong>6. How does Git polling differ from webhook triggers?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Polling is real-time; webhooks have delays</li>
+<li><input disabled="" type="checkbox"> Polling checks on a schedule; webhooks push events immediately</li>
+<li><input disabled="" type="checkbox"> Polling is more efficient</li>
+<li><input disabled="" type="checkbox"> Webhooks require more configuration</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Polling checks on a schedule; webhooks push events immediately**
+<p>SCM polling periodically checks for changes (e.g., every 5 minutes), introducing delay between commit and build. Webhooks notify Jenkins immediately when changes happen, enabling near-instant build triggers.</p>
+</details>
+<hr>
+<p><strong>7. What is a Jenkins credential provider?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A service that generates credentials</li>
+<li><input disabled="" type="checkbox"> A storage backend for Jenkins credentials</li>
+<li><input disabled="" type="checkbox"> A credential validation service</li>
+<li><input disabled="" type="checkbox"> A password manager</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A storage backend for Jenkins credentials**
+<p>Credential providers are storage backends for Jenkins credentials. Built-in providers include the Jenkins internal store. Additional providers like HashiCorp Vault, CyberArk, or Azure Key Vault can be integrated via plugins.</p>
+</details>
+<hr>
+<p><strong>8. What is the purpose of the <code>scm</code> step in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To test SCM connectivity</li>
+<li><input disabled="" type="checkbox"> To configure the SCM settings for the pipeline</li>
+<li><input disabled="" type="checkbox"> To clone the repository</li>
+<li><input disabled="" type="checkbox"> To display SCM information</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To configure the SCM settings for the pipeline**
+<p>The <code>scm</code> step is used to define the source code management configuration for a pipeline. It specifies the repository URL, credentials, branch, and other SCM-specific settings. The <code>checkout</code> step uses the SCM configuration to clone the repository.</p>
+</details>
+<hr>
+<p><strong>9. How do you configure Jenkins to use a specific Git branch?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> In the job configuration under Source Code Management</li>
+<li><input disabled="" type="checkbox"> By setting a parameter in the build script</li>
+<li><input disabled="" type="checkbox"> By editing the Jenkins config.xml</li>
+<li><input disabled="" type="checkbox"> By using a plugin</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**In the job configuration under Source Code Management**
+<p>For freestyle jobs and pipelines, the branch to build is specified in the SCM configuration section. You can use wildcards like <code>*/main</code> or <code>*/develop</code>, or reference a parameter like <code>$BRANCH_NAME</code>.</p>
+</details>
+<hr>
+<p><strong>10. What is SCM behavior in multibranch pipelines?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> All branches are built with the same Jenkinsfile</li>
+<li><input disabled="" type="checkbox"> Each branch can have its own Jenkinsfile</li>
+<li><input disabled="" type="checkbox"> Only the main branch is built</li>
+<li><input disabled="" type="checkbox"> Branches cannot be built automatically</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All branches are built with the same Jenkinsfile**
+<p>In multibranch pipelines, Jenkins automatically discovers branches and creates a pipeline for each branch that contains a Jenkinsfile. The Jenkinsfile can contain branch-specific logic using <code>when { branch }</code> conditions.</p>
+</details>
+<hr>
+<p><strong>11. What does the <code>git</code> step do in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Configures Git settings</li>
+<li><input disabled="" type="checkbox"> Clones a Git repository</li>
+<li><input disabled="" type="checkbox"> Installs Git on the agent</li>
+<li><input disabled="" type="checkbox"> Updates Git to the latest version</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Clones a Git repository**
+<p>The <code>git</code> step is a simplified way to clone a Git repository. It accepts parameters like <code>url</code>, <code>branch</code>, <code>credentialsId</code>, and <code>changelog</code>. It is a wrapper around the more verbose <code>checkout</code> step with GitSCM.</p>
+</details>
+<hr>
+<p><strong>12. What is the purpose of Git credentials binding?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To encrypt Git operations</li>
+<li><input disabled="" type="checkbox"> To securely authenticate Jenkins with Git repositories</li>
+<li><input disabled="" type="checkbox"> To create Git users</li>
+<li><input disabled="" type="checkbox"> To manage Git SSH keys</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To securely authenticate Jenkins with Git repositories**
+<p>Git credentials binding allows Jenkins to securely authenticate with Git repositories using stored credentials (username/password, SSH keys, or access tokens). This avoids hardcoding credentials in Jenkinsfiles.</p>
+</details>
+<hr>
+<p><strong>13. What is a webhook payload in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> The response from Jenkins to a webhook</li>
+<li><input disabled="" type="checkbox"> The HTTP request data sent by the SCM to Jenkins</li>
+<li><input disabled="" type="checkbox"> A hook for web developers</li>
+<li><input disabled="" type="checkbox"> A Jenkins plugin</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**The HTTP request data sent by the SCM to Jenkins**
+<p>A webhook payload is the HTTP POST request sent by GitHub, GitLab, or Bitbucket to Jenkins when a configured event occurs. The payload contains information about the event, including commit details, branch, and repository.</p>
+</details>
+<hr>
+<p><strong>14. How do you verify Jenkins is receiving webhook requests?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> By checking the Jenkins system log</li>
+<li><input disabled="" type="checkbox"> By monitoring the <code>/github-webhook/</code> endpoint logs</li>
+<li><input disabled="" type="checkbox"> By reviewing the build history</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Webhook activity can be verified by checking Jenkins system logs, monitoring the webhook endpoint logs (e.g., <code>/github-webhook/</code>), and reviewing webhook delivery logs on the SCM provider&rsquo;s side (GitHub/GitLab).</p>
+</details>
+<hr>
+<p><strong>15. What is the purpose of the <code>checkout</code> step in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To validate the SCM configuration</li>
+<li><input disabled="" type="checkbox"> To clone the repository and optionally switch branches</li>
+<li><input disabled="" type="checkbox"> To check for updates</li>
+<li><input disabled="" type="checkbox"> To verify credentials</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To clone the repository and optionally switch branches**
+<p>The <code>checkout</code> step is the most flexible way to clone a repository. It accepts an SCM configuration object that defines all checkout parameters including URL, credentials, branch, changelog, and submodule settings.</p>
+</details>
+<hr>
+<p><strong>16. What is sparse checkout in Git?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Cloning only specific files or directories instead of the entire repository</li>
+<li><input disabled="" type="checkbox"> Cloning the repository with limited history</li>
+<li><input disabled="" type="checkbox"> A lightweight Git installation</li>
+<li><input disabled="" type="checkbox"> A partial branch checkout</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Cloning only specific files or directories instead of the entire repository**
+<p>Sparse checkout allows cloning only specific paths from a Git repository. This reduces the clone time and disk space usage, particularly useful for large monorepos where only a subset of files is needed for the build.</p>
+</details>
+<hr>
+<p><strong>17. How do you configure Jenkins to use shallow Git clones?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using the <code>shallow()</code> option in GitSCM</li>
+<li><input disabled="" type="checkbox"> By setting the <code>depth</code> parameter in the Git checkout</li>
+<li><input disabled="" type="checkbox"> Using a plugin</li>
+<li><input disabled="" type="checkbox"> By editing the system configuration</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**By setting the `depth` parameter in the Git checkout**
+<p>Shallow clones can be configured in Jenkins by setting the <code>depth</code> parameter in the Git checkout configuration. This limits the number of commits fetched, reducing clone time and disk usage for repositories with long histories.</p>
+</details>
+<hr>
+<p><strong>18. What is the <code>Polling ignores commits in certain paths</code> feature?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> An option to skip polling for changes in specific file paths</li>
+<li><input disabled="" type="checkbox"> A feature to ignore all commit polling</li>
+<li><input disabled="" type="checkbox"> A way to skip certain repositories</li>
+<li><input disabled="" type="checkbox"> A method to filter webhook notifications</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**An option to skip polling for changes in specific file paths**
+<p>This feature in the Git plugin allows specifying excluded paths. Changes to files in those paths (like documentation, README, or configuration files) will not trigger a build, preventing unnecessary builds for non-code changes.</p>
+</details>
+<hr>
+<p><strong>19. What is the purpose of the &ldquo;Merge before build&rdquo; option?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To run builds in parallel</li>
+<li><input disabled="" type="checkbox"> To merge the feature branch with the target branch before building</li>
+<li><input disabled="" type="checkbox"> To merge build artifacts</li>
+<li><input disabled="" type="checkbox"> To combine multiple Jenkins jobs</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To merge the feature branch with the target branch before building**
+<p>The &ldquo;Merge before build&rdquo; option (in the Git plugin) creates a temporary merge of the source branch with the target branch and builds the merged result. This validates that the code works correctly when merged, catching integration issues early.</p>
+</details>
+<hr>
+<p><strong>20. What is the advantage of using SSH keys for Git authentication over passwords?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> SSH keys are faster</li>
+<li><input disabled="" type="checkbox"> SSH keys provide stronger security and can be used without interactive login</li>
+<li><input disabled="" type="checkbox"> SSH keys are easier to manage</li>
+<li><input disabled="" type="checkbox"> SSH keys work with all Git providers</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**SSH keys provide stronger security and can be used without interactive login**
+<p>SSH keys offer stronger security through public-key cryptography and enable non-interactive Git operations. They are ideal for automated systems like Jenkins where password-based authentication would require storing passwords insecurely.</p>
+</details>
+<hr>
+<p><strong>21. What is a Personal Access Token (PAT) in Git context?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A temporary password for Git operations</li>
+<li><input disabled="" type="checkbox"> An alternative to passwords for Git authentication with scoped permissions</li>
+<li><input disabled="" type="checkbox"> A token for Git GUI clients</li>
+<li><input disabled="" type="checkbox"> A session cookie</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**An alternative to passwords for Git authentication with scoped permissions**
+<p>A Personal Access Token is a token-based authentication method that allows restricting permissions (read, write, admin) and can be revoked independently of the user account. GitHub, GitLab, and Bitbucket all support PATs.</p>
+</details>
+<hr>
+<p><strong>22. What is the difference between <code>checkout</code> and <code>git</code> steps?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>checkout</code> is simpler; <code>git</code> is more configurable</li>
+<li><input disabled="" type="checkbox"> <code>git</code> is simpler; <code>checkout</code> provides more options</li>
+<li><input disabled="" type="checkbox"> They are identical</li>
+<li><input disabled="" type="checkbox"> <code>git</code> is for scripted pipelines; <code>checkout</code> is for declarative</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`git` is simpler; `checkout` provides more options**
+<p>The <code>git</code> step is a simplified wrapper for common Git checkout operations. The <code>checkout</code> step with GitSCM provides full control over checkout options including submodules, shallow clones, changelog, and advanced SCM settings.</p>
+</details>
+<hr>
+<p><strong>23. What is the purpose of the <code>changelog</code> option in Git checkout?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To generate a changelog file</li>
+<li><input disabled="" type="checkbox"> To retrieve commit changes since the last build</li>
+<li><input disabled="" type="checkbox"> To log checkout operations</li>
+<li><input disabled="" type="checkbox"> To display Git version</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To retrieve commit changes since the last build**
+<p>The <code>changelog</code> option controls whether Jenkins retrieves and displays commit information (changelog) since the last build. Enabling this provides detailed change information in build pages.</p>
+</details>
+<hr>
+<p><strong>24. What is Git LFS and how does Jenkins support it?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Git Large File Storage; supported via the Git LFS plugin</li>
+<li><input disabled="" type="checkbox"> Git Local File System; not supported</li>
+<li><input disabled="" type="checkbox"> Git Lightweight File System; built-in</li>
+<li><input disabled="" type="checkbox"> Git Logging File System; requires configuration</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Git Large File Storage; supported via the Git LFS plugin**
+<p>Git LFS (Large File Storage) replaces large files (binaries, archives, media) with text pointers while storing the actual file content on a remote server. Jenkins supports LFS through the Git LFS plugin.</p>
+</details>
+<hr>
+<p><strong>25. What does the <code>clean before checkout</code> option do?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Cleans the Jenkins workspace before cloning</li>
+<li><input disabled="" type="checkbox"> Cleans the Git repository</li>
+<li><input disabled="" type="checkbox"> Deletes old builds</li>
+<li><input disabled="" type="checkbox"> Removes stale credentials</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Cleans the Jenkins workspace before cloning**
+<p>The <code>clean before checkout</code> option forces a fresh checkout by deleting all untracked files and reverting changes in the workspace before cloning. This ensures builds start from a clean state, preventing contamination from previous builds.</p>
+</details>
+<hr>
+<p><strong>26. How do you trigger a build on a pull request in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using a webhook for pull request events</li>
+<li><input disabled="" type="checkbox"> Using SCM polling</li>
+<li><input disabled="" type="checkbox"> Using a scheduled trigger</li>
+<li><input disabled="" type="checkbox"> Using a manual trigger</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Using a webhook for pull request events**
+<p>Pull request builds are typically triggered via webhooks configured to fire on pull request events (opened, updated, merged). Multibranch Pipeline and GitHub Organization Folder projects automatically build pull requests when configured.</p>
+</details>
+<hr>
+<p><strong>27. What is the purpose of the GitHub Checks API?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To validate GitHub credentials</li>
+<li><input disabled="" type="checkbox"> To report build status as checks in GitHub pull requests</li>
+<li><input disabled="" type="checkbox"> To check for GitHub API limits</li>
+<li><input disabled="" type="checkbox"> To verify GitHub webhooks</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To report build status as checks in GitHub pull requests**
+<p>The GitHub Checks API allows Jenkins to report detailed build status directly in GitHub pull requests. This shows individual check results (build, test, lint), logs, and annotations inline in the GitHub UI.</p>
+</details>
+<hr>
+<p><strong>28. What is the role of <code>credentialsId</code> in the <code>git</code> step?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To specify the credential ID stored in Jenkins for authentication</li>
+<li><input disabled="" type="checkbox"> To generate credentials</li>
+<li><input disabled="" type="checkbox"> To validate credentials</li>
+<li><input disabled="" type="checkbox"> To delete credentials</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To specify the credential ID stored in Jenkins for authentication**
+<p>The <code>credentialsId</code> parameter in the <code>git</code> step references a stored credential in Jenkins by its ID. Jenkins looks up the credential and uses it for authentication when cloning the repository.</p>
+</details>
+<hr>
+<p><strong>29. What is Git submodule support in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A feature to recursively clone Git submodules</li>
+<li><input disabled="" type="checkbox"> A feature to create Git submodules</li>
+<li><input disabled="" type="checkbox"> A feature to convert repositories to submodules</li>
+<li><input disabled="" type="checkbox"> A feature to delete submodules</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A feature to recursively clone Git submodules**
+<p>Git submodule support in Jenkins recursively checks out submodules after the main repository is cloned. The Git plugin provides options to control which submodules are checked out and how they are updated.</p>
+</details>
+<hr>
+<p><strong>30. How do you prevent Jenkins from building on documentation-only changes?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using the &ldquo;Polling ignores commits in certain paths&rdquo; option</li>
+<li><input disabled="" type="checkbox"> Using a <code>when</code> condition with <code>changeset</code></li>
+<li><input disabled="" type="checkbox"> Both A and B</li>
+<li><input disabled="" type="checkbox"> This is not possible</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Both A and B**
+<p>Jenkins can skip builds for documentation changes using either the Git plugin&rsquo;s excluded paths option (at checkout time) or the <code>when { changeset }</code> directive in Declarative Pipeline (at stage execution time).</p>
+</details>
+<hr>
+<p><strong>31. What is the purpose of the <code>pollSCM</code> trigger in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To send SCM polling results to a monitoring system</li>
+<li><input disabled="" type="checkbox"> To enable periodic SCM polling for build triggers</li>
+<li><input disabled="" type="checkbox"> To check SCM server health</li>
+<li><input disabled="" type="checkbox"> To poll for new plugins</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To enable periodic SCM polling for build triggers**
+<p>The <code>pollSCM</code> trigger within the <code>triggers</code> directive enables Jenkins to periodically poll the SCM for changes. If changes are detected, the pipeline is automatically triggered.</p>
+</details>
+<hr>
+<p><strong>32. What is the difference between Git polling and a cron trigger?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Git polling checks for SCM changes; cron triggers are time-based regardless of changes</li>
+<li><input disabled="" type="checkbox"> They are identical</li>
+<li><input disabled="" type="checkbox"> Git polling is more reliable</li>
+<li><input disabled="" type="checkbox"> Cron triggers are only for freestyle jobs</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Git polling checks for SCM changes; cron triggers are time-based regardless of changes**
+<p>Git polling triggers builds only when changes are detected in the repository. Cron triggers run builds on a fixed schedule (e.g., nightly) regardless of whether code has changed.</p>
+</details>
+<hr>
+<p><strong>33. What is a build trigger chain in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A series of builds triggered sequentially based on completion</li>
+<li><input disabled="" type="checkbox"> Multiple builds triggered concurrently</li>
+<li><input disabled="" type="checkbox"> A build with multiple stages</li>
+<li><input disabled="" type="checkbox"> A build that runs on multiple agents</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A series of builds triggered sequentially based on completion**
+<p>A build trigger chain is a sequence where one job triggers another upon completion. This creates dependencies forming a chain (A triggers B, B triggers C), which is useful for multi-stage delivery pipelines with freestyle jobs.</p>
+</details>
+<hr>
+<p><strong>34. How do you pass parameters from one job to another in a trigger chain?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using the <code>build</code> step with parameters</li>
+<li><input disabled="" type="checkbox"> Using environment variables</li>
+<li><input disabled="" type="checkbox"> Using shared files</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Parameters can be passed between jobs using the <code>build</code> step with parameters, environment variables set in one job and read in another, or files written to shared storage. The <code>build</code> step with explicit parameters is the most reliable approach.</p>
+</details>
+<hr>
+<p><strong>35. What is a post-commit hook in Git?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A script that runs on the Git server after a commit</li>
+<li><input disabled="" type="checkbox"> A script that runs on the client after a commit</li>
+<li><input disabled="" type="checkbox"> A Jenkins plugin</li>
+<li><input disabled="" type="checkbox"> A Git command</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A script that runs on the client after a commit**
+<p>A post-commit hook is a client-side Git hook script that runs after a commit is created locally. It can be used to trigger Jenkins builds from the developer&rsquo;s machine, though server-side webhooks are more common for CI/CD.</p>
+</details>
+<hr>
+<p><strong>36. What is the purpose of the &ldquo;Force polling using workspace&rdquo; option in Jenkins Git plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To use the agent workspace for polling instead of the controller</li>
+<li><input disabled="" type="checkbox"> To force a full workspace recheck</li>
+<li><input disabled="" type="checkbox"> To force a Git pull instead of fetch</li>
+<li><input disabled="" type="checkbox"> To force checkout of a specific branch</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To use the agent workspace for polling instead of the controller**
+<p>This option uses the agent&rsquo;s workspace (instead of the controller) to perform SCM polling. This can improve polling performance for large repositories by utilizing agent resources and local caching.</p>
+</details>
+<hr>
+<p><strong>37. What is the purpose of the credentials binding plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To create credentials in Jenkins</li>
+<li><input disabled="" type="checkbox"> To securely inject credentials into build environments</li>
+<li><input disabled="" type="checkbox"> To delete expired credentials</li>
+<li><input disabled="" type="checkbox"> To audit credential usage</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To securely inject credentials into build environments**
+<p>The Credentials Binding plugin provides the <code>withCredentials</code> step for securely injecting stored credentials as environment variables. This allows pipelines to use secrets without exposing them in code or logs.</p>
+</details>
+<hr>
+<p><strong>38. What is the default Git branch in most modern Git hosting platforms?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> master</li>
+<li><input disabled="" type="checkbox"> main</li>
+<li><input disabled="" type="checkbox"> develop</li>
+<li><input disabled="" type="checkbox"> production</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**main**
+<p>GitHub, GitLab, and Bitbucket have migrated from <code>master</code> to <code>main</code> as the default branch name for new repositories, following community-wide efforts to adopt more inclusive terminology.</p>
+</details>
+<hr>
+<p><strong>39. How do you configure Jenkins to use a specific Git credential globally?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Under Jenkins &gt; Manage Credentials &gt; Global Credentials</li>
+<li><input disabled="" type="checkbox"> In each job configuration individually</li>
+<li><input disabled="" type="checkbox"> By editing Jenkins configuration files</li>
+<li><input disabled="" type="checkbox"> Using environment variables</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Under Jenkins > Manage Credentials > Global Credentials**
+<p>Global credentials are configured in Jenkins under Manage Jenkins &gt; Manage Credentials &gt; Global Credentials (unrestricted). These credentials can be used by any job or pipeline on the Jenkins instance.</p>
+</details>
+<hr>
+<p><strong>40. What is the role of the <code>SCM API</code> plugin in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To provide a unified API for different SCM systems</li>
+<li><input disabled="" type="checkbox"> To connect Jenkins to SCM databases</li>
+<li><input disabled="" type="checkbox"> To create SCM repositories</li>
+<li><input disabled="" type="checkbox"> To monitor SCM performance</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To provide a unified API for different SCM systems**
+<p>The SCM API plugin provides common abstractions for integrating various SCM systems with Jenkins. It defines interfaces that SCM plugins implement, enabling consistent behavior across Git, SVN, and other SCM providers.</p>
+</details>
+<hr>
+<p><strong>41. What is a Git merge conflict in Jenkins context?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> An error when Jenkins updates plugins</li>
+<li><input disabled="" type="checkbox"> A conflict between different code changes that cannot be automatically resolved</li>
+<li><input disabled="" type="checkbox"> A Jenkins configuration conflict</li>
+<li><input disabled="" type="checkbox"> A network connectivity issue</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A conflict between different code changes that cannot be automatically resolved**
+<p>A merge conflict occurs when Git cannot automatically merge changes from different branches. In Jenkins, this may happen during &ldquo;Merge before build&rdquo; operations, causing the build to fail until the conflict is manually resolved.</p>
+</details>
+<hr>
+<p><strong>42. What does the <code>gitTool</code> option do in the Git checkout?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Specifies which Git installation to use</li>
+<li><input disabled="" type="checkbox"> Installs Git on the agent</li>
+<li><input disabled="" type="checkbox"> Configures Git settings</li>
+<li><input disabled="" type="checkbox"> Updates Git to a specific version</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Specifies which Git installation to use**
+<p>The <code>gitTool</code> option in the Git plugin allows specifying the path or named Git installation to use for the checkout operation. Multiple Git versions can be configured in Global Tool Configuration.</p>
+</details>
+<hr>
+<p><strong>43. What is GitWeb in Jenkins context?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A web-based Git repository viewer integrated with Jenkins</li>
+<li><input disabled="" type="checkbox"> A Jenkins plugin for Git webhooks</li>
+<li><input disabled="" type="checkbox"> A Git server</li>
+<li><input disabled="" type="checkbox"> A web-based Git client</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A web-based Git repository viewer integrated with Jenkins**
+<p>GitWeb is a simple web-based Git repository viewer that can be integrated with Jenkins to browse repository content and history directly from the Jenkins UI, though it is less commonly used now.</p>
+</details>
+<hr>
+<p><strong>44. How do you set up Jenkins to build only specific folder paths in a monorepo?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using file path filters in SCM configuration</li>
+<li><input disabled="" type="checkbox"> Using multiple Jenkinsfiles per folder</li>
+<li><input disabled="" type="checkbox"> Using the <code>when { changeset }</code> directive</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Monorepo conditional builds can be achieved through file path filters in Git SCM configuration, multiple Jenkinsfiles with path-specific triggers, or the <code>when { changeset }</code> directive in Declarative Pipeline to skip stages that don&rsquo;t affect specific paths.</p>
+</details>
+<hr>
+<p><strong>45. What is the purpose of the <code>gitParameter</code> plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To add Git-related build parameters to parameterized jobs</li>
+<li><input disabled="" type="checkbox"> To configure Git settings</li>
+<li><input disabled="" type="checkbox"> To manage Git credentials</li>
+<li><input disabled="" type="checkbox"> To optimize Git performance</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To add Git-related build parameters to parameterized jobs**
+<p>The Git Parameter plugin adds dynamic Git parameters to build jobs, such as branch selectors, tag selectors, and revision selectors. These are populated dynamically from the Git repository when the build is triggered.</p>
+</details>
+<hr>
+<p><strong>46. What is a Jenkins multibranch pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A pipeline that automatically discovers and builds branches</li>
+<li><input disabled="" type="checkbox"> A pipeline with multiple stages</li>
+<li><input disabled="" type="checkbox"> A pipeline that runs on multiple agents</li>
+<li><input disabled="" type="checkbox"> A pipeline with multiple SCM sources</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A pipeline that automatically discovers and builds branches**
+<p>A multibranch pipeline automatically discovers branches in a Git repository and creates a pipeline for each branch that contains a Jenkinsfile. It manages branch indexing, automatic builds, and cleanup for deleted branches.</p>
+</details>
+<hr>
+<p><strong>47. What is the purpose of branch indexing in multibranch pipelines?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To index the Jenkinsfile for syntax highlighting</li>
+<li><input disabled="" type="checkbox"> To scan the repository for branches and create/delete pipelines accordingly</li>
+<li><input disabled="" type="checkbox"> To index build artifacts</li>
+<li><input disabled="" type="checkbox"> To measure branch performance</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To scan the repository for branches and create/delete pipelines accordingly**
+<p>Branch indexing scans the Git repository to discover new branches, create corresponding pipelines, and delete pipelines for removed branches. It runs periodically or can be triggered via webhooks.</p>
+</details>
+<hr>
+<p><strong>48. How do you configure Jenkins to build only specific branches in a multibranch pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using branch filters (e.g., <code>main</code>, <code>develop</code>, <code>feature/*</code>)</li>
+<li><input disabled="" type="checkbox"> By manually creating jobs for each branch</li>
+<li><input disabled="" type="checkbox"> By editing Jenkins configuration</li>
+<li><input disabled="" type="checkbox"> By using environment variables</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Using branch filters (e.g., `main`, `develop`, `feature/*`)**
+<p>Multibranch pipeline projects support branch filters that specify which branches should be built. Filters can use branch name patterns, regular expressions, or whitelist/blacklist strategies.</p>
+</details>
+<hr>
+<p><strong>49. What is the purpose of the <code>discoverBranches</code> strategy in multibranch pipelines?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To discover branches from the SCM</li>
+<li><input disabled="" type="checkbox"> To choose which branch discovery strategy to use (e.g., all branches, only main)</li>
+<li><input disabled="" type="checkbox"> To rename branches</li>
+<li><input disabled="" type="checkbox"> To monitor branch growth</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To choose which branch discovery strategy to use (e.g., all branches, only main)**
+<p>The <code>discoverBranches</code> strategy defines how Jenkins discovers branches. Options include discovering all branches, only main/master branches, or branches matching specific naming patterns.</p>
+</details>
+<hr>
+<p><strong>50. What is a GitHub Organization Folder in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A folder that organizes GitHub repositories in Jenkins</li>
+<li><input disabled="" type="checkbox"> A project type that discovers all repositories in a GitHub org and creates pipelines</li>
+<li><input disabled="" type="checkbox"> A folder for storing GitHub configuration</li>
+<li><input disabled="" type="checkbox"> A GitHub repository organization tool</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A project type that discovers all repositories in a GitHub org and creates pipelines**
+<p>A GitHub Organization Folder automatically scans a GitHub organization or account, discovers all repositories containing Jenkinsfiles, and creates multibranch pipelines for each. It fully automates project creation for GitHub-hosted code.</p>
+</details>
+<hr>
+<p><strong>51. What does the SCM step <code>checkout scm: scmGit(...)</code> do?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Checks out code using Git with explicit configuration</li>
+<li><input disabled="" type="checkbox"> Checks out the default SCM configured in the job</li>
+<li><input disabled="" type="checkbox"> Checks out code from SVN</li>
+<li><input disabled="" type="checkbox"> Validates SCM configuration</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Checks out code using Git with explicit configuration**
+<p><code>checkout scm: scmGit(...)</code> uses the Git pipeline step to explicitly configure and perform a Git checkout. This provides full control over checkout options including repository URL, credentials, branch, and clone behavior.</p>
+</details>
+<hr>
+<p><strong>52. What is the purpose of the <code>generic-webhook-trigger</code> plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To trigger Jenkins jobs from any webhook source</li>
+<li><input disabled="" type="checkbox"> To send webhook notifications</li>
+<li><input disabled="" type="checkbox"> To generate webhook URLs</li>
+<li><input disabled="" type="checkbox"> To test webhook connectivity</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To trigger Jenkins jobs from any webhook source**
+<p>The Generic Webhook Trigger plugin allows triggering Jenkins jobs from any system that can send HTTP POST requests. It supports extracting parameters from JSON/XML payloads and filtering based on payload content.</p>
+</details>
+<hr>
+<p><strong>53. How do you filter webhook triggers based on payload content?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> By using the optional filter expressions in the webhook trigger configuration</li>
+<li><input disabled="" type="checkbox"> By using regular expressions on the request body</li>
+<li><input disabled="" type="checkbox"> By using <code>when</code> conditions in the pipeline</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Webhook triggers can be filtered at multiple levels: the generic webhook trigger plugin supports regex filters on payload content, pipelines can use <code>when</code> conditions to check variables, and some SCM webhooks support event-type filtering.</p>
+</details>
+<hr>
+<p><strong>54. What is the function of the <code>secret text</code> credential type?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To store passwords</li>
+<li><input disabled="" type="checkbox"> To store API tokens and other generic secrets</li>
+<li><input disabled="" type="checkbox"> To store SSH keys</li>
+<li><input disabled="" type="checkbox"> To store certificates</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To store API tokens and other generic secrets**
+<p>The &ldquo;Secret text&rdquo; credential type stores arbitrary text secrets like API tokens, access keys, or any sensitive string. These are encrypted at rest in Jenkins and masked in logs and UI.</p>
+</details>
+<hr>
+<p><strong>55. What is the purpose of the &ldquo;Secret file&rdquo; credential type in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To upload and store a file containing sensitive data</li>
+<li><input disabled="" type="checkbox"> To store secrets in a file format</li>
+<li><input disabled="" type="checkbox"> To encrypt build files</li>
+<li><input disabled="" type="checkbox"> To store binary secrets</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To upload and store a file containing sensitive data**
+<p>The &ldquo;Secret file&rdquo; credential type allows uploading an entire file (like a service account JSON key, certificate file, or SSH private key) as a credential. Jenkins securely stores the file and makes it available to builds.</p>
+</details>
+<hr>
+<p><strong>56. How do you revoke credentials in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> By deleting the credential from the credentials store</li>
+<li><input disabled="" type="checkbox"> By disabling the credential</li>
+<li><input disabled="" type="checkbox"> By setting an expiry date</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Credentials can be revoked in Jenkins by deleting them from the credential store, disabling them, or setting an expiration date. It&rsquo;s also recommended to rotate or revoke the underlying secret (e.g., GitHub token) independently.</p>
+</details>
+<hr>
+<p><strong>57. What is best practice for credential rotation in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Rotate credentials periodically and update them in Jenkins</li>
+<li><input disabled="" type="checkbox"> Never change credentials once set</li>
+<li><input disabled="" type="checkbox"> Use the same credential for all systems</li>
+<li><input disabled="" type="checkbox"> Store credentials in Jenkinsfiles</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Rotate credentials periodically and update them in Jenkins**
+<p>Best practice is to rotate credentials on a regular schedule (e.g., every 90 days) and update them in the Jenkins credential store. Automation tools or plugins can help manage credential rotation, and external providers like HashiCorp Vault support dynamic secrets.</p>
+</details>
+<hr>
+<blockquote class='book-hint '>
+<p><strong>Pro tip:</strong> After completing this test, check your score per topic. If you scored below 70% in any area, review the corresponding chapters in this guide before attempting the next practice test.</p>
+</blockquote></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="flex align-center">
+        <img src="/complete_jenkins_notes/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="flex align-center">
+        <span>📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</span>
+        <img src="/complete_jenkins_notes/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){"use strict";document.querySelectorAll("pre > code").forEach(function(t){var n,s=t.parentElement;if(!s||s.tagName!=="PRE")return;if(s.querySelector(".copy-button"))return;s.style.position="relative",n=document.createElement("button"),n.className="copy-button",n.textContent="Copy",n.setAttribute("aria-label","Copy code to clipboard"),n.setAttribute("type","button"),s.appendChild(n),n.addEventListener("click",function(){var s=t.textContent||"";navigator.clipboard?navigator.clipboard.writeText(s).then(function(){n.textContent="Copied!",n.classList.add("copied"),setTimeout(function(){n.textContent="Copy",n.classList.remove("copied")},2e3)}).catch(function(){e(s,n)}):e(s,n)})});function e(e,t){var n=document.createElement("textarea");n.value=e,n.style.position="fixed",n.style.opacity="0",document.body.appendChild(n),n.select();try{document.execCommand("copy"),t.textContent="Copied!",t.classList.add("copied"),setTimeout(function(){t.textContent="Copy",t.classList.remove("copied")},2e3)}catch{t.textContent="Error",setTimeout(function(){t.textContent="Copy"},2e3)}document.body.removeChild(n)}})()</script>
+  
+
+        
+  
+    <script>(function(){"use strict";var t,a,o="jenkins_exam_progress",c="jenkins_chapter_progress";function e(e){this.element=e,this.minutesDisplay=e.querySelector(".timer-minutes"),this.secondsDisplay=e.querySelector(".timer-seconds"),this.statusEl=e.querySelector(".timer-status"),this.totalSeconds=parseInt(e.dataset.minutes||"60",10)*60,this.remaining=this.totalSeconds,this.interval=null,this.running=!1,this.finished=!1;var n,s,o,i,t=this.loadState();t&&t.remaining>0&&!t.finished&&(this.remaining=t.remaining),this.updateDisplay(),n=this,s=e.querySelector(".timer-start"),o=e.querySelector(".timer-pause"),i=e.querySelector(".timer-reset"),s&&s.addEventListener("click",function(){n.start()}),o&&o.addEventListener("click",function(){n.pause()}),i&&i.addEventListener("click",function(){n.reset()}),t&&t.running&&this.start()}e.prototype.start=function(){if(this.finished)return;if(this.running)return;this.running=!0,this.element.classList.add("timer-running"),this.element.classList.remove("timer-paused");var e=this;this.interval=setInterval(function(){e.remaining--,e.updateDisplay(),e.saveState(),e.remaining<=0&&(e.remaining=0,e.updateDisplay(),e.finish())},1e3)},e.prototype.pause=function(){if(!this.running)return;this.running=!1,this.element.classList.remove("timer-running"),this.element.classList.add("timer-paused"),clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.reset=function(){this.pause(),this.remaining=this.totalSeconds,this.finished=!1,this.element.classList.remove("timer-finished"),this.element.classList.remove("timer-paused"),this.statusEl.textContent="Time Remaining",this.updateDisplay(),this.saveState(),localStorage.removeItem(this.getTimerStorageKey())},e.prototype.finish=function(){this.running=!1,this.finished=!0,this.element.classList.remove("timer-running"),this.element.classList.add("timer-finished"),this.statusEl.textContent="⏰ Time's Up!",clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.updateDisplay=function(){var e=Math.floor(this.remaining/60),t=this.remaining%60;this.minutesDisplay.textContent=String(e).padStart(2,"0"),this.secondsDisplay.textContent=String(t).padStart(2,"0"),this.remaining<=300&&this.remaining>0?this.element.classList.add("timer-warning"):this.element.classList.remove("timer-warning")},e.prototype.getTimerStorageKey=function(){return o+"_timer_"+this.element.dataset.testId},e.prototype.loadState=function(){try{var e=localStorage.getItem(this.getTimerStorageKey());return e?JSON.parse(e):null}catch{return null}},e.prototype.saveState=function(){try{var e={remaining:this.remaining,running:this.running,finished:this.finished,savedAt:Date.now()};localStorage.setItem(this.getTimerStorageKey(),JSON.stringify(e))}catch{}},document.querySelectorAll(".exam-timer").forEach(function(t){new e(t)});function f(e,t){try{var s=n();s[e]=t,localStorage.setItem(o,JSON.stringify(s)),m()}catch{}}function n(){try{var e=localStorage.getItem(o);return e?JSON.parse(e):{}}catch{return{}}}function _(){var e=n();return Object.keys(e).filter(function(t){return e[t]===!0}).length}function p(){return 7}function m(){var t=_(),e=p(),n=e>0?Math.round(t/e*100):0,a=i(),s=document.getElementById("exam-progress-bar"),o=document.getElementById("exam-progress-text");s&&(s.style.width=n+"%",s.textContent=n>15?n+"%":""),o&&(o.textContent=t+" of "+e+" tests completed"),l(a,t,e)}function l(e,t,n){var s,o,l,i=document.getElementById("sidebar-progress-fill"),a=document.getElementById("sidebar-progress-pct"),r=document.getElementById("sidebar-progress-chapters"),c=document.getElementById("sidebar-progress-tests");if(!i)return;s=e.total+n,l=e.completed+t,o=s>0?Math.round(l/s*100):0,i.style.width=o+"%",a&&(a.textContent=o+"%"),r&&(r.textContent=e.completed+"/"+e.total+" chapters"),c&&(c.textContent=t+"/"+n+" tests")}document.addEventListener("change",function(e){if(e.target&&e.target.matches(".test-complete-check")){var t=e.target.dataset.testId;t&&f(t,e.target.checked)}});function w(){var e=n();document.querySelectorAll(".test-complete-check").forEach(function(t){var n=t.dataset.testId;n&&e[n]===!0&&(t.checked=!0)}),m()}t=[{id:"01-introduction-to-ci-cd-and-jenkins",title:"Ch 1: Introduction to CI/CD & Jenkins",number:1,section:"Foundation"},{id:"02-jenkins-architecture-and-installation",title:"Ch 2: Jenkins Architecture & Installation",number:2,section:"Foundation"},{id:"03-jenkins-configuration-and-management",title:"Ch 3: Configuration & Management",number:3,section:"Foundation"},{id:"04-freestyle-projects-and-build-jobs",title:"Ch 4: Freestyle Projects & Build Jobs",number:4,section:"Foundation"},{id:"05-pipeline-fundamentals",title:"Ch 5: Pipeline Fundamentals",number:5,section:"Core Skills"},{id:"06-pipeline-syntax-and-steps",title:"Ch 6: Pipeline Syntax & Steps",number:6,section:"Core Skills"},{id:"07-agents-nodes-and-distributed-builds",title:"Ch 7: Agents, Nodes & Distributed Builds",number:7,section:"Core Skills"},{id:"08-source-code-management",title:"Ch 8: Source Code Management",number:8,section:"Core Skills"},{id:"09-shared-libraries-and-reusability",title:"Ch 9: Shared Libraries & Reusability",number:9,section:"Advanced"},{id:"10-multi-branch-pipelines",title:"Ch 10: Multi-Branch Pipelines",number:10,section:"Advanced"},{id:"11-jenkins-docker-and-kubernetes",title:"Ch 11: Docker & Kubernetes Integration",number:11,section:"Advanced"},{id:"12-testing-security-and-compliance",title:"Ch 12: Testing, Security & Compliance",number:12,section:"Advanced"},{id:"13-jenkins-configuration-as-code",title:"Ch 13: Jenkins Configuration as Code (JCasC)",number:13,section:"Production & Exam Prep"},{id:"14-production-grade-jenkins",title:"Ch 14: Production-Grade Jenkins",number:14,section:"Production & Exam Prep"},{id:"15-exam-preparation-guide",title:"Ch 15: Exam Preparation Guide",number:15,section:"Production & Exam Prep"},{id:"16-interview-questions",title:"Ch 16: Interview Questions & Answers",number:16,section:"Bonus"},{id:"17-real-world-scenarios",title:"Ch 17: Real-World Scenario Questions",number:17,section:"Bonus"}],a=[{id:"exam-test-1",title:"Practice Test 1",number:1},{id:"exam-test-2",title:"Practice Test 2",number:2},{id:"exam-test-3",title:"Practice Test 3",number:3},{id:"exam-test-4",title:"Practice Test 4",number:4},{id:"exam-test-5",title:"Practice Test 5",number:5},{id:"exam-test-6",title:"Practice Test 6",number:6},{id:"exam-test-7",title:"Practice Test 7",number:7}];function s(){try{var e=localStorage.getItem(c);return e?JSON.parse(e):{}}catch{return{}}}function u(e,t){try{var n=s();n[e]=n[e]||{},Object.keys(t).forEach(function(s){n[e][s]=t[s]}),localStorage.setItem(c,JSON.stringify(n))}catch{}}function i(){var o=s(),e=0,n=0;return t.forEach(function(t){var s=o[t.id];s&&(s.read&&e++,s.completed&&n++)}),{read:e,completed:n,total:t.length}}function r(){var t=n(),e=0;return a.forEach(function(n){t[n.id]===!0&&e++}),{completed:e,total:a.length}}function g(){var e=window.location.pathname.match(/\/docs\/(\d+-[^/]+)\//);return e?e[1]:null}function v(){var e=g(),n=e&&t.some(function(t){return t.id===e});n&&(b(e),j(e))}function b(e){var t=s();(!t[e]||!t[e].read)&&u(e,{read:!0,readAt:Date.now()})}function j(e){var t,n,i,a,r,o=document.querySelector(".book-article");if(!o)return;if(o.querySelector(".chapter-complete-check"))return;a=s(),r=a[e]||{},i=r.completed===!0,t=document.createElement("div"),t.className="chapter-complete-check",t.innerHTML='<hr><div class="chapter-progress-bar"><input type="checkbox" id="ch-cpl-'+e+'" class="chapter-complete-checkbox" data-chapter-id="'+e+'"'+(i?" checked":"")+'><label for="ch-cpl-'+e+'" class="chapter-complete-label">✓ Mark this chapter as completed</label><span class="chapter-status-badge">'+(i?"✅ Completed":"📖 Reading")+"</span></div>",o.appendChild(t),n=t.querySelector(".chapter-complete-checkbox"),n.addEventListener("change",function(){u(e,{completed:n.checked,completedAt:n.checked?Date.now():null});var s=t.querySelector(".chapter-status-badge");s.textContent=n.checked?"✅ Completed":"📖 Reading"})}window.initExamDashboard=function(){var e,t=document.getElementById("exam-dashboard-app");if(!t)return;t.innerHTML=y(),document.querySelectorAll(".dashboard-chapter-check").forEach(function(e){e.addEventListener("change",function(){u(e.dataset.chapterId,{completed:e.checked,completedAt:e.checked?Date.now():null}),d()})}),document.querySelectorAll(".dashboard-test-check").forEach(function(e){e.addEventListener("change",function(){f(e.dataset.testId,e.checked),d()})}),e=document.getElementById("exam-reset-all"),e&&e.addEventListener("click",function(){confirm("Reset ALL progress (chapters and tests)? This cannot be undone.")&&(localStorage.removeItem(o),localStorage.removeItem(c),d())})};function y(){var m,o=i(),c=r(),u=s(),f=n(),d=o.total+c.total,h=o.completed+c.completed,l=d>0?Math.round(h/d*100):0,e="";return e+='<div class="exam-dashboard-header">',e+="  <h1>📊 Your Learning Dashboard</h1>",e+='  <p class="exam-progress-summary">Track your Jenkins learning journey — from chapters to practice exams</p>',e+="</div>",e+='<div class="exam-combined-progress">',e+='  <div class="exam-progress-bar-wrapper" style="max-width:100%;">',e+='    <div class="exam-progress-bar-fill" id="dash-combined-bar" style="width:'+l+'%;">'+(l>15?l+"%":"")+"</div>",e+="  </div>",e+='  <p class="exam-progress-summary" style="text-align:center;margin-top:0.75rem;">'+h+" of "+d+" total items completed</p>",e+="</div>",e+='<div class="exam-stats">',e+='  <div class="exam-stat-card"><span class="stat-number">'+o.completed+'</span><span class="stat-label">of '+o.total+" Chapters</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+o.read+'</span><span class="stat-label">Chapters Read</span></div>',e+='  <div class="exam-stat-card"><span class="stat-number">'+c.completed+'</span><span class="stat-label">of '+c.total+" Tests Passed</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+l+'%</span><span class="stat-label">Overall Progress</span></div>',e+="</div>",e+='<h2 style="margin-top:2.5rem;">📚 Learning Progress</h2>',e+='<div class="exam-dashboard-grid">',m=["Foundation","Core Skills","Advanced","Production & Exam Prep","Bonus"],m.forEach(function(n){if(s=t.filter(function(e){return e.section===n}),s.length===0)return;var s,i,a=0,o=0;s.forEach(function(e){var t=u[e.id];t&&(t.read&&a++,t.completed&&o++)}),i=Math.round(o/s.length*100),e+='<div class="dashboard-section-card">',e+='  <div class="dashboard-section-header">',e+='    <span class="dashboard-section-badge">'+n+"</span>",e+='    <span class="dashboard-section-count">'+o+"/"+s.length+"</span>",e+="  </div>",e+='  <div class="dashboard-section-bar-wrapper"><div class="dashboard-section-bar-fill" style="width:'+i+'%;"></div></div>',e+='  <div class="dashboard-section-chapters">',s.forEach(function(t){var s=u[t.id]||{},n=s.completed===!0,o=s.read===!0,i=n?"✅":o?"📖":"⬜";e+='    <div class="dashboard-chapter-row'+(n?" completed":"")+'" title="'+t.title+'">',e+='      <input type="checkbox" class="dashboard-chapter-check" data-chapter-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="dashboard-chapter-status">'+i+"</span>",e+='      <span class="dashboard-chapter-title">'+t.title+"</span>",e+="    </div>"}),e+="  </div>",e+="</div>"}),e+="</div>",e+='<h2 style="margin-top:2.5rem;">📝 Practice Test Progress</h2>',e+='<div class="exam-dashboard-grid">',a.forEach(function(t){var n=f[t.id]===!0;e+='  <div class="exam-dashboard-card'+(n?" completed":"")+'">',e+="    <h3>Practice Test "+t.number+"</h3>",e+="    <p>57 questions across all domains | 60 min</p>",e+='    <div style="display:flex;align-items:center;gap:0.5rem;">',e+='      <input type="checkbox" class="exam-dashboard-check dashboard-test-check" data-test-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="card-status">'+(n?"✅ Passed":"⬜ Not yet")+"</span>",e+="    </div>",e+='    <a href="/docs/'+(17+t.number)+"-exam-practice-test-"+t.number+'/" style="display:inline-block;margin-top:0.75rem;font-size:0.85rem;">→ Open test</a>',e+="  </div>"}),e+="</div>",e+='<div style="text-align:center;margin:2.5rem 0;">',e+='  <button class="btn-reset" id="exam-reset-all">🔄 Reset All Progress</button>',e+="</div>",e}function d(){window.initExamDashboard&&window.initExamDashboard()}window.refreshSidebarProgress=function(){var t=i(),e=r();l(t,e.completed,e.total)};function h(){w(),v(),document.getElementById("exam-dashboard-app")&&initExamDashboard();var t=i(),e=r();l(t,e.completed,e.total)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

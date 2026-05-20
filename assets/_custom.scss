@@ -1,0 +1,1031 @@
+/* ===========================================
+   Custom Dark Theme Overrides
+   Developer-friendly polish on top of the
+   Hugo Book theme's Nord-based dark theme
+   =========================================== */
+
+/* Smooth theme transitions */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Code block enhancements */
+.book-page pre {
+  border-radius: 8px;
+  padding: 1.25rem 1rem;
+  position: relative; /* for copy button positioning */
+}
+
+.book-page code {
+  font-size: 0.875rem;
+}
+
+/* Inline code styling */
+.book-page :not(pre) > code {
+  background: var(--gray-100);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.85em;
+  border: 1px solid var(--gray-200);
+}
+
+/* Table styling for better readability */
+.book-page table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.book-page th,
+.book-page td {
+  border: 1px solid var(--gray-200);
+  padding: 0.75rem 1rem;
+}
+
+.book-page th {
+  font-weight: 600;
+  background: var(--gray-100);
+}
+
+/* Blockquote styling */
+.book-page blockquote {
+  border-left: 4px solid var(--color-link);
+  background: var(--gray-100);
+  border-radius: 0 8px 8px 0;
+  padding: 0.75rem 1.25rem;
+  margin: 1.5rem 0;
+}
+
+.book-page blockquote p {
+  margin: 0.25rem 0;
+}
+
+/* Sidebar / Menu styling */
+.book-menu {
+  font-size: 0.9rem;
+}
+
+.book-menu a {
+  transition: color 0.2s ease;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+}
+
+.book-menu a:hover {
+  color: var(--color-link);
+  background: var(--gray-100);
+}
+
+/* Active menu item */
+.book-menu a.active {
+  color: var(--color-link);
+  font-weight: 600;
+  background: var(--gray-100);
+}
+
+/* Header styling */
+.book-header {
+  border-bottom: 1px solid var(--gray-200);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Smooth hover for links */
+a {
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+/* Heading anchors */
+.book-page h1, .book-page h2, .book-page h3, .book-page h4 {
+  position: relative;
+}
+
+.book-page h1 {
+  border-bottom: 2px solid var(--gray-200);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.book-page h2 {
+  border-bottom: 1px solid var(--gray-200);
+  padding-bottom: 0.3rem;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+/* Mark checkboxes in task lists */
+.book-page input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.1);
+  accent-color: var(--color-link);
+}
+
+/* Horizontal rule styling */
+.book-page hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--gray-200),
+    transparent
+  );
+  margin: 2rem 0;
+}
+
+/* Image styling */
+.book-page img {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  margin: 1rem 0;
+}
+
+/* Definition list styling for KV pairs */
+.book-page dt {
+  font-weight: 600;
+  color: var(--color-link);
+}
+
+.book-page dd {
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Custom scrollbar for dark theme */
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--body-background);
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--gray-500);
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: var(--color-link);
+}
+
+/* Theme toggle button styling */
+.book-header .book-header-toggle {
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  transition: background-color 0.2s ease;
+}
+
+.book-header .book-header-toggle:hover {
+  background: var(--gray-100);
+}
+
+/* Search field enhancement */
+.book-search input {
+  border-radius: 8px;
+  border: 1px solid var(--gray-200);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-search input:focus {
+  outline: none;
+  border-color: var(--color-link);
+  box-shadow: 0 0 0 3px rgba(129, 161, 193, 0.2);
+}
+
+/* Markdown content line spacing */
+.book-page p {
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.book-page li {
+  line-height: 1.6;
+  margin-bottom: 0.25rem;
+}
+
+/* Tag/category badges for exams section */
+.book-page .badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Responsive table container */
+.book-page .table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+}
+
+/* ===========================================
+   Exam Timer Styles
+   Countdown timer for practice tests
+   =========================================== */
+
+.exam-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 2rem;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+/* Timer Display */
+.exam-timer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.timer-face {
+  display: flex;
+  align-items: baseline;
+  gap: 0.1rem;
+  font-variant-numeric: tabular-nums;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--body-font-color);
+  background: var(--body-background);
+  padding: 0.35rem 0.85rem;
+  border-radius: 8px;
+  border: 1px solid var(--gray-200);
+  min-width: 7rem;
+  text-align: center;
+  transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+}
+
+.timer-face .timer-minutes {
+  min-width: 2.5ch;
+}
+
+.timer-face .timer-separator {
+  animation: timer-blink 1s step-end infinite;
+}
+
+.timer-face .timer-seconds {
+  min-width: 2.5ch;
+}
+
+/* Blinking colon only when running */
+.timer-running .timer-separator {
+  animation: timer-blink 1s step-end infinite;
+}
+
+.timer-paused .timer-separator,
+.timer-finished .timer-separator {
+  animation: none;
+  opacity: 0.4;
+}
+
+@keyframes timer-blink {
+  50% { opacity: 0; }
+}
+
+/* Timer status text */
+.timer-status {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  white-space: nowrap;
+}
+
+/* Timer buttons */
+.timer-controls {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.timer-btn {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  font-family: inherit;
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  background: var(--body-background);
+  color: var(--body-font-color);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  line-height: 1.4;
+}
+
+.timer-btn:hover {
+  background: var(--gray-200);
+  border-color: var(--gray-400);
+}
+
+.timer-btn:active {
+  transform: scale(0.95);
+}
+
+.timer-btn.timer-start {
+  background: var(--color-link);
+  color: #fff;
+  border-color: var(--color-link);
+}
+
+.timer-btn.timer-start:hover {
+  opacity: 0.9;
+}
+
+.timer-btn.timer-pause {
+  display: none;
+}
+
+.timer-running .timer-pause {
+  display: inline-block;
+}
+
+.timer-running .timer-start {
+  display: none;
+}
+
+/* Warning state (last 5 minutes) */
+.timer-warning .timer-face {
+  color: #e05a47;
+  border-color: #e05a47;
+  background: #fef2f1;
+}
+
+.timer-warning .timer-status {
+  color: #e05a47;
+  font-weight: 600;
+}
+
+/* Finished state */
+.timer-finished .timer-face {
+  color: #c0392b;
+  border-color: #c0392b;
+  background: #fdecea;
+}
+
+.timer-finished .timer-status {
+  color: #c0392b;
+  font-weight: 700;
+}
+
+.timer-finished .timer-btn.timer-start {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Progress Checkbox */
+.exam-progress-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+
+.exam-progress-check input[type="checkbox"] {
+  transform: scale(1.2);
+  accent-color: var(--color-link);
+  cursor: pointer;
+}
+
+.exam-progress-check label {
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ===========================================
+   Progress Dashboard Styles
+   =========================================== */
+
+.exam-dashboard-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  padding: 2rem;
+  background: var(--gray-100);
+  border-radius: 12px;
+  border: 1px solid var(--gray-200);
+}
+
+.exam-dashboard-header h1 {
+  border-bottom: none;
+  margin-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.exam-dashboard-header .exam-progress-summary {
+  font-size: 1.1rem;
+  color: var(--gray-500);
+}
+
+.exam-progress-bar-wrapper {
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem auto;
+  background: var(--gray-200);
+  border-radius: 999px;
+  height: 1.5rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.exam-progress-bar-fill {
+  height: 100%;
+  background: var(--color-link);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+  min-width: 0;
+}
+
+.exam-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.exam-dashboard-card {
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  padding: 1.25rem;
+  background: var(--body-background);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.exam-dashboard-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-color: var(--gray-300);
+}
+
+.exam-dashboard-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.05rem;
+}
+
+.exam-dashboard-card p {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  margin-bottom: 0.75rem;
+}
+
+.exam-dashboard-card .exam-dashboard-check {
+  transform: scale(1.3);
+  accent-color: var(--color-link);
+  cursor: pointer;
+}
+
+.exam-dashboard-card .exam-dashboard-check:checked ~ .card-status {
+  color: var(--color-link);
+  font-weight: 600;
+}
+
+.exam-dashboard-card .card-status {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin-left: 0.5rem;
+}
+
+.exam-dashboard-card.completed {
+  border-color: var(--color-link);
+  background: rgba(94, 129, 172, 0.05);
+}
+
+.btn-reset {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  border: 1px solid #e05a47;
+  border-radius: 8px;
+  background: transparent;
+  color: #e05a47;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  margin-top: 1rem;
+}
+
+.btn-reset:hover {
+  background: #e05a47;
+  color: #fff;
+}
+
+.btn-reset:active {
+  transform: scale(0.97);
+}
+
+/* Stats summary row */
+.exam-stats {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+}
+
+.exam-stat-card {
+  text-align: center;
+  padding: 1rem 1.5rem;
+  background: var(--body-background);
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  min-width: 120px;
+}
+
+.exam-stat-card .stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-link);
+  display: block;
+}
+
+.exam-stat-card .stat-label {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin-top: 0.25rem;
+  display: block;
+}
+
+/* ===========================================
+   Code Block Copy Button
+   Visible copy button on code blocks
+   =========================================== */
+.copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  padding: 0.25rem 0.65rem;
+  font-size: 0.75rem;
+  font-family: inherit;
+  line-height: 1.4;
+  border: 1px solid var(--gray-200);
+  border-radius: 6px;
+  background: var(--gray-100);
+  color: var(--gray-500);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.copy-button:hover {
+  background: var(--gray-200);
+  color: var(--body-font-color);
+  border-color: var(--gray-500);
+}
+
+.copy-button:active {
+  transform: scale(0.95);
+}
+
+.copy-button.copied {
+  background: var(--color-link);
+  color: #fff;
+  border-color: var(--color-link);
+  opacity: 1;
+}
+
+/* Show copy button on hover over the code block */
+pre:hover > .copy-button,
+.copy-button.copied {
+  opacity: 1;
+}
+
+/* Keep it visible on short/focused code blocks */
+pre:focus-within > .copy-button {
+  opacity: 1;
+}
+
+/* ===========================================
+   Dashboard Section Cards
+   For learning progress by section group
+   =========================================== */
+
+.dashboard-section-card {
+  border: 1px solid var(--gray-200);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  background: var(--body-background);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.dashboard-section-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-color: var(--gray-300);
+}
+
+.dashboard-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-section-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: var(--gray-100);
+  color: var(--gray-500);
+  border: 1px solid var(--gray-200);
+}
+
+.dashboard-section-count {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-500);
+}
+
+.dashboard-section-bar-wrapper {
+  width: 100%;
+  height: 4px;
+  background: var(--gray-200);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.dashboard-section-bar-fill {
+  height: 100%;
+  background: var(--color-link);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.dashboard-section-chapters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.dashboard-chapter-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.3rem 0.4rem;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+  font-size: 0.85rem;
+}
+
+.dashboard-chapter-row:hover {
+  background: var(--gray-100);
+}
+
+.dashboard-chapter-row.completed {
+  color: var(--body-font-color);
+}
+
+.dashboard-chapter-check {
+  transform: scale(1.1);
+  accent-color: var(--color-link);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.dashboard-chapter-status {
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  width: 1.2em;
+  text-align: center;
+}
+
+.dashboard-chapter-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Combined progress bar */
+.exam-combined-progress {
+  margin-bottom: 1.5rem;
+}
+
+/* Chapter progress bar at bottom of chapter pages */
+.chapter-progress-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: var(--gray-100);
+  border: 1px solid var(--gray-200);
+  border-radius: 10px;
+  margin: 2rem 0;
+  transition: border-color 0.2s ease;
+}
+
+.chapter-progress-bar:hover {
+  border-color: var(--gray-300);
+}
+
+.chapter-complete-checkbox {
+  transform: scale(1.2);
+  accent-color: var(--color-link);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.chapter-complete-label {
+  cursor: pointer;
+  font-weight: 600;
+  flex: 1;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.chapter-status-badge {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ===========================================
+   Sidebar Progress Bar
+   Always-visible progress in the left menu
+   =========================================== */
+
+.sidebar-progress {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--gray-200);
+  margin-bottom: 0.5rem;
+}
+
+.sidebar-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4rem;
+}
+
+.sidebar-progress-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--body-font-color);
+}
+
+.sidebar-progress-pct {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-link);
+}
+
+.sidebar-progress-track {
+  width: 100%;
+  height: 5px;
+  background: var(--gray-200);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 0.35rem;
+}
+
+.sidebar-progress-fill {
+  height: 100%;
+  background: var(--color-link);
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.sidebar-progress-detail {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  color: var(--gray-500);
+}
+
+.sidebar-progress-detail span {
+  white-space: nowrap;
+}
+
+/* ===========================================
+   Sidebar & ToC Toggle Buttons
+   Collapse/expand panels on desktop
+   =========================================== */
+
+/* ===========================================
+   Collapse target strips — full-height clickable
+   areas when panels are collapsed
+   =========================================== */
+.book-menu-collapse-target,
+.book-toc-collapse-target {
+  display: none;
+}  /* Fixed toggle buttons — always visible, never scroll */
+.book-sidebar-toggle,
+.book-toc-toggle {
+  display: none; /* Hidden on mobile */
+}
+
+@media screen and (min-width: calc(#{$mobile-breakpoint} + 1px)) {
+  .book-sidebar-toggle {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    z-index: 100;
+    transform: translateY(-50%);
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 52px;
+    cursor: pointer;
+  }
+
+  .book-toc-toggle {
+    display: flex;
+    position: fixed;
+    top: 50%;
+    right: 0;
+    z-index: 100;
+    transform: translateY(-50%);
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 52px;
+    cursor: pointer;
+  }
+
+  .sidebar-toggle-label,
+  .toc-toggle-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background: var(--body-background);
+    border: 1px solid var(--gray-200);
+    border-left: none;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .toc-toggle-label {
+    border-left: 1px solid var(--gray-200);
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+  }
+
+  .sidebar-toggle-label:hover,
+  .toc-toggle-label:hover {
+    background: var(--gray-100);
+    border-color: var(--gray-400);
+  }
+
+  .sidebar-toggle-label:active,
+  .toc-toggle-label:active {
+    transform: scale(0.92);
+  }
+
+  .sidebar-toggle-icon,
+  .toc-toggle-icon {
+    font-size: 0.65rem;
+    line-height: 1;
+    display: inline-block;
+    transition: transform 0.25s ease;
+    color: var(--gray-400);
+  }
+
+  .sidebar-toggle-label:hover .sidebar-toggle-icon,
+  .toc-toggle-label:hover .toc-toggle-icon {
+    color: var(--body-font-color);
+  }
+
+  /* Containers need position relative for the collapse-target overlays */
+  .book-menu,
+  .book-toc {
+    position: relative;
+  }
+
+  /* --- Expanded state (default) --- */
+  .book-menu {
+    border-right: 1px solid var(--gray-200);
+  }
+
+  .book-toc {
+    border-left: 1px solid var(--gray-200);
+  }
+
+  /* Keep the theme's @include fixed (position: fixed) for sticky panels */
+  .book-menu .book-menu-content {
+    overflow-y: auto;
+  }
+
+  .book-toc .book-toc-content {
+    overflow-y: auto;
+  }
+
+  /* --- Collapsed state (checkbox checked) --- */
+  /* Left sidebar: panel shrinks to thin strip, content slides left off-screen */
+  #menu-control:checked ~ main .book-menu {
+    flex: 0 0 12px;
+    min-width: 12px;
+    overflow: visible;
+    cursor: pointer;
+  }
+
+  #menu-control:checked ~ main .book-menu .book-menu-content {
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Full-height clickable target overlay */
+  #menu-control:checked ~ main .book-menu .book-menu-collapse-target {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  /* Hover highlight on the collapsed strip */
+  #menu-control:checked ~ main .book-menu:hover {
+    background: var(--gray-100);
+  }
+
+  /* Toggle icon rotates when collapsed */
+  #menu-control:checked ~ main .book-sidebar-toggle .sidebar-toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Right ToC: panel shrinks to thin strip, content slides right off-screen */
+  #toc-control:checked ~ main .book-toc {
+    flex: 0 0 12px;
+    min-width: 12px;
+    overflow: visible;
+    cursor: pointer;
+  }
+
+  #toc-control:checked ~ main .book-toc .book-toc-content {
+    transform: translateX(100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Full-height clickable target overlay */
+  #toc-control:checked ~ main .book-toc .book-toc-collapse-target {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    z-index: 10;
+  }
+
+  /* Hover highlight on the collapsed strip */
+  #toc-control:checked ~ main .book-toc:hover {
+    background: var(--gray-100);
+  }
+
+  /* Toggle icon rotates when collapsed */
+  #toc-control:checked ~ main .book-toc-toggle .toc-toggle-icon {
+    transform: rotate(180deg);
+  }
+
+  /* Smooth transitions — content slides (transform), panels flex */
+  .book-menu .book-menu-content,
+  .book-toc .book-toc-content {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .book-menu,
+  .book-toc,
+  .book-page {
+    transition: flex 0.3s ease, max-width 0.3s ease, background 0.2s ease;
+  }
+}

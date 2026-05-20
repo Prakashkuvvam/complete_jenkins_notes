@@ -1,0 +1,70 @@
+baseURL = "/complete_jenkins_notes/"
+title = "Jenkins Learning Path"
+theme = "book"
+locale = "en-us"
+defaultContentLanguage = "en"
+
+# Book theme configuration
+[params]
+  # Website description
+  description = "Complete Jenkins learning path from zero to production-grade — designed for CI/CD certification"
+
+  # Theme: light, dark, or auto (follows OS preference)
+  BookTheme = "dark"
+
+  # Show or hide table of contents
+  BookShowToC = true
+
+  # Section numbering
+  BookSectionNumber = true
+
+  # Repository configuration
+  BookRepo = "https://github.com/prakashkuvvam/complete_jenkins_notes"
+  BookEditPath = "edit/main/content"
+  BookCommitPath = "commit/main/content"
+
+  # Hide empty menu sections
+  BookMenuBundleDisabled = true
+
+  # Date format
+  BookDateFormat = "January 2, 2006"
+
+  # Search
+  BookSearch = true
+
+# Author
+[author]
+  name = "Jenkins Learning"
+
+# Syntax highlighting
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    lineNumbersInTable = false
+    noClasses = false
+    style = "dracula"
+    tabWidth = 2
+
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+# Menu configuration
+[menu]
+  [[menu.before]]
+    identifier = "home"
+    name = "Home"
+    url = "/"
+    weight = 1
+
+  [[menu.before]]
+    identifier = "docs"
+    name = "Documentation"
+    url = "/docs/"
+    weight = 2
+
+# Taxonomies
+[taxonomies]
+  tag = "tags"

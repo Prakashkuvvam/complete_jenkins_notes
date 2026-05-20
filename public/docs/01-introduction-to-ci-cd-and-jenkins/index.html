@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Introduction to CI/CD &amp; Jenkins# Learning Objectives# After reading this chapter, you will be able to:
+Explain the problems that CI/CD solves in software development Describe the stages of a CI/CD pipeline Understand what Jenkins is and where it fits in the DevOps toolchain Set up Jenkins locally using Docker Navigate the Jenkins web interface 1.1 What is Continuous Integration?# Continuous Integration (CI) is a development practice where developers integrate code into a shared repository frequently — ideally multiple times per day. Each integration is verified by an automated build and test process, allowing teams to detect problems early.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/">
+  <meta property="og:site_name" content="Jenkins Learning Path">
+  <meta property="og:title" content="Ch 1: Introduction to CI/CD & Jenkins">
+  <meta property="og:description" content="Introduction to CI/CD &amp; Jenkins# Learning Objectives# After reading this chapter, you will be able to:
+Explain the problems that CI/CD solves in software development Describe the stages of a CI/CD pipeline Understand what Jenkins is and where it fits in the DevOps toolchain Set up Jenkins locally using Docker Navigate the Jenkins web interface 1.1 What is Continuous Integration?# Continuous Integration (CI) is a development practice where developers integrate code into a shared repository frequently — ideally multiple times per day. Each integration is verified by an automated build and test process, allowing teams to detect problems early.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Ch 1: Introduction to CI/CD & Jenkins">
+  <meta itemprop="description" content="Introduction to CI/CD &amp; Jenkins# Learning Objectives# After reading this chapter, you will be able to:
+Explain the problems that CI/CD solves in software development Describe the stages of a CI/CD pipeline Understand what Jenkins is and where it fits in the DevOps toolchain Set up Jenkins locally using Docker Navigate the Jenkins web interface 1.1 What is Continuous Integration?# Continuous Integration (CI) is a development practice where developers integrate code into a shared repository frequently — ideally multiple times per day. Each integration is verified by an automated build and test process, allowing teams to detect problems early.">
+  <meta itemprop="wordCount" content="810">
+
+<title>Ch 1: Introduction to CI/CD &amp; Jenkins • Jenkins Learning Path</title>
+<link rel="icon" href="/complete_jenkins_notes/favicon.png" >
+<link rel="manifest" href="/complete_jenkins_notes/manifest.json">
+<link rel="canonical" href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/">
+<link rel="stylesheet" href="/complete_jenkins_notes/book.min.a65532e79bcac2f95ba4108b26cdc17b0fe6382f603d8a6b72971bfa3261bf47.css" >
+
+
+  <script defer type="module" src="/complete_jenkins_notes/en.search.min.2d25fa1fe6842b36dbd4e753f3112a465146ff5f09912883575978a46c3ff969.js" ></script>
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<div class="book-sidebar-toggle">
+  <label for="menu-control" role="button" class="sidebar-toggle-label" title="Toggle sidebar">
+    <span class="sidebar-toggle-icon">◀</span>
+  </label>
+</div>
+<aside class="book-menu">
+  <label for="menu-control" class="book-menu-collapse-target" title="Expand sidebar" aria-label="Expand sidebar"></label>
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/complete_jenkins_notes/"><span>Jenkins Learning Path</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+<div class="sidebar-progress" id="sidebar-progress">
+  <div class="sidebar-progress-header">
+    <span class="sidebar-progress-label">📊 Progress</span>
+    <span class="sidebar-progress-pct" id="sidebar-progress-pct">0%</span>
+  </div>
+  <div class="sidebar-progress-track">
+    <div class="sidebar-progress-fill" id="sidebar-progress-fill" style="width:0%;"></div>
+  </div>
+  <div class="sidebar-progress-detail" id="sidebar-progress-detail">
+    <span id="sidebar-progress-chapters">0/17 chapters</span>
+    <span id="sidebar-progress-tests">0/7 tests</span>
+  </div>
+</div>
+
+
+
+<ul><li><a href="/complete_jenkins_notes/">Home</a></li><li><a href="/complete_jenkins_notes/docs/">Documentation</a></li></ul>
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/25-progress-dashboard/" class="">
+      📊 Progress Dashboard</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/26-start-here/" class="">
+      🚀 Start Here</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="active">
+      Ch 1: Introduction to CI/CD &amp; Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="">
+      Ch 2: Jenkins Architecture &amp; Installation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="">
+      Ch 3: Configuration &amp; Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="">
+      Ch 4: Freestyle Projects &amp; Build Jobs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/" class="">
+      Ch 5: Pipeline Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/" class="">
+      Ch 6: Pipeline Syntax &amp; Steps</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/" class="">
+      Ch 7: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="">
+      Ch 8: Source Code Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/" class="">
+      Ch 9: Shared Libraries &amp; Reusability</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="">
+      Ch 10: Multi-Branch Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="">
+      Ch 11: Docker &amp; Kubernetes Integration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/" class="">
+      Ch 12: Testing, Security &amp; Compliance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="">
+      Ch 13: Jenkins Configuration as Code (JCasC)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="">
+      Ch 14: Production-Grade Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/15-exam-preparation-guide/" class="">
+      Ch 15: Exam Preparation Guide</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="">
+      Ch 16: Interview Questions &amp; Answers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="">
+      Ch 17: Real-World Scenario Questions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="">
+      📝 Practice Test 1: CI/CD Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="">
+      📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="">
+      📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="">
+      📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="">
+      📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="">
+      📝 Practice Test 6: Production Jenkins &amp; Monitoring</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="">
+      📝 Practice Test 7: DevOps &amp; Real-World Scenarios</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/complete_jenkins_notes/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Ch 1: Introduction to CI/CD &amp; Jenkins</h3>
+
+  <label for="toc-control">
+    
+    <img src="/complete_jenkins_notes/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#11-what-is-continuous-integration">1.1 What is Continuous Integration?</a>
+      <ul>
+        <li><a href="#the-problem-ci-solves">The Problem CI Solves</a></li>
+        <li><a href="#core-ci-practices">Core CI Practices</a></li>
+      </ul>
+    </li>
+    <li><a href="#12-what-is-continuous-deliverydeployment">1.2 What is Continuous Delivery/Deployment?</a></li>
+    <li><a href="#13-the-cicd-pipeline">1.3 The CI/CD Pipeline</a></li>
+    <li><a href="#14-what-is-jenkins">1.4 What is Jenkins?</a>
+      <ul>
+        <li><a href="#key-features">Key Features</a></li>
+        <li><a href="#jenkins-vs-other-cicd-tools">Jenkins vs Other CI/CD Tools</a></li>
+        <li><a href="#when-to-choose-jenkins">When to Choose Jenkins</a></li>
+      </ul>
+    </li>
+    <li><a href="#15-installing-jenkins">1.5 Installing Jenkins</a>
+      <ul>
+        <li><a href="#option-1-docker-recommended">Option 1: Docker (Recommended)</a></li>
+        <li><a href="#option-2-native-installation-ubuntudebian">Option 2: Native Installation (Ubuntu/Debian)</a></li>
+        <li><a href="#option-3-macos-homebrew">Option 3: macOS (Homebrew)</a></li>
+        <li><a href="#initial-setup">Initial Setup</a></li>
+      </ul>
+    </li>
+    <li><a href="#16-navigating-the-jenkins-ui">1.6 Navigating the Jenkins UI</a></li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="introduction-to-cicd--jenkins">Introduction to CI/CD &amp; Jenkins<a class="anchor" href="#introduction-to-cicd--jenkins">#</a></h1>
+<h2 id="learning-objectives">Learning Objectives<a class="anchor" href="#learning-objectives">#</a></h2>
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Explain the problems that CI/CD solves in software development</li>
+<li>Describe the stages of a CI/CD pipeline</li>
+<li>Understand what Jenkins is and where it fits in the DevOps toolchain</li>
+<li>Set up Jenkins locally using Docker</li>
+<li>Navigate the Jenkins web interface</li>
+</ul>
+<hr>
+<h2 id="11-what-is-continuous-integration">1.1 What is Continuous Integration?<a class="anchor" href="#11-what-is-continuous-integration">#</a></h2>
+<p><strong>Continuous Integration (CI)</strong> is a development practice where developers integrate code into a shared repository frequently — ideally multiple times per day. Each integration is verified by an automated build and test process, allowing teams to detect problems early.</p>
+<h3 id="the-problem-ci-solves">The Problem CI Solves<a class="anchor" href="#the-problem-ci-solves">#</a></h3>
+<p>Before CI, development workflows looked like this:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Developer A works on feature  →  merges after weeks
+</span></span><span class="line"><span class="cl">Developer B works on feature  →  merges after weeks
+</span></span><span class="line"><span class="cl">    ↓
+</span></span><span class="line"><span class="cl">Merge hell! Conflicts everywhere. Build breaks. Days lost debugging.</span></span></code></pre></div><p>With CI:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Developer commits small changes → Automated build &amp; test → Fast feedback
+</span></span><span class="line"><span class="cl">Developer commits small changes → Automated build &amp; test → Fast feedback
+</span></span><span class="line"><span class="cl">    ↓
+</span></span><span class="line"><span class="cl">Conflicts are rare. Bugs are caught immediately. Code is always deployable.</span></span></code></pre></div><h3 id="core-ci-practices">Core CI Practices<a class="anchor" href="#core-ci-practices">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Practice</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Frequent commits</strong></td>
+          <td>Push code to shared repo multiple times daily</td>
+      </tr>
+      <tr>
+          <td><strong>Automated builds</strong></td>
+          <td>Every commit triggers an automated build</td>
+      </tr>
+      <tr>
+          <td><strong>Automated tests</strong></td>
+          <td>Unit, integration, and acceptance tests run automatically</td>
+      </tr>
+      <tr>
+          <td><strong>Fast feedback</strong></td>
+          <td>Developers know within minutes if their changes broke something</td>
+      </tr>
+      <tr>
+          <td><strong>Fix broken builds immediately</strong></td>
+          <td>The #1 rule: broken builds are the team&rsquo;s top priority</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="12-what-is-continuous-deliverydeployment">1.2 What is Continuous Delivery/Deployment?<a class="anchor" href="#12-what-is-continuous-deliverydeployment">#</a></h2>
+<p><strong>Continuous Delivery (CD)</strong> extends CI by ensuring that the software is always in a deployable state. The build artifact is automatically validated and ready for deployment to production at any time.</p>
+<p><strong>Continuous Deployment</strong> goes one step further — every change that passes the automated pipeline is automatically deployed to production without human intervention.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">CI:   Commit → Build → Test
+</span></span><span class="line"><span class="cl">CDel: Commit → Build → Test → Stage → Ready to Deploy
+</span></span><span class="line"><span class="cl">CDepl: Commit → Build → Test → Stage → Deploy to Production (automatic)</span></span></code></pre></div><hr>
+<h2 id="13-the-cicd-pipeline">1.3 The CI/CD Pipeline<a class="anchor" href="#13-the-cicd-pipeline">#</a></h2>
+<p>A typical CI/CD pipeline consists of several stages:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Conceptual pipeline stages
+</span></span></span><span class="line"><span class="cl"><span class="nl">Pipeline:</span>
+</span></span><span class="line"><span class="cl">  <span class="mi">1</span><span class="o">.</span> <span class="n">Source</span>     <span class="err">←</span> <span class="n">Fetch</span> <span class="n">code</span> <span class="n">from</span> <span class="n">version</span> <span class="n">control</span>
+</span></span><span class="line"><span class="cl">  <span class="mi">2</span><span class="o">.</span> <span class="n">Build</span>      <span class="err">←</span> <span class="n">Compile</span> <span class="n">code</span><span class="o">,</span> <span class="n">resolve</span> <span class="n">dependencies</span>
+</span></span><span class="line"><span class="cl">  <span class="mi">3</span><span class="o">.</span> <span class="n">Test</span>       <span class="err">←</span> <span class="n">Run</span> <span class="n">unit</span><span class="o">,</span> <span class="n">integration</span><span class="o">,</span> <span class="n">and</span> <span class="n">quality</span> <span class="n">checks</span>
+</span></span><span class="line"><span class="cl">  <span class="mi">4</span><span class="o">.</span> <span class="n">Package</span>    <span class="err">←</span> <span class="n">Create</span> <span class="n">deployable</span> <span class="n">artifact</span> <span class="o">(</span><span class="n">JAR</span><span class="o">,</span> <span class="n">Docker</span> <span class="n">image</span><span class="o">,</span> <span class="n">etc</span><span class="o">.)</span>
+</span></span><span class="line"><span class="cl">  <span class="mi">5</span><span class="o">.</span> <span class="n">Deploy</span>     <span class="err">←</span> <span class="n">Push</span> <span class="n">to</span> <span class="n">staging</span><span class="o">/</span><span class="n">production</span> <span class="n">environments</span></span></span></code></pre></div><p>Each stage provides fast feedback. If tests fail, the pipeline stops immediately.</p>
+<hr>
+<h2 id="14-what-is-jenkins">1.4 What is Jenkins?<a class="anchor" href="#14-what-is-jenkins">#</a></h2>
+<p><strong>Jenkins</strong> is an open-source automation server that enables developers to build, test, and deploy software reliably. It is the most widely used CI/CD tool in the industry.</p>
+<h3 id="key-features">Key Features<a class="anchor" href="#key-features">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Feature</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Extensible</strong></td>
+          <td>1,800+ plugins for every tool imaginable</td>
+      </tr>
+      <tr>
+          <td><strong>Pipeline as Code</strong></td>
+          <td>Define build pipelines in a Jenkinsfile (Groovy DSL)</td>
+      </tr>
+      <tr>
+          <td><strong>Master/Agent Architecture</strong></td>
+          <td>Distribute builds across multiple machines</td>
+      </tr>
+      <tr>
+          <td><strong>Built-in Security</strong></td>
+          <td>Credential management, RBAC, audit trails</td>
+      </tr>
+      <tr>
+          <td><strong>REST API</strong></td>
+          <td>Integrate Jenkins with any tool via HTTP API</td>
+      </tr>
+      <tr>
+          <td><strong>Multi-platform</strong></td>
+          <td>Runs on Windows, Linux, macOS</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="jenkins-vs-other-cicd-tools">Jenkins vs Other CI/CD Tools<a class="anchor" href="#jenkins-vs-other-cicd-tools">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Feature</th>
+          <th>Jenkins</th>
+          <th>GitHub Actions</th>
+          <th>GitLab CI</th>
+          <th>CircleCI</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Hosting</strong></td>
+          <td>Self-hosted or Cloud</td>
+          <td>Cloud-only</td>
+          <td>Hybrid</td>
+          <td>Cloud-only</td>
+      </tr>
+      <tr>
+          <td><strong>Configuration</strong></td>
+          <td>Jenkinsfile (Groovy)</td>
+          <td>YAML</td>
+          <td>YAML</td>
+          <td>YAML</td>
+      </tr>
+      <tr>
+          <td><strong>Plugin ecosystem</strong></td>
+          <td>1,800+ plugins</td>
+          <td>Marketplace</td>
+          <td>Built-in</td>
+          <td>Built-in</td>
+      </tr>
+      <tr>
+          <td><strong>Infrastructure</strong></td>
+          <td>Master/agent</td>
+          <td>Runners</td>
+          <td>Runners</td>
+          <td>Docker</td>
+      </tr>
+      <tr>
+          <td><strong>Pricing</strong></td>
+          <td>Free (open source)</td>
+          <td>Free tier</td>
+          <td>Free tier</td>
+          <td>Free tier</td>
+      </tr>
+      <tr>
+          <td><strong>Flexibility</strong></td>
+          <td>Maximum</td>
+          <td>Moderate</td>
+          <td>Moderate</td>
+          <td>Moderate</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="when-to-choose-jenkins">When to Choose Jenkins<a class="anchor" href="#when-to-choose-jenkins">#</a></h3>
+<ul>
+<li>You need <strong>self-hosted</strong> control over your CI/CD infrastructure</li>
+<li>Your toolchain includes <strong>niche or legacy tools</strong> with Jenkins plugins</li>
+<li>You need <strong>complex, custom pipeline logic</strong> beyond simple YAML</li>
+<li>You&rsquo;re operating in <strong>air-gapped or security-sensitive</strong> environments</li>
+</ul>
+<hr>
+<h2 id="15-installing-jenkins">1.5 Installing Jenkins<a class="anchor" href="#15-installing-jenkins">#</a></h2>
+<h3 id="option-1-docker-recommended">Option 1: Docker (Recommended)<a class="anchor" href="#option-1-docker-recommended">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Pull and run Jenkins LTS</span>
+</span></span><span class="line"><span class="cl">docker run <span class="se">\
+</span></span></span><span class="line"><span class="cl">  --name jenkins <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -p 8080:8080 <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -p 50000:50000 <span class="se">\
+</span></span></span><span class="line"><span class="cl">  -v jenkins_home:/var/jenkins_home <span class="se">\
+</span></span></span><span class="line"><span class="cl">  jenkins/jenkins:lts
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Get the initial admin password</span>
+</span></span><span class="line"><span class="cl">docker logs jenkins 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="p">|</span> grep <span class="s2">&#34;Password&#34;</span></span></span></code></pre></div><h3 id="option-2-native-installation-ubuntudebian">Option 2: Native Installation (Ubuntu/Debian)<a class="anchor" href="#option-2-native-installation-ubuntudebian">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key <span class="p">|</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">  sudo tee /usr/share/keyrings/jenkins-keyring.asc &gt; /dev/null
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> deb <span class="o">[</span>signed-by<span class="o">=</span>/usr/share/keyrings/jenkins-keyring.asc<span class="o">]</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">  https://pkg.jenkins.io/debian-stable binary/ <span class="p">|</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl">  sudo tee /etc/apt/sources.list.d/jenkins.list &gt; /dev/null
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sudo apt update
+</span></span><span class="line"><span class="cl">sudo apt install -y fontconfig openjdk-17-jre jenkins
+</span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> --now jenkins</span></span></code></pre></div><h3 id="option-3-macos-homebrew">Option 3: macOS (Homebrew)<a class="anchor" href="#option-3-macos-homebrew">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install jenkins-lts
+</span></span><span class="line"><span class="cl">brew services start jenkins-lts</span></span></code></pre></div><h3 id="initial-setup">Initial Setup<a class="anchor" href="#initial-setup">#</a></h3>
+<ol>
+<li>Open <code>http://localhost:8080</code></li>
+<li>Unlock with the initial admin password</li>
+<li>Install suggested plugins</li>
+<li>Create the first admin user</li>
+<li>Set the Jenkins URL</li>
+</ol>
+<hr>
+<h2 id="16-navigating-the-jenkins-ui">1.6 Navigating the Jenkins UI<a class="anchor" href="#16-navigating-the-jenkins-ui">#</a></h2>
+<p>Once logged in, you&rsquo;ll see:</p>
+<ul>
+<li><strong>Dashboard</strong> — Main landing page with job status and build history</li>
+<li><strong>New Item</strong> — Create jobs, pipelines, folders, etc.</li>
+<li><strong>People</strong> — User management</li>
+<li><strong>Build History</strong> — Recent builds across all jobs</li>
+<li><strong>Manage Jenkins</strong> — System configuration, plugin management, security</li>
+<li><strong>My Views</strong> — Custom filtered views of your jobs</li>
+</ul>
+<hr>
+<h2 id="key-takeaways">Key Takeaways<a class="anchor" href="#key-takeaways">#</a></h2>
+<ul>
+<li>CI/CD automates the software delivery process, catching bugs early</li>
+<li>Jenkins is a self-hosted, extensible automation server with 1,800+ plugins</li>
+<li>The Jenkinsfile allows you to define pipelines as code</li>
+<li>Docker is the quickest way to get started with Jenkins locally</li>
+<li>Jenkins&rsquo;s master/agent architecture scales from a single machine to thousands of nodes</li>
+</ul>
+<hr>
+<h2 id="next-steps">Next Steps<a class="anchor" href="#next-steps">#</a></h2>
+<p>→ Continue to <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/">Chapter 2: Jenkins Architecture &amp; Installation</a></p>
+<p>→ Or jump to the <a href="/complete_jenkins_notes/docs/25-progress-dashboard/">Progress Dashboard</a> to track your learning</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/26-start-here/" class="flex align-center">
+        <img src="/complete_jenkins_notes/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>🚀 Start Here</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="flex align-center">
+        <span>Ch 2: Jenkins Architecture &amp; Installation</span>
+        <img src="/complete_jenkins_notes/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){"use strict";document.querySelectorAll("pre > code").forEach(function(t){var n,s=t.parentElement;if(!s||s.tagName!=="PRE")return;if(s.querySelector(".copy-button"))return;s.style.position="relative",n=document.createElement("button"),n.className="copy-button",n.textContent="Copy",n.setAttribute("aria-label","Copy code to clipboard"),n.setAttribute("type","button"),s.appendChild(n),n.addEventListener("click",function(){var s=t.textContent||"";navigator.clipboard?navigator.clipboard.writeText(s).then(function(){n.textContent="Copied!",n.classList.add("copied"),setTimeout(function(){n.textContent="Copy",n.classList.remove("copied")},2e3)}).catch(function(){e(s,n)}):e(s,n)})});function e(e,t){var n=document.createElement("textarea");n.value=e,n.style.position="fixed",n.style.opacity="0",document.body.appendChild(n),n.select();try{document.execCommand("copy"),t.textContent="Copied!",t.classList.add("copied"),setTimeout(function(){t.textContent="Copy",t.classList.remove("copied")},2e3)}catch{t.textContent="Error",setTimeout(function(){t.textContent="Copy"},2e3)}document.body.removeChild(n)}})()</script>
+  
+
+        
+  
+    <script>(function(){"use strict";var t,a,o="jenkins_exam_progress",c="jenkins_chapter_progress";function e(e){this.element=e,this.minutesDisplay=e.querySelector(".timer-minutes"),this.secondsDisplay=e.querySelector(".timer-seconds"),this.statusEl=e.querySelector(".timer-status"),this.totalSeconds=parseInt(e.dataset.minutes||"60",10)*60,this.remaining=this.totalSeconds,this.interval=null,this.running=!1,this.finished=!1;var n,s,o,i,t=this.loadState();t&&t.remaining>0&&!t.finished&&(this.remaining=t.remaining),this.updateDisplay(),n=this,s=e.querySelector(".timer-start"),o=e.querySelector(".timer-pause"),i=e.querySelector(".timer-reset"),s&&s.addEventListener("click",function(){n.start()}),o&&o.addEventListener("click",function(){n.pause()}),i&&i.addEventListener("click",function(){n.reset()}),t&&t.running&&this.start()}e.prototype.start=function(){if(this.finished)return;if(this.running)return;this.running=!0,this.element.classList.add("timer-running"),this.element.classList.remove("timer-paused");var e=this;this.interval=setInterval(function(){e.remaining--,e.updateDisplay(),e.saveState(),e.remaining<=0&&(e.remaining=0,e.updateDisplay(),e.finish())},1e3)},e.prototype.pause=function(){if(!this.running)return;this.running=!1,this.element.classList.remove("timer-running"),this.element.classList.add("timer-paused"),clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.reset=function(){this.pause(),this.remaining=this.totalSeconds,this.finished=!1,this.element.classList.remove("timer-finished"),this.element.classList.remove("timer-paused"),this.statusEl.textContent="Time Remaining",this.updateDisplay(),this.saveState(),localStorage.removeItem(this.getTimerStorageKey())},e.prototype.finish=function(){this.running=!1,this.finished=!0,this.element.classList.remove("timer-running"),this.element.classList.add("timer-finished"),this.statusEl.textContent="⏰ Time's Up!",clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.updateDisplay=function(){var e=Math.floor(this.remaining/60),t=this.remaining%60;this.minutesDisplay.textContent=String(e).padStart(2,"0"),this.secondsDisplay.textContent=String(t).padStart(2,"0"),this.remaining<=300&&this.remaining>0?this.element.classList.add("timer-warning"):this.element.classList.remove("timer-warning")},e.prototype.getTimerStorageKey=function(){return o+"_timer_"+this.element.dataset.testId},e.prototype.loadState=function(){try{var e=localStorage.getItem(this.getTimerStorageKey());return e?JSON.parse(e):null}catch{return null}},e.prototype.saveState=function(){try{var e={remaining:this.remaining,running:this.running,finished:this.finished,savedAt:Date.now()};localStorage.setItem(this.getTimerStorageKey(),JSON.stringify(e))}catch{}},document.querySelectorAll(".exam-timer").forEach(function(t){new e(t)});function f(e,t){try{var s=n();s[e]=t,localStorage.setItem(o,JSON.stringify(s)),m()}catch{}}function n(){try{var e=localStorage.getItem(o);return e?JSON.parse(e):{}}catch{return{}}}function _(){var e=n();return Object.keys(e).filter(function(t){return e[t]===!0}).length}function p(){return 7}function m(){var t=_(),e=p(),n=e>0?Math.round(t/e*100):0,a=i(),s=document.getElementById("exam-progress-bar"),o=document.getElementById("exam-progress-text");s&&(s.style.width=n+"%",s.textContent=n>15?n+"%":""),o&&(o.textContent=t+" of "+e+" tests completed"),l(a,t,e)}function l(e,t,n){var s,o,l,i=document.getElementById("sidebar-progress-fill"),a=document.getElementById("sidebar-progress-pct"),r=document.getElementById("sidebar-progress-chapters"),c=document.getElementById("sidebar-progress-tests");if(!i)return;s=e.total+n,l=e.completed+t,o=s>0?Math.round(l/s*100):0,i.style.width=o+"%",a&&(a.textContent=o+"%"),r&&(r.textContent=e.completed+"/"+e.total+" chapters"),c&&(c.textContent=t+"/"+n+" tests")}document.addEventListener("change",function(e){if(e.target&&e.target.matches(".test-complete-check")){var t=e.target.dataset.testId;t&&f(t,e.target.checked)}});function w(){var e=n();document.querySelectorAll(".test-complete-check").forEach(function(t){var n=t.dataset.testId;n&&e[n]===!0&&(t.checked=!0)}),m()}t=[{id:"01-introduction-to-ci-cd-and-jenkins",title:"Ch 1: Introduction to CI/CD & Jenkins",number:1,section:"Foundation"},{id:"02-jenkins-architecture-and-installation",title:"Ch 2: Jenkins Architecture & Installation",number:2,section:"Foundation"},{id:"03-jenkins-configuration-and-management",title:"Ch 3: Configuration & Management",number:3,section:"Foundation"},{id:"04-freestyle-projects-and-build-jobs",title:"Ch 4: Freestyle Projects & Build Jobs",number:4,section:"Foundation"},{id:"05-pipeline-fundamentals",title:"Ch 5: Pipeline Fundamentals",number:5,section:"Core Skills"},{id:"06-pipeline-syntax-and-steps",title:"Ch 6: Pipeline Syntax & Steps",number:6,section:"Core Skills"},{id:"07-agents-nodes-and-distributed-builds",title:"Ch 7: Agents, Nodes & Distributed Builds",number:7,section:"Core Skills"},{id:"08-source-code-management",title:"Ch 8: Source Code Management",number:8,section:"Core Skills"},{id:"09-shared-libraries-and-reusability",title:"Ch 9: Shared Libraries & Reusability",number:9,section:"Advanced"},{id:"10-multi-branch-pipelines",title:"Ch 10: Multi-Branch Pipelines",number:10,section:"Advanced"},{id:"11-jenkins-docker-and-kubernetes",title:"Ch 11: Docker & Kubernetes Integration",number:11,section:"Advanced"},{id:"12-testing-security-and-compliance",title:"Ch 12: Testing, Security & Compliance",number:12,section:"Advanced"},{id:"13-jenkins-configuration-as-code",title:"Ch 13: Jenkins Configuration as Code (JCasC)",number:13,section:"Production & Exam Prep"},{id:"14-production-grade-jenkins",title:"Ch 14: Production-Grade Jenkins",number:14,section:"Production & Exam Prep"},{id:"15-exam-preparation-guide",title:"Ch 15: Exam Preparation Guide",number:15,section:"Production & Exam Prep"},{id:"16-interview-questions",title:"Ch 16: Interview Questions & Answers",number:16,section:"Bonus"},{id:"17-real-world-scenarios",title:"Ch 17: Real-World Scenario Questions",number:17,section:"Bonus"}],a=[{id:"exam-test-1",title:"Practice Test 1",number:1},{id:"exam-test-2",title:"Practice Test 2",number:2},{id:"exam-test-3",title:"Practice Test 3",number:3},{id:"exam-test-4",title:"Practice Test 4",number:4},{id:"exam-test-5",title:"Practice Test 5",number:5},{id:"exam-test-6",title:"Practice Test 6",number:6},{id:"exam-test-7",title:"Practice Test 7",number:7}];function s(){try{var e=localStorage.getItem(c);return e?JSON.parse(e):{}}catch{return{}}}function u(e,t){try{var n=s();n[e]=n[e]||{},Object.keys(t).forEach(function(s){n[e][s]=t[s]}),localStorage.setItem(c,JSON.stringify(n))}catch{}}function i(){var o=s(),e=0,n=0;return t.forEach(function(t){var s=o[t.id];s&&(s.read&&e++,s.completed&&n++)}),{read:e,completed:n,total:t.length}}function r(){var t=n(),e=0;return a.forEach(function(n){t[n.id]===!0&&e++}),{completed:e,total:a.length}}function g(){var e=window.location.pathname.match(/\/docs\/(\d+-[^/]+)\//);return e?e[1]:null}function v(){var e=g(),n=e&&t.some(function(t){return t.id===e});n&&(b(e),j(e))}function b(e){var t=s();(!t[e]||!t[e].read)&&u(e,{read:!0,readAt:Date.now()})}function j(e){var t,n,i,a,r,o=document.querySelector(".book-article");if(!o)return;if(o.querySelector(".chapter-complete-check"))return;a=s(),r=a[e]||{},i=r.completed===!0,t=document.createElement("div"),t.className="chapter-complete-check",t.innerHTML='<hr><div class="chapter-progress-bar"><input type="checkbox" id="ch-cpl-'+e+'" class="chapter-complete-checkbox" data-chapter-id="'+e+'"'+(i?" checked":"")+'><label for="ch-cpl-'+e+'" class="chapter-complete-label">✓ Mark this chapter as completed</label><span class="chapter-status-badge">'+(i?"✅ Completed":"📖 Reading")+"</span></div>",o.appendChild(t),n=t.querySelector(".chapter-complete-checkbox"),n.addEventListener("change",function(){u(e,{completed:n.checked,completedAt:n.checked?Date.now():null});var s=t.querySelector(".chapter-status-badge");s.textContent=n.checked?"✅ Completed":"📖 Reading"})}window.initExamDashboard=function(){var e,t=document.getElementById("exam-dashboard-app");if(!t)return;t.innerHTML=y(),document.querySelectorAll(".dashboard-chapter-check").forEach(function(e){e.addEventListener("change",function(){u(e.dataset.chapterId,{completed:e.checked,completedAt:e.checked?Date.now():null}),d()})}),document.querySelectorAll(".dashboard-test-check").forEach(function(e){e.addEventListener("change",function(){f(e.dataset.testId,e.checked),d()})}),e=document.getElementById("exam-reset-all"),e&&e.addEventListener("click",function(){confirm("Reset ALL progress (chapters and tests)? This cannot be undone.")&&(localStorage.removeItem(o),localStorage.removeItem(c),d())})};function y(){var m,o=i(),c=r(),u=s(),f=n(),d=o.total+c.total,h=o.completed+c.completed,l=d>0?Math.round(h/d*100):0,e="";return e+='<div class="exam-dashboard-header">',e+="  <h1>📊 Your Learning Dashboard</h1>",e+='  <p class="exam-progress-summary">Track your Jenkins learning journey — from chapters to practice exams</p>',e+="</div>",e+='<div class="exam-combined-progress">',e+='  <div class="exam-progress-bar-wrapper" style="max-width:100%;">',e+='    <div class="exam-progress-bar-fill" id="dash-combined-bar" style="width:'+l+'%;">'+(l>15?l+"%":"")+"</div>",e+="  </div>",e+='  <p class="exam-progress-summary" style="text-align:center;margin-top:0.75rem;">'+h+" of "+d+" total items completed</p>",e+="</div>",e+='<div class="exam-stats">',e+='  <div class="exam-stat-card"><span class="stat-number">'+o.completed+'</span><span class="stat-label">of '+o.total+" Chapters</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+o.read+'</span><span class="stat-label">Chapters Read</span></div>',e+='  <div class="exam-stat-card"><span class="stat-number">'+c.completed+'</span><span class="stat-label">of '+c.total+" Tests Passed</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+l+'%</span><span class="stat-label">Overall Progress</span></div>',e+="</div>",e+='<h2 style="margin-top:2.5rem;">📚 Learning Progress</h2>',e+='<div class="exam-dashboard-grid">',m=["Foundation","Core Skills","Advanced","Production & Exam Prep","Bonus"],m.forEach(function(n){if(s=t.filter(function(e){return e.section===n}),s.length===0)return;var s,i,a=0,o=0;s.forEach(function(e){var t=u[e.id];t&&(t.read&&a++,t.completed&&o++)}),i=Math.round(o/s.length*100),e+='<div class="dashboard-section-card">',e+='  <div class="dashboard-section-header">',e+='    <span class="dashboard-section-badge">'+n+"</span>",e+='    <span class="dashboard-section-count">'+o+"/"+s.length+"</span>",e+="  </div>",e+='  <div class="dashboard-section-bar-wrapper"><div class="dashboard-section-bar-fill" style="width:'+i+'%;"></div></div>',e+='  <div class="dashboard-section-chapters">',s.forEach(function(t){var s=u[t.id]||{},n=s.completed===!0,o=s.read===!0,i=n?"✅":o?"📖":"⬜";e+='    <div class="dashboard-chapter-row'+(n?" completed":"")+'" title="'+t.title+'">',e+='      <input type="checkbox" class="dashboard-chapter-check" data-chapter-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="dashboard-chapter-status">'+i+"</span>",e+='      <span class="dashboard-chapter-title">'+t.title+"</span>",e+="    </div>"}),e+="  </div>",e+="</div>"}),e+="</div>",e+='<h2 style="margin-top:2.5rem;">📝 Practice Test Progress</h2>',e+='<div class="exam-dashboard-grid">',a.forEach(function(t){var n=f[t.id]===!0;e+='  <div class="exam-dashboard-card'+(n?" completed":"")+'">',e+="    <h3>Practice Test "+t.number+"</h3>",e+="    <p>57 questions across all domains | 60 min</p>",e+='    <div style="display:flex;align-items:center;gap:0.5rem;">',e+='      <input type="checkbox" class="exam-dashboard-check dashboard-test-check" data-test-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="card-status">'+(n?"✅ Passed":"⬜ Not yet")+"</span>",e+="    </div>",e+='    <a href="/docs/'+(17+t.number)+"-exam-practice-test-"+t.number+'/" style="display:inline-block;margin-top:0.75rem;font-size:0.85rem;">→ Open test</a>',e+="  </div>"}),e+="</div>",e+='<div style="text-align:center;margin:2.5rem 0;">',e+='  <button class="btn-reset" id="exam-reset-all">🔄 Reset All Progress</button>',e+="</div>",e}function d(){window.initExamDashboard&&window.initExamDashboard()}window.refreshSidebarProgress=function(){var t=i(),e=r();l(t,e.completed,e.total)};function h(){w(),v(),document.getElementById("exam-dashboard-app")&&initExamDashboard();var t=i(),e=r();l(t,e.completed,e.total)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <div class="book-toc-toggle">
+    <label for="toc-control" role="button" class="toc-toggle-label" title="Toggle table of contents">
+      <span class="toc-toggle-icon">▶</span>
+    </label>
+  </div>
+  <aside class="book-toc">
+    <label for="toc-control" class="book-toc-collapse-target" title="Expand table of contents" aria-label="Expand table of contents"></label>
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#11-what-is-continuous-integration">1.1 What is Continuous Integration?</a>
+      <ul>
+        <li><a href="#the-problem-ci-solves">The Problem CI Solves</a></li>
+        <li><a href="#core-ci-practices">Core CI Practices</a></li>
+      </ul>
+    </li>
+    <li><a href="#12-what-is-continuous-deliverydeployment">1.2 What is Continuous Delivery/Deployment?</a></li>
+    <li><a href="#13-the-cicd-pipeline">1.3 The CI/CD Pipeline</a></li>
+    <li><a href="#14-what-is-jenkins">1.4 What is Jenkins?</a>
+      <ul>
+        <li><a href="#key-features">Key Features</a></li>
+        <li><a href="#jenkins-vs-other-cicd-tools">Jenkins vs Other CI/CD Tools</a></li>
+        <li><a href="#when-to-choose-jenkins">When to Choose Jenkins</a></li>
+      </ul>
+    </li>
+    <li><a href="#15-installing-jenkins">1.5 Installing Jenkins</a>
+      <ul>
+        <li><a href="#option-1-docker-recommended">Option 1: Docker (Recommended)</a></li>
+        <li><a href="#option-2-native-installation-ubuntudebian">Option 2: Native Installation (Ubuntu/Debian)</a></li>
+        <li><a href="#option-3-macos-homebrew">Option 3: macOS (Homebrew)</a></li>
+        <li><a href="#initial-setup">Initial Setup</a></li>
+      </ul>
+    </li>
+    <li><a href="#16-navigating-the-jenkins-ui">1.6 Navigating the Jenkins UI</a></li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

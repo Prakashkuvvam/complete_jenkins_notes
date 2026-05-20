@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Exam Preparation Guide# Learning Objectives# After reading this chapter, you will be able to:
+Understand the Jenkins certification exam domains Create an effective study plan Use cheat sheets for quick reference Identify key topics to focus on Practice with sample questions 15.1 Certification Overview# The Jenkins Certified Engineer exam covers these domains:
+Domain Weight Key Topics Installation &amp; Configuration 15% Installation, plugins, system config Pipeline as Code 25% Jenkinsfile, Declarative/Scripted, shared libs Authentication &amp; Authorization 10% Security realms, RBAC, credentials Source Code Management 10% Git integration, webhooks, multi-branch Builds &amp; Testing 15% Freestyle, pipeline steps, test reports Distributed Builds 10% Agents, labels, Docker/K8s agents Monitoring &amp; Maintenance 10% Backups, monitoring, performance Security &amp; Compliance 5% Secrets, audit, container security 15.2 Key Concepts Cheat Sheet# Pipeline Basics# // Declarative Pipeline Structure pipeline { agent any stages { stage(&#39;Build&#39;) { steps { echo &#39;Hello&#39; } } } post { success { /* runs on success */ } failure { /* runs on failure */ } always { /* always runs */ } } }Common Pipeline Directives# Directive Purpose agent any Run on any available agent agent { label &#39;linux&#39; } Run on specific label agent { docker &#39;node:18&#39; } Run inside Docker container when { branch &#39;main&#39; } Conditional execution parallel { ... } Run stages in parallel input { ... } Manual approval gate tools { maven &#39;Maven 3.9&#39; } Auto-install tools options { timeout(1) } Pipeline behavior settings environment { VAR = &#39;val&#39; } Environment variables parameters { string(...) } Build parameters Git Checkout Options# checkout([ $class: &#39;GitSCM&#39;, branches: [[name: &#39;*/main&#39;]], userRemoteConfigs: [[url: &#39;https://github.com/org/repo.git&#39;]], extensions: [ [$class: &#39;CloneOption&#39;, depth: 1], [$class: &#39;CleanCheckout&#39;], [$class: &#39;RelativeTargetDirectory&#39;, relativeTargetDir: &#39;src&#39;] ] ])Common Steps Reference# Step Description sh &#39;command&#39; Run shell command (Linux) bat &#39;command&#39; Run batch command (Windows) echo &#39;message&#39; Print message to console checkout scm Checkout from source control junit &#39;*.xml&#39; Publish JUnit test results archiveArtifacts &#39;*.jar&#39; Archive build artifacts stash/unstash Save/restore files between stages retry(3) { ... } Retry block on failure timeout(30) { ... } Time limit for block sleep(10) Pause for N seconds error(&#39;message&#39;) Fail the pipeline withCredentials([...]) { } Bind credentials securely docker.build(&#39;image&#39;) Build Docker image slackSend(...) Send Slack notification 15.3 Quick Reference Tables# Jenkinsfile Environment Variables# Variable Description env.BUILD_NUMBER Current build number env.BUILD_ID Build ID (same as number) env.BUILD_URL URL of the current build env.JOB_NAME Full job name (e.g., myapp/main) env.BRANCH_NAME Branch being built env.GIT_COMMIT Commit SHA checked out env.CHANGE_ID PR number (if PR build) env.CHANGE_TARGET Target branch of PR env.WORKSPACE Absolute path to workspace env.NODE_NAME Agent node name env.EXECUTOR_NUMBER Executor number on node env.CURRENT_RESULT Current build result currentBuild.result Build result (SUCCESS/FAILURE/UNSTABLE) Agent Labels# // Label expressions agent { label &#39;linux&#39; } // Single label agent { label &#39;linux &amp;&amp; docker&#39; } // AND agent { label &#39;high-mem || gpu&#39; } // OR agent { label &#39;!spot-instance&#39; } // NOT agent { label &#39;(linux || macos) &amp;&amp; docker&#39; } // ComplexPost Conditions# Condition Runs When always Always success Build success failure Build failure unstable Unstable (test failures) changed Status changed from previous aborted Build manually aborted regression Fixed-then-broken 15.4 Study Plan# 2-Week Intensive Plan# Day Focus Study Material 1 CI/CD concepts, Jenkins overview Ch 1 2 Architecture, installation Ch 2 3 Configuration, plugins, security Ch 3 4 Freestyle projects Ch 4 5 Pipeline fundamentals Ch 5 6 Pipeline syntax &amp; steps Ch 6 7 Practice Test 1 Test 1 8 Agents &amp; distributed builds Ch 7 9 SCM integration Ch 8 10 Shared libraries Ch 9 11 Multi-branch &amp; Docker/K8s Ch 10-11 12 Practice Test 2 Test 2 13 JCasC, Production Ch 13-14 14 Practice Test 3 &amp; 4 Test 3 · Test 4 4-Week Balanced Plan# Follow the Start Here guide for a complete 4-week curriculum.
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/complete_jenkins_notes/docs/15-exam-preparation-guide/">
+  <meta property="og:site_name" content="Jenkins Learning Path">
+  <meta property="og:title" content="Ch 15: Exam Preparation Guide">
+  <meta property="og:description" content="Exam Preparation Guide# Learning Objectives# After reading this chapter, you will be able to:
+Understand the Jenkins certification exam domains Create an effective study plan Use cheat sheets for quick reference Identify key topics to focus on Practice with sample questions 15.1 Certification Overview# The Jenkins Certified Engineer exam covers these domains:
+Domain Weight Key Topics Installation &amp; Configuration 15% Installation, plugins, system config Pipeline as Code 25% Jenkinsfile, Declarative/Scripted, shared libs Authentication &amp; Authorization 10% Security realms, RBAC, credentials Source Code Management 10% Git integration, webhooks, multi-branch Builds &amp; Testing 15% Freestyle, pipeline steps, test reports Distributed Builds 10% Agents, labels, Docker/K8s agents Monitoring &amp; Maintenance 10% Backups, monitoring, performance Security &amp; Compliance 5% Secrets, audit, container security 15.2 Key Concepts Cheat Sheet# Pipeline Basics# // Declarative Pipeline Structure pipeline { agent any stages { stage(&#39;Build&#39;) { steps { echo &#39;Hello&#39; } } } post { success { /* runs on success */ } failure { /* runs on failure */ } always { /* always runs */ } } }Common Pipeline Directives# Directive Purpose agent any Run on any available agent agent { label &#39;linux&#39; } Run on specific label agent { docker &#39;node:18&#39; } Run inside Docker container when { branch &#39;main&#39; } Conditional execution parallel { ... } Run stages in parallel input { ... } Manual approval gate tools { maven &#39;Maven 3.9&#39; } Auto-install tools options { timeout(1) } Pipeline behavior settings environment { VAR = &#39;val&#39; } Environment variables parameters { string(...) } Build parameters Git Checkout Options# checkout([ $class: &#39;GitSCM&#39;, branches: [[name: &#39;*/main&#39;]], userRemoteConfigs: [[url: &#39;https://github.com/org/repo.git&#39;]], extensions: [ [$class: &#39;CloneOption&#39;, depth: 1], [$class: &#39;CleanCheckout&#39;], [$class: &#39;RelativeTargetDirectory&#39;, relativeTargetDir: &#39;src&#39;] ] ])Common Steps Reference# Step Description sh &#39;command&#39; Run shell command (Linux) bat &#39;command&#39; Run batch command (Windows) echo &#39;message&#39; Print message to console checkout scm Checkout from source control junit &#39;*.xml&#39; Publish JUnit test results archiveArtifacts &#39;*.jar&#39; Archive build artifacts stash/unstash Save/restore files between stages retry(3) { ... } Retry block on failure timeout(30) { ... } Time limit for block sleep(10) Pause for N seconds error(&#39;message&#39;) Fail the pipeline withCredentials([...]) { } Bind credentials securely docker.build(&#39;image&#39;) Build Docker image slackSend(...) Send Slack notification 15.3 Quick Reference Tables# Jenkinsfile Environment Variables# Variable Description env.BUILD_NUMBER Current build number env.BUILD_ID Build ID (same as number) env.BUILD_URL URL of the current build env.JOB_NAME Full job name (e.g., myapp/main) env.BRANCH_NAME Branch being built env.GIT_COMMIT Commit SHA checked out env.CHANGE_ID PR number (if PR build) env.CHANGE_TARGET Target branch of PR env.WORKSPACE Absolute path to workspace env.NODE_NAME Agent node name env.EXECUTOR_NUMBER Executor number on node env.CURRENT_RESULT Current build result currentBuild.result Build result (SUCCESS/FAILURE/UNSTABLE) Agent Labels# // Label expressions agent { label &#39;linux&#39; } // Single label agent { label &#39;linux &amp;&amp; docker&#39; } // AND agent { label &#39;high-mem || gpu&#39; } // OR agent { label &#39;!spot-instance&#39; } // NOT agent { label &#39;(linux || macos) &amp;&amp; docker&#39; } // ComplexPost Conditions# Condition Runs When always Always success Build success failure Build failure unstable Unstable (test failures) changed Status changed from previous aborted Build manually aborted regression Fixed-then-broken 15.4 Study Plan# 2-Week Intensive Plan# Day Focus Study Material 1 CI/CD concepts, Jenkins overview Ch 1 2 Architecture, installation Ch 2 3 Configuration, plugins, security Ch 3 4 Freestyle projects Ch 4 5 Pipeline fundamentals Ch 5 6 Pipeline syntax &amp; steps Ch 6 7 Practice Test 1 Test 1 8 Agents &amp; distributed builds Ch 7 9 SCM integration Ch 8 10 Shared libraries Ch 9 11 Multi-branch &amp; Docker/K8s Ch 10-11 12 Practice Test 2 Test 2 13 JCasC, Production Ch 13-14 14 Practice Test 3 &amp; 4 Test 3 · Test 4 4-Week Balanced Plan# Follow the Start Here guide for a complete 4-week curriculum.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Ch 15: Exam Preparation Guide">
+  <meta itemprop="description" content="Exam Preparation Guide# Learning Objectives# After reading this chapter, you will be able to:
+Understand the Jenkins certification exam domains Create an effective study plan Use cheat sheets for quick reference Identify key topics to focus on Practice with sample questions 15.1 Certification Overview# The Jenkins Certified Engineer exam covers these domains:
+Domain Weight Key Topics Installation &amp; Configuration 15% Installation, plugins, system config Pipeline as Code 25% Jenkinsfile, Declarative/Scripted, shared libs Authentication &amp; Authorization 10% Security realms, RBAC, credentials Source Code Management 10% Git integration, webhooks, multi-branch Builds &amp; Testing 15% Freestyle, pipeline steps, test reports Distributed Builds 10% Agents, labels, Docker/K8s agents Monitoring &amp; Maintenance 10% Backups, monitoring, performance Security &amp; Compliance 5% Secrets, audit, container security 15.2 Key Concepts Cheat Sheet# Pipeline Basics# // Declarative Pipeline Structure pipeline { agent any stages { stage(&#39;Build&#39;) { steps { echo &#39;Hello&#39; } } } post { success { /* runs on success */ } failure { /* runs on failure */ } always { /* always runs */ } } }Common Pipeline Directives# Directive Purpose agent any Run on any available agent agent { label &#39;linux&#39; } Run on specific label agent { docker &#39;node:18&#39; } Run inside Docker container when { branch &#39;main&#39; } Conditional execution parallel { ... } Run stages in parallel input { ... } Manual approval gate tools { maven &#39;Maven 3.9&#39; } Auto-install tools options { timeout(1) } Pipeline behavior settings environment { VAR = &#39;val&#39; } Environment variables parameters { string(...) } Build parameters Git Checkout Options# checkout([ $class: &#39;GitSCM&#39;, branches: [[name: &#39;*/main&#39;]], userRemoteConfigs: [[url: &#39;https://github.com/org/repo.git&#39;]], extensions: [ [$class: &#39;CloneOption&#39;, depth: 1], [$class: &#39;CleanCheckout&#39;], [$class: &#39;RelativeTargetDirectory&#39;, relativeTargetDir: &#39;src&#39;] ] ])Common Steps Reference# Step Description sh &#39;command&#39; Run shell command (Linux) bat &#39;command&#39; Run batch command (Windows) echo &#39;message&#39; Print message to console checkout scm Checkout from source control junit &#39;*.xml&#39; Publish JUnit test results archiveArtifacts &#39;*.jar&#39; Archive build artifacts stash/unstash Save/restore files between stages retry(3) { ... } Retry block on failure timeout(30) { ... } Time limit for block sleep(10) Pause for N seconds error(&#39;message&#39;) Fail the pipeline withCredentials([...]) { } Bind credentials securely docker.build(&#39;image&#39;) Build Docker image slackSend(...) Send Slack notification 15.3 Quick Reference Tables# Jenkinsfile Environment Variables# Variable Description env.BUILD_NUMBER Current build number env.BUILD_ID Build ID (same as number) env.BUILD_URL URL of the current build env.JOB_NAME Full job name (e.g., myapp/main) env.BRANCH_NAME Branch being built env.GIT_COMMIT Commit SHA checked out env.CHANGE_ID PR number (if PR build) env.CHANGE_TARGET Target branch of PR env.WORKSPACE Absolute path to workspace env.NODE_NAME Agent node name env.EXECUTOR_NUMBER Executor number on node env.CURRENT_RESULT Current build result currentBuild.result Build result (SUCCESS/FAILURE/UNSTABLE) Agent Labels# // Label expressions agent { label &#39;linux&#39; } // Single label agent { label &#39;linux &amp;&amp; docker&#39; } // AND agent { label &#39;high-mem || gpu&#39; } // OR agent { label &#39;!spot-instance&#39; } // NOT agent { label &#39;(linux || macos) &amp;&amp; docker&#39; } // ComplexPost Conditions# Condition Runs When always Always success Build success failure Build failure unstable Unstable (test failures) changed Status changed from previous aborted Build manually aborted regression Fixed-then-broken 15.4 Study Plan# 2-Week Intensive Plan# Day Focus Study Material 1 CI/CD concepts, Jenkins overview Ch 1 2 Architecture, installation Ch 2 3 Configuration, plugins, security Ch 3 4 Freestyle projects Ch 4 5 Pipeline fundamentals Ch 5 6 Pipeline syntax &amp; steps Ch 6 7 Practice Test 1 Test 1 8 Agents &amp; distributed builds Ch 7 9 SCM integration Ch 8 10 Shared libraries Ch 9 11 Multi-branch &amp; Docker/K8s Ch 10-11 12 Practice Test 2 Test 2 13 JCasC, Production Ch 13-14 14 Practice Test 3 &amp; 4 Test 3 · Test 4 4-Week Balanced Plan# Follow the Start Here guide for a complete 4-week curriculum.">
+  <meta itemprop="wordCount" content="1040">
+
+<title>Ch 15: Exam Preparation Guide • Jenkins Learning Path</title>
+<link rel="icon" href="/complete_jenkins_notes/favicon.png" >
+<link rel="manifest" href="/complete_jenkins_notes/manifest.json">
+<link rel="canonical" href="/complete_jenkins_notes/docs/15-exam-preparation-guide/">
+<link rel="stylesheet" href="/complete_jenkins_notes/book.min.a65532e79bcac2f95ba4108b26cdc17b0fe6382f603d8a6b72971bfa3261bf47.css" >
+
+
+  <script defer type="module" src="/complete_jenkins_notes/en.search.min.2d25fa1fe6842b36dbd4e753f3112a465146ff5f09912883575978a46c3ff969.js" ></script>
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<div class="book-sidebar-toggle">
+  <label for="menu-control" role="button" class="sidebar-toggle-label" title="Toggle sidebar">
+    <span class="sidebar-toggle-icon">◀</span>
+  </label>
+</div>
+<aside class="book-menu">
+  <label for="menu-control" class="book-menu-collapse-target" title="Expand sidebar" aria-label="Expand sidebar"></label>
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/complete_jenkins_notes/"><span>Jenkins Learning Path</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+<div class="sidebar-progress" id="sidebar-progress">
+  <div class="sidebar-progress-header">
+    <span class="sidebar-progress-label">📊 Progress</span>
+    <span class="sidebar-progress-pct" id="sidebar-progress-pct">0%</span>
+  </div>
+  <div class="sidebar-progress-track">
+    <div class="sidebar-progress-fill" id="sidebar-progress-fill" style="width:0%;"></div>
+  </div>
+  <div class="sidebar-progress-detail" id="sidebar-progress-detail">
+    <span id="sidebar-progress-chapters">0/17 chapters</span>
+    <span id="sidebar-progress-tests">0/7 tests</span>
+  </div>
+</div>
+
+
+
+<ul><li><a href="/complete_jenkins_notes/">Home</a></li><li><a href="/complete_jenkins_notes/docs/">Documentation</a></li></ul>
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/25-progress-dashboard/" class="">
+      📊 Progress Dashboard</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/26-start-here/" class="">
+      🚀 Start Here</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="">
+      Ch 1: Introduction to CI/CD &amp; Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="">
+      Ch 2: Jenkins Architecture &amp; Installation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="">
+      Ch 3: Configuration &amp; Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="">
+      Ch 4: Freestyle Projects &amp; Build Jobs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/" class="">
+      Ch 5: Pipeline Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/" class="">
+      Ch 6: Pipeline Syntax &amp; Steps</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/" class="">
+      Ch 7: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="">
+      Ch 8: Source Code Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/" class="">
+      Ch 9: Shared Libraries &amp; Reusability</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="">
+      Ch 10: Multi-Branch Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="">
+      Ch 11: Docker &amp; Kubernetes Integration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/" class="">
+      Ch 12: Testing, Security &amp; Compliance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="">
+      Ch 13: Jenkins Configuration as Code (JCasC)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="">
+      Ch 14: Production-Grade Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/15-exam-preparation-guide/" class="active">
+      Ch 15: Exam Preparation Guide</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="">
+      Ch 16: Interview Questions &amp; Answers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="">
+      Ch 17: Real-World Scenario Questions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="">
+      📝 Practice Test 1: CI/CD Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="">
+      📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="">
+      📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="">
+      📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="">
+      📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="">
+      📝 Practice Test 6: Production Jenkins &amp; Monitoring</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="">
+      📝 Practice Test 7: DevOps &amp; Real-World Scenarios</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/complete_jenkins_notes/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Ch 15: Exam Preparation Guide</h3>
+
+  <label for="toc-control">
+    
+    <img src="/complete_jenkins_notes/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#151-certification-overview">15.1 Certification Overview</a></li>
+    <li><a href="#152-key-concepts-cheat-sheet">15.2 Key Concepts Cheat Sheet</a>
+      <ul>
+        <li><a href="#pipeline-basics">Pipeline Basics</a></li>
+        <li><a href="#common-pipeline-directives">Common Pipeline Directives</a></li>
+        <li><a href="#git-checkout-options">Git Checkout Options</a></li>
+        <li><a href="#common-steps-reference">Common Steps Reference</a></li>
+      </ul>
+    </li>
+    <li><a href="#153-quick-reference-tables">15.3 Quick Reference Tables</a>
+      <ul>
+        <li><a href="#jenkinsfile-environment-variables">Jenkinsfile Environment Variables</a></li>
+        <li><a href="#agent-labels">Agent Labels</a></li>
+        <li><a href="#post-conditions">Post Conditions</a></li>
+      </ul>
+    </li>
+    <li><a href="#154-study-plan">15.4 Study Plan</a>
+      <ul>
+        <li><a href="#2-week-intensive-plan">2-Week Intensive Plan</a></li>
+        <li><a href="#4-week-balanced-plan">4-Week Balanced Plan</a></li>
+      </ul>
+    </li>
+    <li><a href="#155-sample-questions">15.5 Sample Questions</a>
+      <ul>
+        <li><a href="#question-1-declarative-pipeline">Question 1: Declarative Pipeline</a></li>
+        <li><a href="#question-2-agent-labels">Question 2: Agent Labels</a></li>
+        <li><a href="#question-3-shared-libraries">Question 3: Shared Libraries</a></li>
+      </ul>
+    </li>
+    <li><a href="#156-exam-tips">15.6 Exam Tips</a>
+      <ul>
+        <li><a href="#before-the-exam">Before the Exam</a></li>
+        <li><a href="#during-the-exam">During the Exam</a></li>
+        <li><a href="#common-mistakes">Common Mistakes</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="exam-preparation-guide">Exam Preparation Guide<a class="anchor" href="#exam-preparation-guide">#</a></h1>
+<h2 id="learning-objectives">Learning Objectives<a class="anchor" href="#learning-objectives">#</a></h2>
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Understand the Jenkins certification exam domains</li>
+<li>Create an effective study plan</li>
+<li>Use cheat sheets for quick reference</li>
+<li>Identify key topics to focus on</li>
+<li>Practice with sample questions</li>
+</ul>
+<hr>
+<h2 id="151-certification-overview">15.1 Certification Overview<a class="anchor" href="#151-certification-overview">#</a></h2>
+<p>The <strong>Jenkins Certified Engineer</strong> exam covers these domains:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Domain</th>
+          <th>Weight</th>
+          <th>Key Topics</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Installation &amp; Configuration</td>
+          <td>15%</td>
+          <td>Installation, plugins, system config</td>
+      </tr>
+      <tr>
+          <td>Pipeline as Code</td>
+          <td>25%</td>
+          <td>Jenkinsfile, Declarative/Scripted, shared libs</td>
+      </tr>
+      <tr>
+          <td>Authentication &amp; Authorization</td>
+          <td>10%</td>
+          <td>Security realms, RBAC, credentials</td>
+      </tr>
+      <tr>
+          <td>Source Code Management</td>
+          <td>10%</td>
+          <td>Git integration, webhooks, multi-branch</td>
+      </tr>
+      <tr>
+          <td>Builds &amp; Testing</td>
+          <td>15%</td>
+          <td>Freestyle, pipeline steps, test reports</td>
+      </tr>
+      <tr>
+          <td>Distributed Builds</td>
+          <td>10%</td>
+          <td>Agents, labels, Docker/K8s agents</td>
+      </tr>
+      <tr>
+          <td>Monitoring &amp; Maintenance</td>
+          <td>10%</td>
+          <td>Backups, monitoring, performance</td>
+      </tr>
+      <tr>
+          <td>Security &amp; Compliance</td>
+          <td>5%</td>
+          <td>Secrets, audit, container security</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="152-key-concepts-cheat-sheet">15.2 Key Concepts Cheat Sheet<a class="anchor" href="#152-key-concepts-cheat-sheet">#</a></h2>
+<h3 id="pipeline-basics">Pipeline Basics<a class="anchor" href="#pipeline-basics">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Declarative Pipeline Structure
+</span></span></span><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">echo</span> <span class="s1">&#39;Hello&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">success</span> <span class="o">{</span> <span class="cm">/* runs on success */</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">failure</span> <span class="o">{</span> <span class="cm">/* runs on failure */</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">always</span>  <span class="o">{</span> <span class="cm">/* always runs */</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="common-pipeline-directives">Common Pipeline Directives<a class="anchor" href="#common-pipeline-directives">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Directive</th>
+          <th>Purpose</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>agent any</code></td>
+          <td>Run on any available agent</td>
+      </tr>
+      <tr>
+          <td><code>agent { label 'linux' }</code></td>
+          <td>Run on specific label</td>
+      </tr>
+      <tr>
+          <td><code>agent { docker 'node:18' }</code></td>
+          <td>Run inside Docker container</td>
+      </tr>
+      <tr>
+          <td><code>when { branch 'main' }</code></td>
+          <td>Conditional execution</td>
+      </tr>
+      <tr>
+          <td><code>parallel { ... }</code></td>
+          <td>Run stages in parallel</td>
+      </tr>
+      <tr>
+          <td><code>input { ... }</code></td>
+          <td>Manual approval gate</td>
+      </tr>
+      <tr>
+          <td><code>tools { maven 'Maven 3.9' }</code></td>
+          <td>Auto-install tools</td>
+      </tr>
+      <tr>
+          <td><code>options { timeout(1) }</code></td>
+          <td>Pipeline behavior settings</td>
+      </tr>
+      <tr>
+          <td><code>environment { VAR = 'val' }</code></td>
+          <td>Environment variables</td>
+      </tr>
+      <tr>
+          <td><code>parameters { string(...) }</code></td>
+          <td>Build parameters</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="git-checkout-options">Git Checkout Options<a class="anchor" href="#git-checkout-options">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">checkout</span><span class="o">([</span>
+</span></span><span class="line"><span class="cl">    <span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;GitSCM&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">branches:</span> <span class="o">[[</span><span class="nl">name:</span> <span class="s1">&#39;*/main&#39;</span><span class="o">]],</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">userRemoteConfigs:</span> <span class="o">[[</span><span class="nl">url:</span> <span class="s1">&#39;https://github.com/org/repo.git&#39;</span><span class="o">]],</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">extensions:</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">        <span class="o">[</span><span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;CloneOption&#39;</span><span class="o">,</span> <span class="nl">depth:</span> <span class="mi">1</span><span class="o">],</span>
+</span></span><span class="line"><span class="cl">        <span class="o">[</span><span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;CleanCheckout&#39;</span><span class="o">],</span>
+</span></span><span class="line"><span class="cl">        <span class="o">[</span><span class="n">$class</span><span class="o">:</span> <span class="s1">&#39;RelativeTargetDirectory&#39;</span><span class="o">,</span> <span class="nl">relativeTargetDir:</span> <span class="s1">&#39;src&#39;</span><span class="o">]</span>
+</span></span><span class="line"><span class="cl">    <span class="o">]</span>
+</span></span><span class="line"><span class="cl"><span class="o">])</span></span></span></code></pre></div><h3 id="common-steps-reference">Common Steps Reference<a class="anchor" href="#common-steps-reference">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Step</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>sh 'command'</code></td>
+          <td>Run shell command (Linux)</td>
+      </tr>
+      <tr>
+          <td><code>bat 'command'</code></td>
+          <td>Run batch command (Windows)</td>
+      </tr>
+      <tr>
+          <td><code>echo 'message'</code></td>
+          <td>Print message to console</td>
+      </tr>
+      <tr>
+          <td><code>checkout scm</code></td>
+          <td>Checkout from source control</td>
+      </tr>
+      <tr>
+          <td><code>junit '*.xml'</code></td>
+          <td>Publish JUnit test results</td>
+      </tr>
+      <tr>
+          <td><code>archiveArtifacts '*.jar'</code></td>
+          <td>Archive build artifacts</td>
+      </tr>
+      <tr>
+          <td><code>stash/unstash</code></td>
+          <td>Save/restore files between stages</td>
+      </tr>
+      <tr>
+          <td><code>retry(3) { ... }</code></td>
+          <td>Retry block on failure</td>
+      </tr>
+      <tr>
+          <td><code>timeout(30) { ... }</code></td>
+          <td>Time limit for block</td>
+      </tr>
+      <tr>
+          <td><code>sleep(10)</code></td>
+          <td>Pause for N seconds</td>
+      </tr>
+      <tr>
+          <td><code>error('message')</code></td>
+          <td>Fail the pipeline</td>
+      </tr>
+      <tr>
+          <td><code>withCredentials([...]) { }</code></td>
+          <td>Bind credentials securely</td>
+      </tr>
+      <tr>
+          <td><code>docker.build('image')</code></td>
+          <td>Build Docker image</td>
+      </tr>
+      <tr>
+          <td><code>slackSend(...)</code></td>
+          <td>Send Slack notification</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="153-quick-reference-tables">15.3 Quick Reference Tables<a class="anchor" href="#153-quick-reference-tables">#</a></h2>
+<h3 id="jenkinsfile-environment-variables">Jenkinsfile Environment Variables<a class="anchor" href="#jenkinsfile-environment-variables">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Variable</th>
+          <th>Description</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>env.BUILD_NUMBER</code></td>
+          <td>Current build number</td>
+      </tr>
+      <tr>
+          <td><code>env.BUILD_ID</code></td>
+          <td>Build ID (same as number)</td>
+      </tr>
+      <tr>
+          <td><code>env.BUILD_URL</code></td>
+          <td>URL of the current build</td>
+      </tr>
+      <tr>
+          <td><code>env.JOB_NAME</code></td>
+          <td>Full job name (e.g., <code>myapp/main</code>)</td>
+      </tr>
+      <tr>
+          <td><code>env.BRANCH_NAME</code></td>
+          <td>Branch being built</td>
+      </tr>
+      <tr>
+          <td><code>env.GIT_COMMIT</code></td>
+          <td>Commit SHA checked out</td>
+      </tr>
+      <tr>
+          <td><code>env.CHANGE_ID</code></td>
+          <td>PR number (if PR build)</td>
+      </tr>
+      <tr>
+          <td><code>env.CHANGE_TARGET</code></td>
+          <td>Target branch of PR</td>
+      </tr>
+      <tr>
+          <td><code>env.WORKSPACE</code></td>
+          <td>Absolute path to workspace</td>
+      </tr>
+      <tr>
+          <td><code>env.NODE_NAME</code></td>
+          <td>Agent node name</td>
+      </tr>
+      <tr>
+          <td><code>env.EXECUTOR_NUMBER</code></td>
+          <td>Executor number on node</td>
+      </tr>
+      <tr>
+          <td><code>env.CURRENT_RESULT</code></td>
+          <td>Current build result</td>
+      </tr>
+      <tr>
+          <td><code>currentBuild.result</code></td>
+          <td>Build result (SUCCESS/FAILURE/UNSTABLE)</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="agent-labels">Agent Labels<a class="anchor" href="#agent-labels">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Label expressions
+</span></span></span><span class="line"><span class="cl"><span class="n">agent</span> <span class="o">{</span> <span class="n">label</span> <span class="s1">&#39;linux&#39;</span> <span class="o">}</span>                    <span class="c1">// Single label
+</span></span></span><span class="line"><span class="cl"><span class="n">agent</span> <span class="o">{</span> <span class="n">label</span> <span class="s1">&#39;linux &amp;&amp; docker&#39;</span> <span class="o">}</span>          <span class="c1">// AND
+</span></span></span><span class="line"><span class="cl"><span class="n">agent</span> <span class="o">{</span> <span class="n">label</span> <span class="s1">&#39;high-mem || gpu&#39;</span> <span class="o">}</span>          <span class="c1">// OR
+</span></span></span><span class="line"><span class="cl"><span class="n">agent</span> <span class="o">{</span> <span class="n">label</span> <span class="s1">&#39;!spot-instance&#39;</span> <span class="o">}</span>           <span class="c1">// NOT
+</span></span></span><span class="line"><span class="cl"><span class="n">agent</span> <span class="o">{</span> <span class="n">label</span> <span class="s1">&#39;(linux || macos) &amp;&amp; docker&#39;</span> <span class="o">}</span> <span class="s">//</span> <span class="n">Complex</span></span></span></code></pre></div><h3 id="post-conditions">Post Conditions<a class="anchor" href="#post-conditions">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Condition</th>
+          <th>Runs When</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><code>always</code></td>
+          <td>Always</td>
+      </tr>
+      <tr>
+          <td><code>success</code></td>
+          <td>Build success</td>
+      </tr>
+      <tr>
+          <td><code>failure</code></td>
+          <td>Build failure</td>
+      </tr>
+      <tr>
+          <td><code>unstable</code></td>
+          <td>Unstable (test failures)</td>
+      </tr>
+      <tr>
+          <td><code>changed</code></td>
+          <td>Status changed from previous</td>
+      </tr>
+      <tr>
+          <td><code>aborted</code></td>
+          <td>Build manually aborted</td>
+      </tr>
+      <tr>
+          <td><code>regression</code></td>
+          <td>Fixed-then-broken</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="154-study-plan">15.4 Study Plan<a class="anchor" href="#154-study-plan">#</a></h2>
+<h3 id="2-week-intensive-plan">2-Week Intensive Plan<a class="anchor" href="#2-week-intensive-plan">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Day</th>
+          <th>Focus</th>
+          <th>Study Material</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>CI/CD concepts, Jenkins overview</td>
+          <td><a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/">Ch 1</a></td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>Architecture, installation</td>
+          <td><a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/">Ch 2</a></td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>Configuration, plugins, security</td>
+          <td><a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/">Ch 3</a></td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>Freestyle projects</td>
+          <td><a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/">Ch 4</a></td>
+      </tr>
+      <tr>
+          <td>5</td>
+          <td>Pipeline fundamentals</td>
+          <td><a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/">Ch 5</a></td>
+      </tr>
+      <tr>
+          <td>6</td>
+          <td>Pipeline syntax &amp; steps</td>
+          <td><a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/">Ch 6</a></td>
+      </tr>
+      <tr>
+          <td>7</td>
+          <td><strong>Practice Test 1</strong></td>
+          <td><a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/">Test 1</a></td>
+      </tr>
+      <tr>
+          <td>8</td>
+          <td>Agents &amp; distributed builds</td>
+          <td><a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/">Ch 7</a></td>
+      </tr>
+      <tr>
+          <td>9</td>
+          <td>SCM integration</td>
+          <td><a href="/complete_jenkins_notes/docs/08-source-code-management/">Ch 8</a></td>
+      </tr>
+      <tr>
+          <td>10</td>
+          <td>Shared libraries</td>
+          <td><a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/">Ch 9</a></td>
+      </tr>
+      <tr>
+          <td>11</td>
+          <td>Multi-branch &amp; Docker/K8s</td>
+          <td><a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/">Ch 10-11</a></td>
+      </tr>
+      <tr>
+          <td>12</td>
+          <td><strong>Practice Test 2</strong></td>
+          <td><a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/">Test 2</a></td>
+      </tr>
+      <tr>
+          <td>13</td>
+          <td>JCasC, Production</td>
+          <td><a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/">Ch 13-14</a></td>
+      </tr>
+      <tr>
+          <td>14</td>
+          <td><strong>Practice Test 3 &amp; 4</strong></td>
+          <td><a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/">Test 3</a> · <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/">Test 4</a></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="4-week-balanced-plan">4-Week Balanced Plan<a class="anchor" href="#4-week-balanced-plan">#</a></h3>
+<p>Follow the <a href="/complete_jenkins_notes/docs/26-start-here/">Start Here</a> guide for a complete 4-week curriculum.</p>
+<hr>
+<h2 id="155-sample-questions">15.5 Sample Questions<a class="anchor" href="#155-sample-questions">#</a></h2>
+<h3 id="question-1-declarative-pipeline">Question 1: Declarative Pipeline<a class="anchor" href="#question-1-declarative-pipeline">#</a></h3>
+<p>Which of the following is the correct structure for a Declarative Pipeline?</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">A</span><span class="o">.</span> <span class="n">node</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">     <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span> <span class="n">echo</span> <span class="s1">&#39;Building&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">   <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">B</span><span class="o">.</span> <span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">     <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">     <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">       <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span> <span class="n">steps</span> <span class="o">{</span> <span class="n">echo</span> <span class="s1">&#39;Building&#39;</span> <span class="o">}</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">     <span class="o">}</span>
+</span></span><span class="line"><span class="cl">   <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="o">.</span> <span class="nf">job</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">     <span class="n">steps</span> <span class="o">{</span> <span class="n">echo</span> <span class="s1">&#39;Building&#39;</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">   <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">D</span><span class="o">.</span> <span class="nf">build</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">     <span class="n">sh</span> <span class="s1">&#39;echo Building&#39;</span>
+</span></span><span class="line"><span class="cl">   <span class="o">}</span></span></span></code></pre></div><p><strong>Answer: B</strong> — Declarative pipelines use the <code>pipeline {}</code> block with <code>agent</code>, <code>stages</code>, and <code>steps</code>.</p>
+<h3 id="question-2-agent-labels">Question 2: Agent Labels<a class="anchor" href="#question-2-agent-labels">#</a></h3>
+<p>What does the label expression <code>linux &amp;&amp; !arm64</code> mean?</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">A. Run on Linux or ARM64 agents
+</span></span><span class="line"><span class="cl">B. Run on Linux agents that are not ARM64
+</span></span><span class="line"><span class="cl">C. Run on agents that are not Linux or ARM64
+</span></span><span class="line"><span class="cl">D. Run on ARM64 agents only</span></span></code></pre></div><p><strong>Answer: B</strong> — The <code>&amp;&amp;</code> means AND, the <code>!</code> means NOT. So it matches agents with label <code>linux</code> that do NOT have label <code>arm64</code>.</p>
+<h3 id="question-3-shared-libraries">Question 3: Shared Libraries<a class="anchor" href="#question-3-shared-libraries">#</a></h3>
+<p>Where should reusable pipeline functions be stored in a shared library?</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">A</span><span class="o">.</span> <span class="n">src</span><span class="o">/</span><span class="n">com</span><span class="o">/</span><span class="n">company</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="n">B</span><span class="o">.</span> <span class="n">vars</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="n">C</span><span class="o">.</span> <span class="n">resources</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="n">D</span><span class="o">.</span> <span class="n">Jenkinsfile</span></span></span></code></pre></div><p><strong>Answer: B</strong> — The <code>vars/</code> directory stores global variables that become pipeline steps. The filename becomes the step name.</p>
+<hr>
+<h2 id="156-exam-tips">15.6 Exam Tips<a class="anchor" href="#156-exam-tips">#</a></h2>
+<h3 id="before-the-exam">Before the Exam<a class="anchor" href="#before-the-exam">#</a></h3>
+<ul>
+<li><input disabled="" type="checkbox"> Go through all 17 chapters</li>
+<li><input disabled="" type="checkbox"> Complete all 7 practice tests (399 questions total)</li>
+<li><input disabled="" type="checkbox"> Set up a local Jenkins instance and practice</li>
+<li><input disabled="" type="checkbox"> Focus on Pipeline as Code (25% of exam)</li>
+<li><input disabled="" type="checkbox"> Review agent labels and label expressions</li>
+<li><input disabled="" type="checkbox"> Understand credential types and binding methods</li>
+<li><input disabled="" type="checkbox"> Know the JCasC YAML syntax</li>
+</ul>
+<h3 id="during-the-exam">During the Exam<a class="anchor" href="#during-the-exam">#</a></h3>
+<ul>
+<li>Read questions carefully — look for keywords like &ldquo;NOT&rdquo;, &ldquo;ALWAYS&rdquo;, &ldquo;BEST&rdquo;</li>
+<li>Eliminate obviously wrong answers first</li>
+<li>Use process of elimination for multiple choice</li>
+<li>Don&rsquo;t spend more than 2 minutes on a single question</li>
+<li>Flag hard questions and come back later</li>
+</ul>
+<h3 id="common-mistakes">Common Mistakes<a class="anchor" href="#common-mistakes">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Mistake</th>
+          <th>Correct</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Confusing Declarative vs Scripted syntax</td>
+          <td>Declarative uses <code>pipeline {}</code>, Scripted uses <code>node {}</code></td>
+      </tr>
+      <tr>
+          <td>Thinking master should run builds</td>
+          <td>Master should only coordinate — use agents</td>
+      </tr>
+      <tr>
+          <td>Using <code>latest</code> tags in Docker</td>
+          <td>Always pin specific versions</td>
+      </tr>
+      <tr>
+          <td>Hard-coding credentials</td>
+          <td>Use <code>credentialsId</code> and <code>withCredentials</code></td>
+      </tr>
+      <tr>
+          <td>Ignoring <code>post</code> conditions</td>
+          <td><code>post</code> handles success/failure cleanup</td>
+      </tr>
+      <tr>
+          <td>Not using shared libraries</td>
+          <td>DRY up common pipeline code</td>
+      </tr>
+      <tr>
+          <td>Forgetting <code>serialVersionUID</code></td>
+          <td>All library classes must be <code>Serializable</code></td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="key-takeaways">Key Takeaways<a class="anchor" href="#key-takeaways">#</a></h2>
+<ul>
+<li>Pipeline as Code is the largest exam domain (25%)</li>
+<li>Master how agents, labels, and distributed builds work</li>
+<li>Practice with at least 4-5 practice tests before the exam</li>
+<li>Know the difference between Declarative and Scripted pipelines</li>
+<li>Understand credential types and secure secret management</li>
+<li>Review cheat sheets before the exam for quick reference</li>
+</ul>
+<hr>
+<h2 id="next-steps">Next Steps<a class="anchor" href="#next-steps">#</a></h2>
+<p>→ <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/">Take Practice Test 1</a> to assess your current knowledge</p>
+<p>→ Continue to <a href="/complete_jenkins_notes/docs/16-interview-questions/">Chapter 16: Interview Questions &amp; Answers</a></p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="flex align-center">
+        <img src="/complete_jenkins_notes/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Ch 14: Production-Grade Jenkins</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="flex align-center">
+        <span>Ch 16: Interview Questions &amp; Answers</span>
+        <img src="/complete_jenkins_notes/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){"use strict";document.querySelectorAll("pre > code").forEach(function(t){var n,s=t.parentElement;if(!s||s.tagName!=="PRE")return;if(s.querySelector(".copy-button"))return;s.style.position="relative",n=document.createElement("button"),n.className="copy-button",n.textContent="Copy",n.setAttribute("aria-label","Copy code to clipboard"),n.setAttribute("type","button"),s.appendChild(n),n.addEventListener("click",function(){var s=t.textContent||"";navigator.clipboard?navigator.clipboard.writeText(s).then(function(){n.textContent="Copied!",n.classList.add("copied"),setTimeout(function(){n.textContent="Copy",n.classList.remove("copied")},2e3)}).catch(function(){e(s,n)}):e(s,n)})});function e(e,t){var n=document.createElement("textarea");n.value=e,n.style.position="fixed",n.style.opacity="0",document.body.appendChild(n),n.select();try{document.execCommand("copy"),t.textContent="Copied!",t.classList.add("copied"),setTimeout(function(){t.textContent="Copy",t.classList.remove("copied")},2e3)}catch{t.textContent="Error",setTimeout(function(){t.textContent="Copy"},2e3)}document.body.removeChild(n)}})()</script>
+  
+
+        
+  
+    <script>(function(){"use strict";var t,a,o="jenkins_exam_progress",c="jenkins_chapter_progress";function e(e){this.element=e,this.minutesDisplay=e.querySelector(".timer-minutes"),this.secondsDisplay=e.querySelector(".timer-seconds"),this.statusEl=e.querySelector(".timer-status"),this.totalSeconds=parseInt(e.dataset.minutes||"60",10)*60,this.remaining=this.totalSeconds,this.interval=null,this.running=!1,this.finished=!1;var n,s,o,i,t=this.loadState();t&&t.remaining>0&&!t.finished&&(this.remaining=t.remaining),this.updateDisplay(),n=this,s=e.querySelector(".timer-start"),o=e.querySelector(".timer-pause"),i=e.querySelector(".timer-reset"),s&&s.addEventListener("click",function(){n.start()}),o&&o.addEventListener("click",function(){n.pause()}),i&&i.addEventListener("click",function(){n.reset()}),t&&t.running&&this.start()}e.prototype.start=function(){if(this.finished)return;if(this.running)return;this.running=!0,this.element.classList.add("timer-running"),this.element.classList.remove("timer-paused");var e=this;this.interval=setInterval(function(){e.remaining--,e.updateDisplay(),e.saveState(),e.remaining<=0&&(e.remaining=0,e.updateDisplay(),e.finish())},1e3)},e.prototype.pause=function(){if(!this.running)return;this.running=!1,this.element.classList.remove("timer-running"),this.element.classList.add("timer-paused"),clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.reset=function(){this.pause(),this.remaining=this.totalSeconds,this.finished=!1,this.element.classList.remove("timer-finished"),this.element.classList.remove("timer-paused"),this.statusEl.textContent="Time Remaining",this.updateDisplay(),this.saveState(),localStorage.removeItem(this.getTimerStorageKey())},e.prototype.finish=function(){this.running=!1,this.finished=!0,this.element.classList.remove("timer-running"),this.element.classList.add("timer-finished"),this.statusEl.textContent="⏰ Time's Up!",clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.updateDisplay=function(){var e=Math.floor(this.remaining/60),t=this.remaining%60;this.minutesDisplay.textContent=String(e).padStart(2,"0"),this.secondsDisplay.textContent=String(t).padStart(2,"0"),this.remaining<=300&&this.remaining>0?this.element.classList.add("timer-warning"):this.element.classList.remove("timer-warning")},e.prototype.getTimerStorageKey=function(){return o+"_timer_"+this.element.dataset.testId},e.prototype.loadState=function(){try{var e=localStorage.getItem(this.getTimerStorageKey());return e?JSON.parse(e):null}catch{return null}},e.prototype.saveState=function(){try{var e={remaining:this.remaining,running:this.running,finished:this.finished,savedAt:Date.now()};localStorage.setItem(this.getTimerStorageKey(),JSON.stringify(e))}catch{}},document.querySelectorAll(".exam-timer").forEach(function(t){new e(t)});function f(e,t){try{var s=n();s[e]=t,localStorage.setItem(o,JSON.stringify(s)),m()}catch{}}function n(){try{var e=localStorage.getItem(o);return e?JSON.parse(e):{}}catch{return{}}}function _(){var e=n();return Object.keys(e).filter(function(t){return e[t]===!0}).length}function p(){return 7}function m(){var t=_(),e=p(),n=e>0?Math.round(t/e*100):0,a=i(),s=document.getElementById("exam-progress-bar"),o=document.getElementById("exam-progress-text");s&&(s.style.width=n+"%",s.textContent=n>15?n+"%":""),o&&(o.textContent=t+" of "+e+" tests completed"),l(a,t,e)}function l(e,t,n){var s,o,l,i=document.getElementById("sidebar-progress-fill"),a=document.getElementById("sidebar-progress-pct"),r=document.getElementById("sidebar-progress-chapters"),c=document.getElementById("sidebar-progress-tests");if(!i)return;s=e.total+n,l=e.completed+t,o=s>0?Math.round(l/s*100):0,i.style.width=o+"%",a&&(a.textContent=o+"%"),r&&(r.textContent=e.completed+"/"+e.total+" chapters"),c&&(c.textContent=t+"/"+n+" tests")}document.addEventListener("change",function(e){if(e.target&&e.target.matches(".test-complete-check")){var t=e.target.dataset.testId;t&&f(t,e.target.checked)}});function w(){var e=n();document.querySelectorAll(".test-complete-check").forEach(function(t){var n=t.dataset.testId;n&&e[n]===!0&&(t.checked=!0)}),m()}t=[{id:"01-introduction-to-ci-cd-and-jenkins",title:"Ch 1: Introduction to CI/CD & Jenkins",number:1,section:"Foundation"},{id:"02-jenkins-architecture-and-installation",title:"Ch 2: Jenkins Architecture & Installation",number:2,section:"Foundation"},{id:"03-jenkins-configuration-and-management",title:"Ch 3: Configuration & Management",number:3,section:"Foundation"},{id:"04-freestyle-projects-and-build-jobs",title:"Ch 4: Freestyle Projects & Build Jobs",number:4,section:"Foundation"},{id:"05-pipeline-fundamentals",title:"Ch 5: Pipeline Fundamentals",number:5,section:"Core Skills"},{id:"06-pipeline-syntax-and-steps",title:"Ch 6: Pipeline Syntax & Steps",number:6,section:"Core Skills"},{id:"07-agents-nodes-and-distributed-builds",title:"Ch 7: Agents, Nodes & Distributed Builds",number:7,section:"Core Skills"},{id:"08-source-code-management",title:"Ch 8: Source Code Management",number:8,section:"Core Skills"},{id:"09-shared-libraries-and-reusability",title:"Ch 9: Shared Libraries & Reusability",number:9,section:"Advanced"},{id:"10-multi-branch-pipelines",title:"Ch 10: Multi-Branch Pipelines",number:10,section:"Advanced"},{id:"11-jenkins-docker-and-kubernetes",title:"Ch 11: Docker & Kubernetes Integration",number:11,section:"Advanced"},{id:"12-testing-security-and-compliance",title:"Ch 12: Testing, Security & Compliance",number:12,section:"Advanced"},{id:"13-jenkins-configuration-as-code",title:"Ch 13: Jenkins Configuration as Code (JCasC)",number:13,section:"Production & Exam Prep"},{id:"14-production-grade-jenkins",title:"Ch 14: Production-Grade Jenkins",number:14,section:"Production & Exam Prep"},{id:"15-exam-preparation-guide",title:"Ch 15: Exam Preparation Guide",number:15,section:"Production & Exam Prep"},{id:"16-interview-questions",title:"Ch 16: Interview Questions & Answers",number:16,section:"Bonus"},{id:"17-real-world-scenarios",title:"Ch 17: Real-World Scenario Questions",number:17,section:"Bonus"}],a=[{id:"exam-test-1",title:"Practice Test 1",number:1},{id:"exam-test-2",title:"Practice Test 2",number:2},{id:"exam-test-3",title:"Practice Test 3",number:3},{id:"exam-test-4",title:"Practice Test 4",number:4},{id:"exam-test-5",title:"Practice Test 5",number:5},{id:"exam-test-6",title:"Practice Test 6",number:6},{id:"exam-test-7",title:"Practice Test 7",number:7}];function s(){try{var e=localStorage.getItem(c);return e?JSON.parse(e):{}}catch{return{}}}function u(e,t){try{var n=s();n[e]=n[e]||{},Object.keys(t).forEach(function(s){n[e][s]=t[s]}),localStorage.setItem(c,JSON.stringify(n))}catch{}}function i(){var o=s(),e=0,n=0;return t.forEach(function(t){var s=o[t.id];s&&(s.read&&e++,s.completed&&n++)}),{read:e,completed:n,total:t.length}}function r(){var t=n(),e=0;return a.forEach(function(n){t[n.id]===!0&&e++}),{completed:e,total:a.length}}function g(){var e=window.location.pathname.match(/\/docs\/(\d+-[^/]+)\//);return e?e[1]:null}function v(){var e=g(),n=e&&t.some(function(t){return t.id===e});n&&(b(e),j(e))}function b(e){var t=s();(!t[e]||!t[e].read)&&u(e,{read:!0,readAt:Date.now()})}function j(e){var t,n,i,a,r,o=document.querySelector(".book-article");if(!o)return;if(o.querySelector(".chapter-complete-check"))return;a=s(),r=a[e]||{},i=r.completed===!0,t=document.createElement("div"),t.className="chapter-complete-check",t.innerHTML='<hr><div class="chapter-progress-bar"><input type="checkbox" id="ch-cpl-'+e+'" class="chapter-complete-checkbox" data-chapter-id="'+e+'"'+(i?" checked":"")+'><label for="ch-cpl-'+e+'" class="chapter-complete-label">✓ Mark this chapter as completed</label><span class="chapter-status-badge">'+(i?"✅ Completed":"📖 Reading")+"</span></div>",o.appendChild(t),n=t.querySelector(".chapter-complete-checkbox"),n.addEventListener("change",function(){u(e,{completed:n.checked,completedAt:n.checked?Date.now():null});var s=t.querySelector(".chapter-status-badge");s.textContent=n.checked?"✅ Completed":"📖 Reading"})}window.initExamDashboard=function(){var e,t=document.getElementById("exam-dashboard-app");if(!t)return;t.innerHTML=y(),document.querySelectorAll(".dashboard-chapter-check").forEach(function(e){e.addEventListener("change",function(){u(e.dataset.chapterId,{completed:e.checked,completedAt:e.checked?Date.now():null}),d()})}),document.querySelectorAll(".dashboard-test-check").forEach(function(e){e.addEventListener("change",function(){f(e.dataset.testId,e.checked),d()})}),e=document.getElementById("exam-reset-all"),e&&e.addEventListener("click",function(){confirm("Reset ALL progress (chapters and tests)? This cannot be undone.")&&(localStorage.removeItem(o),localStorage.removeItem(c),d())})};function y(){var m,o=i(),c=r(),u=s(),f=n(),d=o.total+c.total,h=o.completed+c.completed,l=d>0?Math.round(h/d*100):0,e="";return e+='<div class="exam-dashboard-header">',e+="  <h1>📊 Your Learning Dashboard</h1>",e+='  <p class="exam-progress-summary">Track your Jenkins learning journey — from chapters to practice exams</p>',e+="</div>",e+='<div class="exam-combined-progress">',e+='  <div class="exam-progress-bar-wrapper" style="max-width:100%;">',e+='    <div class="exam-progress-bar-fill" id="dash-combined-bar" style="width:'+l+'%;">'+(l>15?l+"%":"")+"</div>",e+="  </div>",e+='  <p class="exam-progress-summary" style="text-align:center;margin-top:0.75rem;">'+h+" of "+d+" total items completed</p>",e+="</div>",e+='<div class="exam-stats">',e+='  <div class="exam-stat-card"><span class="stat-number">'+o.completed+'</span><span class="stat-label">of '+o.total+" Chapters</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+o.read+'</span><span class="stat-label">Chapters Read</span></div>',e+='  <div class="exam-stat-card"><span class="stat-number">'+c.completed+'</span><span class="stat-label">of '+c.total+" Tests Passed</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+l+'%</span><span class="stat-label">Overall Progress</span></div>',e+="</div>",e+='<h2 style="margin-top:2.5rem;">📚 Learning Progress</h2>',e+='<div class="exam-dashboard-grid">',m=["Foundation","Core Skills","Advanced","Production & Exam Prep","Bonus"],m.forEach(function(n){if(s=t.filter(function(e){return e.section===n}),s.length===0)return;var s,i,a=0,o=0;s.forEach(function(e){var t=u[e.id];t&&(t.read&&a++,t.completed&&o++)}),i=Math.round(o/s.length*100),e+='<div class="dashboard-section-card">',e+='  <div class="dashboard-section-header">',e+='    <span class="dashboard-section-badge">'+n+"</span>",e+='    <span class="dashboard-section-count">'+o+"/"+s.length+"</span>",e+="  </div>",e+='  <div class="dashboard-section-bar-wrapper"><div class="dashboard-section-bar-fill" style="width:'+i+'%;"></div></div>',e+='  <div class="dashboard-section-chapters">',s.forEach(function(t){var s=u[t.id]||{},n=s.completed===!0,o=s.read===!0,i=n?"✅":o?"📖":"⬜";e+='    <div class="dashboard-chapter-row'+(n?" completed":"")+'" title="'+t.title+'">',e+='      <input type="checkbox" class="dashboard-chapter-check" data-chapter-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="dashboard-chapter-status">'+i+"</span>",e+='      <span class="dashboard-chapter-title">'+t.title+"</span>",e+="    </div>"}),e+="  </div>",e+="</div>"}),e+="</div>",e+='<h2 style="margin-top:2.5rem;">📝 Practice Test Progress</h2>',e+='<div class="exam-dashboard-grid">',a.forEach(function(t){var n=f[t.id]===!0;e+='  <div class="exam-dashboard-card'+(n?" completed":"")+'">',e+="    <h3>Practice Test "+t.number+"</h3>",e+="    <p>57 questions across all domains | 60 min</p>",e+='    <div style="display:flex;align-items:center;gap:0.5rem;">',e+='      <input type="checkbox" class="exam-dashboard-check dashboard-test-check" data-test-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="card-status">'+(n?"✅ Passed":"⬜ Not yet")+"</span>",e+="    </div>",e+='    <a href="/docs/'+(17+t.number)+"-exam-practice-test-"+t.number+'/" style="display:inline-block;margin-top:0.75rem;font-size:0.85rem;">→ Open test</a>',e+="  </div>"}),e+="</div>",e+='<div style="text-align:center;margin:2.5rem 0;">',e+='  <button class="btn-reset" id="exam-reset-all">🔄 Reset All Progress</button>',e+="</div>",e}function d(){window.initExamDashboard&&window.initExamDashboard()}window.refreshSidebarProgress=function(){var t=i(),e=r();l(t,e.completed,e.total)};function h(){w(),v(),document.getElementById("exam-dashboard-app")&&initExamDashboard();var t=i(),e=r();l(t,e.completed,e.total)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <div class="book-toc-toggle">
+    <label for="toc-control" role="button" class="toc-toggle-label" title="Toggle table of contents">
+      <span class="toc-toggle-icon">▶</span>
+    </label>
+  </div>
+  <aside class="book-toc">
+    <label for="toc-control" class="book-toc-collapse-target" title="Expand table of contents" aria-label="Expand table of contents"></label>
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#151-certification-overview">15.1 Certification Overview</a></li>
+    <li><a href="#152-key-concepts-cheat-sheet">15.2 Key Concepts Cheat Sheet</a>
+      <ul>
+        <li><a href="#pipeline-basics">Pipeline Basics</a></li>
+        <li><a href="#common-pipeline-directives">Common Pipeline Directives</a></li>
+        <li><a href="#git-checkout-options">Git Checkout Options</a></li>
+        <li><a href="#common-steps-reference">Common Steps Reference</a></li>
+      </ul>
+    </li>
+    <li><a href="#153-quick-reference-tables">15.3 Quick Reference Tables</a>
+      <ul>
+        <li><a href="#jenkinsfile-environment-variables">Jenkinsfile Environment Variables</a></li>
+        <li><a href="#agent-labels">Agent Labels</a></li>
+        <li><a href="#post-conditions">Post Conditions</a></li>
+      </ul>
+    </li>
+    <li><a href="#154-study-plan">15.4 Study Plan</a>
+      <ul>
+        <li><a href="#2-week-intensive-plan">2-Week Intensive Plan</a></li>
+        <li><a href="#4-week-balanced-plan">4-Week Balanced Plan</a></li>
+      </ul>
+    </li>
+    <li><a href="#155-sample-questions">15.5 Sample Questions</a>
+      <ul>
+        <li><a href="#question-1-declarative-pipeline">Question 1: Declarative Pipeline</a></li>
+        <li><a href="#question-2-agent-labels">Question 2: Agent Labels</a></li>
+        <li><a href="#question-3-shared-libraries">Question 3: Shared Libraries</a></li>
+      </ul>
+    </li>
+    <li><a href="#156-exam-tips">15.6 Exam Tips</a>
+      <ul>
+        <li><a href="#before-the-exam">Before the Exam</a></li>
+        <li><a href="#during-the-exam">During the Exam</a></li>
+        <li><a href="#common-mistakes">Common Mistakes</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

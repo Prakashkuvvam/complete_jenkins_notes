@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Practice Test 1: CI/CD Fundamentals# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: CI/CD concepts, Jenkins basics, build jobs
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/complete_jenkins_notes/docs/18-exam-practice-test-1/">
+  <meta property="og:site_name" content="Jenkins Learning Path">
+  <meta property="og:title" content="📝 Practice Test 1: CI/CD Fundamentals">
+  <meta property="og:description" content="Practice Test 1: CI/CD Fundamentals# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: CI/CD concepts, Jenkins basics, build jobs">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="📝 Practice Test 1: CI/CD Fundamentals">
+  <meta itemprop="description" content="Practice Test 1: CI/CD Fundamentals# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: CI/CD concepts, Jenkins basics, build jobs">
+  <meta itemprop="wordCount" content="4196">
+
+<title>📝 Practice Test 1: CI/CD Fundamentals • Jenkins Learning Path</title>
+<link rel="icon" href="/complete_jenkins_notes/favicon.png" >
+<link rel="manifest" href="/complete_jenkins_notes/manifest.json">
+<link rel="canonical" href="/complete_jenkins_notes/docs/18-exam-practice-test-1/">
+<link rel="stylesheet" href="/complete_jenkins_notes/book.min.a65532e79bcac2f95ba4108b26cdc17b0fe6382f603d8a6b72971bfa3261bf47.css" >
+
+
+  <script defer type="module" src="/complete_jenkins_notes/en.search.min.2d25fa1fe6842b36dbd4e753f3112a465146ff5f09912883575978a46c3ff969.js" ></script>
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<div class="book-sidebar-toggle">
+  <label for="menu-control" role="button" class="sidebar-toggle-label" title="Toggle sidebar">
+    <span class="sidebar-toggle-icon">◀</span>
+  </label>
+</div>
+<aside class="book-menu">
+  <label for="menu-control" class="book-menu-collapse-target" title="Expand sidebar" aria-label="Expand sidebar"></label>
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/complete_jenkins_notes/"><span>Jenkins Learning Path</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+<div class="sidebar-progress" id="sidebar-progress">
+  <div class="sidebar-progress-header">
+    <span class="sidebar-progress-label">📊 Progress</span>
+    <span class="sidebar-progress-pct" id="sidebar-progress-pct">0%</span>
+  </div>
+  <div class="sidebar-progress-track">
+    <div class="sidebar-progress-fill" id="sidebar-progress-fill" style="width:0%;"></div>
+  </div>
+  <div class="sidebar-progress-detail" id="sidebar-progress-detail">
+    <span id="sidebar-progress-chapters">0/17 chapters</span>
+    <span id="sidebar-progress-tests">0/7 tests</span>
+  </div>
+</div>
+
+
+
+<ul><li><a href="/complete_jenkins_notes/">Home</a></li><li><a href="/complete_jenkins_notes/docs/">Documentation</a></li></ul>
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/25-progress-dashboard/" class="">
+      📊 Progress Dashboard</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/26-start-here/" class="">
+      🚀 Start Here</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="">
+      Ch 1: Introduction to CI/CD &amp; Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="">
+      Ch 2: Jenkins Architecture &amp; Installation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="">
+      Ch 3: Configuration &amp; Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="">
+      Ch 4: Freestyle Projects &amp; Build Jobs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/" class="">
+      Ch 5: Pipeline Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/" class="">
+      Ch 6: Pipeline Syntax &amp; Steps</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/" class="">
+      Ch 7: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="">
+      Ch 8: Source Code Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/" class="">
+      Ch 9: Shared Libraries &amp; Reusability</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="">
+      Ch 10: Multi-Branch Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="">
+      Ch 11: Docker &amp; Kubernetes Integration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/" class="">
+      Ch 12: Testing, Security &amp; Compliance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="">
+      Ch 13: Jenkins Configuration as Code (JCasC)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="">
+      Ch 14: Production-Grade Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/15-exam-preparation-guide/" class="">
+      Ch 15: Exam Preparation Guide</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="">
+      Ch 16: Interview Questions &amp; Answers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="">
+      Ch 17: Real-World Scenario Questions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="active">
+      📝 Practice Test 1: CI/CD Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="">
+      📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="">
+      📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="">
+      📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="">
+      📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="">
+      📝 Practice Test 6: Production Jenkins &amp; Monitoring</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="">
+      📝 Practice Test 7: DevOps &amp; Real-World Scenarios</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/complete_jenkins_notes/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>📝 Practice Test 1: CI/CD Fundamentals</h3>
+
+  <label for="toc-control">
+    
+  </label>
+</div>
+
+
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="practice-test-1-cicd-fundamentals">Practice Test 1: CI/CD Fundamentals<a class="anchor" href="#practice-test-1-cicd-fundamentals">#</a></h1>
+<blockquote class='book-hint '>
+<p><strong>Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.</strong></p>
+</blockquote><hr>
+<h2 id="-exam-instructions">📋 Exam Instructions<a class="anchor" href="#-exam-instructions">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Detail</th>
+          <th>Value</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Questions</strong></td>
+          <td>57</td>
+      </tr>
+      <tr>
+          <td><strong>Time Limit</strong></td>
+          <td>60 minutes</td>
+      </tr>
+      <tr>
+          <td><strong>Passing Score</strong></td>
+          <td>~70% (40/57 correct)</td>
+      </tr>
+      <tr>
+          <td><strong>Format</strong></td>
+          <td>Multiple choice</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<div class="exam-controls">
+  <div class="exam-timer" data-minutes="60" data-test-id="exam-test-1">
+    <div class="timer-face">
+      <span class="timer-minutes">60</span>
+      <span class="timer-separator">:</span>
+      <span class="timer-seconds">00</span>
+    </div>
+    <div class="timer-controls">
+      <button class="timer-btn timer-start">▶ Start</button>
+      <button class="timer-btn timer-pause">⏸ Pause</button>
+      <button class="timer-btn timer-reset">↺ Reset</button>
+    </div>
+    <span class="timer-status">Time Remaining</span>
+  </div>
+  <div class="exam-progress-check">
+    <input type="checkbox" class="test-complete-check" id="test-complete-1" data-test-id="exam-test-1">
+    <label for="test-complete-1">✓ Mark test as completed</label>
+  </div>
+</div>
+<p><strong>57 Questions | Duration: 60 minutes | Focus: CI/CD concepts, Jenkins basics, build jobs</strong></p>
+<hr>
+<h2 id="questions">Questions<a class="anchor" href="#questions">#</a></h2>
+<p><strong>1. What is continuous integration?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A practice where developers merge code changes into a shared repository several times a day</li>
+<li><input disabled="" type="checkbox"> A practice of deploying code directly to production</li>
+<li><input disabled="" type="checkbox"> A manual code review process</li>
+<li><input disabled="" type="checkbox"> A database migration strategy</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A practice where developers merge code changes into a shared repository several times a day**
+<p>Continuous integration is the practice of frequently merging code changes into a shared repository, with each merge triggering an automated build and test process to detect integration issues early.</p>
+</details>
+<hr>
+<p><strong>2. What is the primary purpose of continuous delivery?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To automatically deploy to production on every commit</li>
+<li><input disabled="" type="checkbox"> To ensure code is always in a deployable state</li>
+<li><input disabled="" type="checkbox"> To replace manual testing entirely</li>
+<li><input disabled="" type="checkbox"> To eliminate the need for version control</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To ensure code is always in a deployable state**
+<p>Continuous delivery extends CI by ensuring that code is always in a deployable state after passing automated tests. Deployment to production is a manual decision triggered when business requirements dictate.</p>
+</details>
+<hr>
+<p><strong>3. In Jenkins, what is a node?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A Jenkins job configuration</li>
+<li><input disabled="" type="checkbox"> A machine that is part of the Jenkins environment and capable of executing Pipelines or builds</li>
+<li><input disabled="" type="checkbox"> A plugin for source code management</li>
+<li><input disabled="" type="checkbox"> A type of build trigger</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A machine that is part of the Jenkins environment and capable of executing Pipelines or builds**
+<p>A node is any machine that Jenkins can use to execute build jobs or Pipelines. The Jenkins controller is also considered a node.</p>
+</details>
+<hr>
+<p><strong>4. Which of the following best describes a build trigger in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A plugin that manages build artifacts</li>
+<li><input disabled="" type="checkbox"> A mechanism that starts a build job based on specific events</li>
+<li><input disabled="" type="checkbox"> A tool for monitoring build performance</li>
+<li><input disabled="" type="checkbox"> A script that runs after a build completes</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A mechanism that starts a build job based on specific events**
+<p>Build triggers define when and how a build job starts. Triggers include SCM polling, webhooks, scheduled cron jobs, and upstream/downstream job completions.</p>
+</details>
+<hr>
+<p><strong>5. What file format does Jenkins use for declarative Pipelines?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> YAML</li>
+<li><input disabled="" type="checkbox"> XML</li>
+<li><input disabled="" type="checkbox"> Groovy-based DSL</li>
+<li><input disabled="" type="checkbox"> JSON</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Groovy-based DSL**
+<p>Jenkins declarative Pipelines use a Groovy-based Domain Specific Language (DSL). The Pipeline is defined in a <code>Jenkinsfile</code> that lives alongside the application code in version control.</p>
+</details>
+<hr>
+<p><strong>6. Which of the following is NOT a valid Jenkins build trigger?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Build after other projects are built</li>
+<li><input disabled="" type="checkbox"> Poll SCM</li>
+<li><input disabled="" type="checkbox"> GitHub webhook trigger</li>
+<li><input disabled="" type="checkbox"> Manual email trigger</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Manual email trigger**
+<p>Email notifications are outputs of builds, not triggers. Valid triggers include SCM polling, webhooks (GitHub, GitLab, Bitbucket), scheduled builds (cron), and upstream/downstream job dependencies.</p>
+</details>
+<hr>
+<p><strong>7. What is a build artifact in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> The Jenkins configuration file</li>
+<li><input disabled="" type="checkbox"> A file produced by a build job, such as a compiled JAR, WAR, or Docker image</li>
+<li><input disabled="" type="checkbox"> The source code repository</li>
+<li><input disabled="" type="checkbox"> The Jenkins log file</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A file produced by a build job, such as a compiled JAR, WAR, or Docker image**
+<p>Build artifacts are the outputs of a build process. Jenkins can archive artifacts so they are available for later use, such as deployment to staging or production environments.</p>
+</details>
+<hr>
+<p><strong>8. What is the role of the Jenkins controller?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To execute build tasks exclusively</li>
+<li><input disabled="" type="checkbox"> To manage Jenkins configuration, schedule jobs, and serve the UI</li>
+<li><input disabled="" type="checkbox"> To store build artifacts permanently</li>
+<li><input disabled="" type="checkbox"> To act as a load balancer for multiple Jenkins instances</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To manage Jenkins configuration, schedule jobs, and serve the UI**
+<p>The Jenkins controller is the central management node that handles job scheduling, UI requests, configuration, and coordination with agent nodes for build execution.</p>
+</details>
+<hr>
+<p><strong>9. What is the difference between continuous delivery and continuous deployment?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Continuous deployment requires manual approval; continuous delivery does not</li>
+<li><input disabled="" type="checkbox"> Continuous delivery requires manual approval for production; continuous deployment automates it</li>
+<li><input disabled="" type="checkbox"> They are the same concept with different names</li>
+<li><input disabled="" type="checkbox"> Continuous deployment only applies to mobile apps</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Continuous delivery requires manual approval for production; continuous deployment automates it**
+<p>Continuous delivery keeps code in a deployable state but requires a manual trigger for production deployment. Continuous deployment automates the entire pipeline, including production releases, with no manual intervention.</p>
+</details>
+<hr>
+<p><strong>10. What port does Jenkins run on by default?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> 80</li>
+<li><input disabled="" type="checkbox"> 443</li>
+<li><input disabled="" type="checkbox"> 8080</li>
+<li><input disabled="" type="checkbox"> 8443</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**8080**
+<p>Jenkins runs on port 8080 by default when installed via the native package or WAR file. This port can be changed in the Jenkins configuration file or startup parameters.</p>
+</details>
+<hr>
+<p><strong>11. Which Jenkins component executes build jobs?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> The controller</li>
+<li><input disabled="" type="checkbox"> An agent (or node)</li>
+<li><input disabled="" type="checkbox"> The SCM bridge</li>
+<li><input disabled="" type="checkbox"> The build scheduler</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**An agent (or node)**
+<p>Agents are worker machines that execute build jobs assigned by the controller. The controller sends job configurations to agents, which then perform the actual build, test, and deployment tasks.</p>
+</details>
+<hr>
+<p><strong>12. What is the Jenkins home directory?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>/var/log/jenkins</code></li>
+<li><input disabled="" type="checkbox"> <code>/var/lib/jenkins</code></li>
+<li><input disabled="" type="checkbox"> <code>/etc/jenkins</code></li>
+<li><input disabled="" type="checkbox"> <code>/usr/share/jenkins</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`/var/lib/jenkins`**
+<p>The Jenkins home directory stores all configuration files, build logs, job configurations, and plugins. It defaults to <code>/var/lib/jenkins</code> on Linux systems but can be customized.</p>
+</details>
+<hr>
+<p><strong>13. What is the purpose of the Jenkinsfile?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To configure Jenkins system settings</li>
+<li><input disabled="" type="checkbox"> To define a Jenkins Pipeline as code within the source repository</li>
+<li><input disabled="" type="checkbox"> To store build artifacts</li>
+<li><input disabled="" type="checkbox"> To manage user permissions</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To define a Jenkins Pipeline as code within the source repository**
+<p>A Jenkinsfile is a text file that defines the entire CI/CD pipeline using either declarative or scripted pipeline syntax. It is stored in version control alongside application code, following the pipeline-as-code principle.</p>
+</details>
+<hr>
+<p><strong>14. Which of the following is a valid benefit of CI/CD?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Reduced need for version control</li>
+<li><input disabled="" type="checkbox"> Faster detection of integration issues</li>
+<li><input disabled="" type="checkbox"> Elimination of all bugs</li>
+<li><input disabled="" type="checkbox"> Removal of all manual processes</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Faster detection of integration issues**
+<p>CI/CD enables teams to detect integration issues early by frequently merging and building code. This reduces the time between when a bug is introduced and when it is found, making fixes less expensive.</p>
+</details>
+<hr>
+<p><strong>15. What is the primary responsibility of a Jenkins agent?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To monitor build performance</li>
+<li><input disabled="" type="checkbox"> To execute build tasks sent by the controller</li>
+<li><input disabled="" type="checkbox"> To store source code</li>
+<li><input disabled="" type="checkbox"> To manage user authentication</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To execute build tasks sent by the controller**
+<p>Agents receive build instructions from the controller, execute the actual build steps, and report results back. They can run on different operating systems and environments.</p>
+</details>
+<hr>
+<p><strong>16. What is a workspace in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> The Jenkins system configuration directory</li>
+<li><input disabled="" type="checkbox"> A directory on the agent where the build runs and source code is checked out</li>
+<li><input disabled="" type="checkbox"> The Jenkins plugin repository</li>
+<li><input disabled="" type="checkbox"> A virtual machine running Jenkins</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A directory on the agent where the build runs and source code is checked out**
+<p>Each Jenkins job gets a dedicated workspace directory on the agent node. Source code is checked out into the workspace, and all build operations occur within this directory.</p>
+</details>
+<hr>
+<p><strong>17. What does the term &ldquo;pipeline as code&rdquo; refer to?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Writing pipeline definitions in a programming language</li>
+<li><input disabled="" type="checkbox"> Defining build, test, and deployment processes through code stored in version control</li>
+<li><input disabled="" type="checkbox"> Using XML files to store pipeline configurations</li>
+<li><input disabled="" type="checkbox"> Generating code automatically from pipeline definitions</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Defining build, test, and deployment processes through code stored in version control**
+<p>Pipeline as code means the entire CI/CD pipeline is defined programmatically (typically in a Jenkinsfile) and stored in the source repository alongside the application code, enabling versioning, review, and collaboration.</p>
+</details>
+<hr>
+<p><strong>18. What is the default authentication mechanism in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> LDAP</li>
+<li><input disabled="" type="checkbox"> Jenkins&rsquo; own user database</li>
+<li><input disabled="" type="checkbox"> SAML</li>
+<li><input disabled="" type="checkbox"> OAuth</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Jenkins' own user database**
+<p>Jenkins ships with its own internal user database for authentication. Users and their credentials are stored within Jenkins. External authentication mechanisms like LDAP, SAML, or Active Directory can be configured via plugins.</p>
+</details>
+<hr>
+<p><strong>19. Which protocol does Jenkins use for controller-agent communication?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> HTTP/HTTPS</li>
+<li><input disabled="" type="checkbox"> SSH</li>
+<li><input disabled="" type="checkbox"> TCP/IP (JNLP)</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Jenkins supports multiple protocols for controller-agent communication: SSH, JNLP (Java Web Start, a TCP-based protocol), and HTTP/HTTPS. The choice depends on the network setup and security requirements.</p>
+</details>
+<hr>
+<p><strong>20. What is a build executor in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A plugin that optimizes build performance</li>
+<li><input disabled="" type="checkbox"> A slot on an agent node that can run one build at a time</li>
+<li><input disabled="" type="checkbox"> A command-line tool for triggering builds</li>
+<li><input disabled="" type="checkbox"> A Jenkins job type</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A slot on an agent node that can run one build at a time**
+<p>Executors represent the number of concurrent builds a node can handle. Each executor can run one build or pipeline execution at a time. The number of executors is configured per node.</p>
+</details>
+<hr>
+<p><strong>21. What is the Jenkins plugin architecture?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Jenkins comes with all features built-in</li>
+<li><input disabled="" type="checkbox"> Jenkins is extended by installing plugins that add functionality</li>
+<li><input disabled="" type="checkbox"> Plugins are only available in the enterprise version</li>
+<li><input disabled="" type="checkbox"> Plugins are third-party standalone applications</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Jenkins is extended by installing plugins that add functionality**
+<p>Jenkins has a modular plugin architecture. The core provides basic CI/CD functionality, while plugins extend Jenkins with integrations to tools like Git, Docker, Kubernetes, Slack, and hundreds of other services.</p>
+</details>
+<hr>
+<p><strong>22. What is the purpose of the post-build actions in a Jenkins job?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To define build triggers</li>
+<li><input disabled="" type="checkbox"> To specify steps that run after the main build completes</li>
+<li><input disabled="" type="checkbox"> To configure SCM settings</li>
+<li><input disabled="" type="checkbox"> To define environment variables</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To specify steps that run after the main build completes**
+<p>Post-build actions are tasks that execute after the build steps complete, regardless of success or failure. Common post-build actions include archiving artifacts, publishing test reports, sending notifications, and triggering downstream jobs.</p>
+</details>
+<hr>
+<p><strong>23. What is the difference between a freestyle project and a pipeline in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Freestyle projects are more modern than pipelines</li>
+<li><input disabled="" type="checkbox"> Pipelines define the entire build process as code; freestyle projects use a GUI</li>
+<li><input disabled="" type="checkbox"> Freestyle projects support parallelism; pipelines do not</li>
+<li><input disabled="" type="checkbox"> There is no difference</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Pipelines define the entire build process as code; freestyle projects use a GUI**
+<p>Freestyle projects are configured via the Jenkins web UI with individual fields and options. Pipelines use a Jenkinsfile (Groovy DSL) to define the entire build-test-deploy process as code, enabling version control, reusability, and advanced features like parallelism.</p>
+</details>
+<hr>
+<p><strong>24. What does the term &ldquo;CI/CD pipeline&rdquo; typically refer to?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A single Jenkins job</li>
+<li><input disabled="" type="checkbox"> A series of automated steps that take code from commit to deployment</li>
+<li><input disabled="" type="checkbox"> The Jenkins installation process</li>
+<li><input disabled="" type="checkbox"> A manual release process</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A series of automated steps that take code from commit to deployment**
+<p>A CI/CD pipeline encompasses the entire automated workflow: source code checkout, building, testing, and deploying across environments. It is typically defined in a Jenkinsfile using declarative or scripted pipeline syntax.</p>
+</details>
+<hr>
+<p><strong>25. What is the purpose of build wrappers in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To archive build artifacts</li>
+<li><input disabled="" type="checkbox"> To provide additional setup or teardown around a build</li>
+<li><input disabled="" type="checkbox"> To define the build steps</li>
+<li><input disabled="" type="checkbox"> To configure SCM polling</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To provide additional setup or teardown around a build**
+<p>Build wrappers define actions that wrap around the entire build execution. They can set environment variables, inject passwords, create temporary directories, and clean up workspace after the build.</p>
+</details>
+<hr>
+<p><strong>26. Which command is used to start Jenkins from a WAR file?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>jenkins start</code></li>
+<li><input disabled="" type="checkbox"> <code>java -jar jenkins.war</code></li>
+<li><input disabled="" type="checkbox"> <code>systemctl start jenkins</code></li>
+<li><input disabled="" type="checkbox"> <code>run jenkins</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`java -jar jenkins.war`**
+<p>The Jenkins WAR file can be run directly using the Java command: <code>java -jar jenkins.war</code>. This is useful for development, testing, and running Jenkins without a full installation.</p>
+</details>
+<hr>
+<p><strong>27. What is the primary file that stores Jenkins job configurations?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>config.xml</code></li>
+<li><input disabled="" type="checkbox"> <code>Jenkinsfile</code></li>
+<li><input disabled="" type="checkbox"> <code>pipeline.groovy</code></li>
+<li><input disabled="" type="checkbox"> <code>build.xml</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`config.xml`**
+<p>Every Jenkins job and plugin stores its configuration in XML files named <code>config.xml</code> within the Jenkins home directory. The <code>Jenkinsfile</code> (used for pipelines) is stored in the source code repository.</p>
+</details>
+<hr>
+<p><strong>28. What is a downstream job in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A job that runs before the current job</li>
+<li><input disabled="" type="checkbox"> A job that depends on the success of the current job</li>
+<li><input disabled="" type="checkbox"> A job with lower priority</li>
+<li><input disabled="" type="checkbox"> A job running on a different controller</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A job that depends on the success of the current job**
+<p>A downstream job is triggered by the completion (typically success) of the current job. This creates job dependencies and allows building pipeline-like workflows even with freestyle projects.</p>
+</details>
+<hr>
+<p><strong>29. What is the purpose of environment variables in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To configure Jenkins system settings</li>
+<li><input disabled="" type="checkbox"> To pass configuration values to build steps without hardcoding</li>
+<li><input disabled="" type="checkbox"> To define build triggers</li>
+<li><input disabled="" type="checkbox"> To manage user permissions</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To pass configuration values to build steps without hardcoding**
+<p>Environment variables allow passing values like API keys, paths, and configuration parameters to build steps. Jenkins provides built-in environment variables (like BUILD_NUMBER, JOB_NAME) and allows custom ones to be defined.</p>
+</details>
+<hr>
+<p><strong>30. Which port does Jenkins use for controller-agent communication over JNLP?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> 8080</li>
+<li><input disabled="" type="checkbox"> 50000</li>
+<li><input disabled="" type="checkbox"> 443</li>
+<li><input disabled="" type="checkbox"> 22</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**50000**
+<p>Jenkins uses TCP port 50000 by default for controller-agent communication via JNLP. This port must be open in firewalls to allow agents to connect to the controller. This can be changed in Jenkins global security settings.</p>
+</details>
+<hr>
+<p><strong>31. What is a deployment pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A pipeline that only deploys to production</li>
+<li><input disabled="" type="checkbox"> A pipeline that covers the entire process from code commit to production deployment</li>
+<li><input disabled="" type="checkbox"> A manual approval process</li>
+<li><input disabled="" type="checkbox"> A Jenkins plugin</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A pipeline that covers the entire process from code commit to production deployment**
+<p>A deployment pipeline encompasses all stages — commit, build, test, stage, and deploy. It represents the complete path software takes from a developer&rsquo;s commit to being available to users in production.</p>
+</details>
+<hr>
+<p><strong>32. What is the purpose of the <code>checkout scm</code> step in a Jenkins Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To save build artifacts</li>
+<li><input disabled="" type="checkbox"> To clone the source code repository</li>
+<li><input disabled="" type="checkbox"> To run code quality checks</li>
+<li><input disabled="" type="checkbox"> To check out a specific branch</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To clone the source code repository**
+<p>The <code>checkout scm</code> step in a Jenkinsfile automatically checks out the source code from the repository configured in the pipeline. It uses the SCM configuration specified in the pipeline definition.</p>
+</details>
+<hr>
+<p><strong>33. What happens when a Jenkins agent goes offline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> The controller stops working</li>
+<li><input disabled="" type="checkbox"> Builds assigned to that agent are queued or reassigned</li>
+<li><input disabled="" type="checkbox"> All builds are cancelled</li>
+<li><input disabled="" type="checkbox"> Jenkins shuts down</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Builds assigned to that agent are queued or reassigned**
+<p>When an agent goes offline, the controller marks it as unavailable. Any builds that were queued or running on that agent may be queued for another available agent or held until the agent comes back online.</p>
+</details>
+<hr>
+<p><strong>34. What is the difference between a stage and a step in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> They are the same concept</li>
+<li><input disabled="" type="checkbox"> A stage is a logical division of the pipeline; a step is a single operation within a stage</li>
+<li><input disabled="" type="checkbox"> A step contains multiple stages</li>
+<li><input disabled="" type="checkbox"> Stages are only used in scripted pipelines</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A stage is a logical division of the pipeline; a step is a single operation within a stage**
+<p>In Declarative Pipelines, <code>stage</code> directives group related operations into logical phases (e.g., Build, Test, Deploy). Each stage contains <code>steps</code> which are individual operations like <code>sh</code>, <code>echo</code>, or <code>checkout scm</code>.</p>
+</details>
+<hr>
+<p><strong>35. What is the Jenkins queue?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A list of failed builds</li>
+<li><input disabled="" type="checkbox"> A list of builds waiting for an available executor</li>
+<li><input disabled="" type="checkbox"> The build history log</li>
+<li><input disabled="" type="checkbox"> Jenkins system messages</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A list of builds waiting for an available executor**
+<p>The Jenkins queue holds builds that have been triggered but cannot run immediately because no executor is available. Builds in the queue wait until an executor on any eligible node becomes free.</p>
+</details>
+<hr>
+<p><strong>36. What is the typical frequency of commits in continuous integration?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Once a week</li>
+<li><input disabled="" type="checkbox"> Once a day</li>
+<li><input disabled="" type="checkbox"> Several times a day</li>
+<li><input disabled="" type="checkbox"> Once per sprint</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Several times a day**
+<p>A key principle of CI is committing code frequently — multiple times per day. This reduces the scope of each integration, making it easier to identify and fix issues quickly.</p>
+</details>
+<hr>
+<p><strong>37. What is a build result in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> The exit code of a build</li>
+<li><input disabled="" type="checkbox"> The final outcome of a build (success, unstable, failure, aborted)</li>
+<li><input disabled="" type="checkbox"> The build log file</li>
+<li><input disabled="" type="checkbox"> The build artifact checksum</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**The final outcome of a build (success, unstable, failure, aborted)**
+<p>A build result indicates the overall outcome: <strong>Success</strong> (all steps passed), <strong>Unstable</strong> (some non-critical failures like test failures), <strong>Failure</strong> (critical errors), or <strong>Aborted</strong> (manually stopped).</p>
+</details>
+<hr>
+<p><strong>38. What is the purpose of the <code>stash</code> and <code>unstash</code> steps in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To save money on build agents</li>
+<li><input disabled="" type="checkbox"> To pass files between stages on the same node</li>
+<li><input disabled="" type="checkbox"> To store files permanently</li>
+<li><input disabled="" type="checkbox"> To delete build artifacts</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To pass files between stages on the same node**
+<p><code>stash</code> saves a set of files for later use in the same pipeline, while <code>unstash</code> retrieves those files in a later stage. This is useful when files need to be shared across stages but not persisted permanently.</p>
+</details>
+<hr>
+<p><strong>39. What is the primary purpose of automated testing in CI/CD?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To eliminate manual testing entirely</li>
+<li><input disabled="" type="checkbox"> To provide rapid feedback on code changes</li>
+<li><input disabled="" type="checkbox"> To replace developers</li>
+<li><input disabled="" type="checkbox"> To meet compliance requirements</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To provide rapid feedback on code changes**
+<p>Automated testing in CI/CD aims to give developers rapid feedback about the quality and correctness of their changes. Tests run automatically with every commit, catching issues early in the development cycle.</p>
+</details>
+<hr>
+<p><strong>40. Which of the following is NOT a typical phase in a CI/CD pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Build</li>
+<li><input disabled="" type="checkbox"> Test</li>
+<li><input disabled="" type="checkbox"> Deploy</li>
+<li><input disabled="" type="checkbox"> Code review</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Code review**
+<p>While code review is an important practice, it is not a phase within the automated CI/CD pipeline. Pipelines typically include build, test, deploy, and sometimes security scanning phases. Code review happens before code is merged.</p>
+</details>
+<hr>
+<p><strong>41. What is the purpose of the <code>post</code> section in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To define build triggers</li>
+<li><input disabled="" type="checkbox"> To define conditions that run after all stages complete</li>
+<li><input disabled="" type="checkbox"> To configure environment variables</li>
+<li><input disabled="" type="checkbox"> To define the agent</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To define conditions that run after all stages complete**
+<p>The <code>post</code> section defines actions that run after the pipeline stages complete. It supports conditions like <code>always</code>, <code>success</code>, <code>failure</code>, <code>unstable</code>, and <code>changed</code> to customize post-pipeline behavior.</p>
+</details>
+<hr>
+<p><strong>42. What is the function of the <code>when</code> directive in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To run stages in parallel</li>
+<li><input disabled="" type="checkbox"> To conditionally execute a stage based on a condition</li>
+<li><input disabled="" type="checkbox"> To define environment variables</li>
+<li><input disabled="" type="checkbox"> To configure build tools</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To conditionally execute a stage based on a condition**
+<p>The <code>when</code> directive allows a stage to be executed only when specified conditions are met. Common conditions include branch name matching, environment variables, and build parameters.</p>
+</details>
+<hr>
+<p><strong>43. What is a Jenkins label?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A tag assigned to a Jenkins job for categorization</li>
+<li><input disabled="" type="checkbox"> A tag assigned to nodes to control which jobs run on which agents</li>
+<li><input disabled="" type="checkbox"> A build result status</li>
+<li><input disabled="" type="checkbox"> A plugin category</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A tag assigned to nodes to control which jobs run on which agents**
+<p>Labels are user-defined tags assigned to Jenkins agents. Jobs can be configured to run only on agents with specific labels, enabling job-to-agent matching based on capabilities like operating system, tools, or environment.</p>
+</details>
+<hr>
+<p><strong>44. What is the purpose of build retries in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To repeat failed builds automatically</li>
+<li><input disabled="" type="checkbox"> To archive multiple copies of build artifacts</li>
+<li><input disabled="" type="checkbox"> To run builds on multiple agents simultaneously</li>
+<li><input disabled="" type="checkbox"> To defer builds to off-peak hours</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To repeat failed builds automatically**
+<p>Build retries automatically re-run a build a specified number of times if it fails. This can help with transient failures caused by network issues, resource contention, or intermittent test failures.</p>
+</details>
+<hr>
+<p><strong>45. What is the key difference between CI and CD?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> CI validates that code integrates properly; CD extends this to ensure deployability</li>
+<li><input disabled="" type="checkbox"> CI is for developers only; CD involves the operations team</li>
+<li><input disabled="" type="checkbox"> CI runs tests; CD deploys to production</li>
+<li><input disabled="" type="checkbox"> There is no difference</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**CI validates that code integrates properly; CD extends this to ensure deployability**
+<p>Continuous Integration focuses on frequently integrating, building, and testing code changes. Continuous Delivery extends CI by ensuring the integrated code is always in a deployable state and automating the release process.</p>
+</details>
+<hr>
+<p><strong>46. What is the purpose of the Jenkins system log?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To store build artifacts</li>
+<li><input disabled="" type="checkbox"> To record Jenkins system events and errors</li>
+<li><input disabled="" type="checkbox"> To track user login history</li>
+<li><input disabled="" type="checkbox"> To cache plugin downloads</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To record Jenkins system events and errors**
+<p>The Jenkins system log records system-level events, warnings, and errors. It is useful for debugging issues related to plugin loading, authentication, agent connectivity, and other system operations.</p>
+</details>
+<hr>
+<p><strong>47. What happens when you delete a Jenkins job?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> The job is disabled but configuration is preserved</li>
+<li><input disabled="" type="checkbox"> The job configuration and all build history are removed</li>
+<li><input disabled="" type="checkbox"> Only the job configuration is deleted; builds are preserved</li>
+<li><input disabled="" type="checkbox"> The job is stopped and queued for deletion</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**The job configuration and all build history are removed**
+<p>Deleting a Jenkins job permanently removes its configuration, all build records, logs, and artifacts. This action cannot be undone through the UI, so it should be performed with caution.</p>
+</details>
+<hr>
+<p><strong>48. What is the purpose of the rebuild plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To automatically run builds on a schedule</li>
+<li><input disabled="" type="checkbox"> To rerun a previous build with the same parameters</li>
+<li><input disabled="" type="checkbox"> To rebuild Jenkins from backup</li>
+<li><input disabled="" type="checkbox"> To reinstall plugins</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To rerun a previous build with the same parameters**
+<p>The rebuild plugin adds a &ldquo;Rebuild&rdquo; button to build history, allowing developers to rerun a specific build with the same parameters, commit, and environment. This is useful for debugging failures.</p>
+</details>
+<hr>
+<p><strong>49. What is a build parameter in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A configuration setting for the Jenkins server</li>
+<li><input disabled="" type="checkbox"> A variable that can be passed to a build job at runtime</li>
+<li><input disabled="" type="checkbox"> A build log entry</li>
+<li><input disabled="" type="checkbox"> A plugin setting</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A variable that can be passed to a build job at runtime**
+<p>Build parameters allow users to pass values to a build when it is triggered. Common parameter types include string, choice, boolean, password, and file parameters. They enable flexible, parameterized builds.</p>
+</details>
+<hr>
+<p><strong>50. What is the purpose of the Build History in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To track changes to Jenkins configuration</li>
+<li><input disabled="" type="checkbox"> To maintain a record of all past build executions and their results</li>
+<li><input disabled="" type="checkbox"> To display real-time build logs</li>
+<li><input disabled="" type="checkbox"> To manage Jenkins plugins</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To maintain a record of all past build executions and their results**
+<p>The Build History stores a record of every build execution, including its result, duration, console output, artifacts, and test results. It provides traceability and audit capability for all CI/CD activities.</p>
+</details>
+<hr>
+<p><strong>51. In CI/CD, what does the term &ldquo;shift left&rdquo; mean?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Moving tasks earlier in the development lifecycle</li>
+<li><input disabled="" type="checkbox"> Moving tasks to the right side of the pipeline</li>
+<li><input disabled="" type="checkbox"> Reducing the number of build stages</li>
+<li><input disabled="" type="checkbox"> Moving from Jenkins to a different CI tool</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Moving tasks earlier in the development lifecycle**
+<p>&ldquo;Shift left&rdquo; refers to moving quality-related activities (testing, security scanning, code analysis) earlier in the development process. This helps catch issues sooner when they are easier and cheaper to fix.</p>
+</details>
+<hr>
+<p><strong>52. What is the purpose of the Jenkins Plugin Manager?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To create new plugins</li>
+<li><input disabled="" type="checkbox"> To install, update, and remove Jenkins plugins</li>
+<li><input disabled="" type="checkbox"> To manage plugin source code</li>
+<li><input disabled="" type="checkbox"> To compile plugins</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To install, update, and remove Jenkins plugins**
+<p>The Plugin Manager provides a UI for managing Jenkins plugins. It allows administrators to install plugins from the Jenkins update center, update existing plugins, and remove unused ones.</p>
+</details>
+<hr>
+<p><strong>53. What is the function of the <code>tools</code> directive in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To install build tools on the agent</li>
+<li><input disabled="" type="checkbox"> To automatically configure tools like JDK, Maven, or Gradle</li>
+<li><input disabled="" type="checkbox"> To download source code</li>
+<li><input disabled="" type="checkbox"> To manage plugins</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To automatically configure tools like JDK, Maven, or Gradle**
+<p>The <code>tools</code> directive allows specifying build tools (JDK, Maven, Gradle) that Jenkins will automatically install and configure on the agent for the pipeline execution. Tools must be configured in Jenkins Global Tool Configuration.</p>
+</details>
+<hr>
+<p><strong>54. What does &ldquo;idempotent deployment&rdquo; mean?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A deployment that runs exactly once</li>
+<li><input disabled="" type="checkbox"> A deployment that can be run multiple times with the same result</li>
+<li><input disabled="" type="checkbox"> A deployment that only runs during off-peak hours</li>
+<li><input disabled="" type="checkbox"> A deployment that includes infrastructure changes</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A deployment that can be run multiple times with the same result**
+<p>An idempotent deployment produces the same outcome regardless of how many times it is run. If the desired state is already achieved, running the deployment again should not cause errors or changes.</p>
+</details>
+<hr>
+<p><strong>55. What is the purpose of the Blue Ocean plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To monitor cloud costs</li>
+<li><input disabled="" type="checkbox"> To provide a modern, visual UI for Jenkins Pipelines</li>
+<li><input disabled="" type="checkbox"> To manage AWS resources</li>
+<li><input disabled="" type="checkbox"> To create Kubernetes clusters</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To provide a modern, visual UI for Jenkins Pipelines**
+<p>Blue Ocean is a plugin that provides a modern, intuitive, and visual interface for Jenkins Pipelines. It offers pipeline visualization, error highlighting, and a simplified pipeline editor.</p>
+</details>
+<hr>
+<p><strong>56. What is the difference between a commit stage and an acceptance stage in a pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> The commit stage focuses on building and unit testing; the acceptance stage validates against requirements</li>
+<li><input disabled="" type="checkbox"> The commit stage runs on every commit; the acceptance stage runs weekly</li>
+<li><input disabled="" type="checkbox"> They are the same stage with different names</li>
+<li><input disabled="" type="checkbox"> The commit stage runs on the controller; acceptance runs on agents</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**The commit stage focuses on building and unit testing; the acceptance stage validates against requirements**
+<p>The commit stage runs immediately after each commit and includes compilation and unit tests. The acceptance stage runs after the commit stage passes and validates the build against acceptance criteria, integration, and end-to-end tests.</p>
+</details>
+<hr>
+<p><strong>57. What is the role of a Jenkins security realm?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To encrypt build artifacts</li>
+<li><input disabled="" type="checkbox"> To define how users authenticate to Jenkins</li>
+<li><input disabled="" type="checkbox"> To secure network traffic</li>
+<li><input disabled="" type="checkbox"> To protect source code</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To define how users authenticate to Jenkins**
+<p>A security realm determines the authentication mechanism Jenkins uses to verify user identities. Options include Jenkins&rsquo; internal database, LDAP, Active Directory, SAML, OAuth (via GitHub, Google, etc.), and custom security plugins.</p>
+</details>
+<hr>
+<blockquote class='book-hint '>
+<p><strong>Pro tip:</strong> After completing this test, check your score per topic. If you scored below 70% in any area, review the corresponding chapters in this guide before attempting the next practice test.</p>
+</blockquote></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="flex align-center">
+        <img src="/complete_jenkins_notes/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Ch 17: Real-World Scenario Questions</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="flex align-center">
+        <span>📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</span>
+        <img src="/complete_jenkins_notes/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){"use strict";document.querySelectorAll("pre > code").forEach(function(t){var n,s=t.parentElement;if(!s||s.tagName!=="PRE")return;if(s.querySelector(".copy-button"))return;s.style.position="relative",n=document.createElement("button"),n.className="copy-button",n.textContent="Copy",n.setAttribute("aria-label","Copy code to clipboard"),n.setAttribute("type","button"),s.appendChild(n),n.addEventListener("click",function(){var s=t.textContent||"";navigator.clipboard?navigator.clipboard.writeText(s).then(function(){n.textContent="Copied!",n.classList.add("copied"),setTimeout(function(){n.textContent="Copy",n.classList.remove("copied")},2e3)}).catch(function(){e(s,n)}):e(s,n)})});function e(e,t){var n=document.createElement("textarea");n.value=e,n.style.position="fixed",n.style.opacity="0",document.body.appendChild(n),n.select();try{document.execCommand("copy"),t.textContent="Copied!",t.classList.add("copied"),setTimeout(function(){t.textContent="Copy",t.classList.remove("copied")},2e3)}catch{t.textContent="Error",setTimeout(function(){t.textContent="Copy"},2e3)}document.body.removeChild(n)}})()</script>
+  
+
+        
+  
+    <script>(function(){"use strict";var t,a,o="jenkins_exam_progress",c="jenkins_chapter_progress";function e(e){this.element=e,this.minutesDisplay=e.querySelector(".timer-minutes"),this.secondsDisplay=e.querySelector(".timer-seconds"),this.statusEl=e.querySelector(".timer-status"),this.totalSeconds=parseInt(e.dataset.minutes||"60",10)*60,this.remaining=this.totalSeconds,this.interval=null,this.running=!1,this.finished=!1;var n,s,o,i,t=this.loadState();t&&t.remaining>0&&!t.finished&&(this.remaining=t.remaining),this.updateDisplay(),n=this,s=e.querySelector(".timer-start"),o=e.querySelector(".timer-pause"),i=e.querySelector(".timer-reset"),s&&s.addEventListener("click",function(){n.start()}),o&&o.addEventListener("click",function(){n.pause()}),i&&i.addEventListener("click",function(){n.reset()}),t&&t.running&&this.start()}e.prototype.start=function(){if(this.finished)return;if(this.running)return;this.running=!0,this.element.classList.add("timer-running"),this.element.classList.remove("timer-paused");var e=this;this.interval=setInterval(function(){e.remaining--,e.updateDisplay(),e.saveState(),e.remaining<=0&&(e.remaining=0,e.updateDisplay(),e.finish())},1e3)},e.prototype.pause=function(){if(!this.running)return;this.running=!1,this.element.classList.remove("timer-running"),this.element.classList.add("timer-paused"),clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.reset=function(){this.pause(),this.remaining=this.totalSeconds,this.finished=!1,this.element.classList.remove("timer-finished"),this.element.classList.remove("timer-paused"),this.statusEl.textContent="Time Remaining",this.updateDisplay(),this.saveState(),localStorage.removeItem(this.getTimerStorageKey())},e.prototype.finish=function(){this.running=!1,this.finished=!0,this.element.classList.remove("timer-running"),this.element.classList.add("timer-finished"),this.statusEl.textContent="⏰ Time's Up!",clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.updateDisplay=function(){var e=Math.floor(this.remaining/60),t=this.remaining%60;this.minutesDisplay.textContent=String(e).padStart(2,"0"),this.secondsDisplay.textContent=String(t).padStart(2,"0"),this.remaining<=300&&this.remaining>0?this.element.classList.add("timer-warning"):this.element.classList.remove("timer-warning")},e.prototype.getTimerStorageKey=function(){return o+"_timer_"+this.element.dataset.testId},e.prototype.loadState=function(){try{var e=localStorage.getItem(this.getTimerStorageKey());return e?JSON.parse(e):null}catch{return null}},e.prototype.saveState=function(){try{var e={remaining:this.remaining,running:this.running,finished:this.finished,savedAt:Date.now()};localStorage.setItem(this.getTimerStorageKey(),JSON.stringify(e))}catch{}},document.querySelectorAll(".exam-timer").forEach(function(t){new e(t)});function f(e,t){try{var s=n();s[e]=t,localStorage.setItem(o,JSON.stringify(s)),m()}catch{}}function n(){try{var e=localStorage.getItem(o);return e?JSON.parse(e):{}}catch{return{}}}function _(){var e=n();return Object.keys(e).filter(function(t){return e[t]===!0}).length}function p(){return 7}function m(){var t=_(),e=p(),n=e>0?Math.round(t/e*100):0,a=i(),s=document.getElementById("exam-progress-bar"),o=document.getElementById("exam-progress-text");s&&(s.style.width=n+"%",s.textContent=n>15?n+"%":""),o&&(o.textContent=t+" of "+e+" tests completed"),l(a,t,e)}function l(e,t,n){var s,o,l,i=document.getElementById("sidebar-progress-fill"),a=document.getElementById("sidebar-progress-pct"),r=document.getElementById("sidebar-progress-chapters"),c=document.getElementById("sidebar-progress-tests");if(!i)return;s=e.total+n,l=e.completed+t,o=s>0?Math.round(l/s*100):0,i.style.width=o+"%",a&&(a.textContent=o+"%"),r&&(r.textContent=e.completed+"/"+e.total+" chapters"),c&&(c.textContent=t+"/"+n+" tests")}document.addEventListener("change",function(e){if(e.target&&e.target.matches(".test-complete-check")){var t=e.target.dataset.testId;t&&f(t,e.target.checked)}});function w(){var e=n();document.querySelectorAll(".test-complete-check").forEach(function(t){var n=t.dataset.testId;n&&e[n]===!0&&(t.checked=!0)}),m()}t=[{id:"01-introduction-to-ci-cd-and-jenkins",title:"Ch 1: Introduction to CI/CD & Jenkins",number:1,section:"Foundation"},{id:"02-jenkins-architecture-and-installation",title:"Ch 2: Jenkins Architecture & Installation",number:2,section:"Foundation"},{id:"03-jenkins-configuration-and-management",title:"Ch 3: Configuration & Management",number:3,section:"Foundation"},{id:"04-freestyle-projects-and-build-jobs",title:"Ch 4: Freestyle Projects & Build Jobs",number:4,section:"Foundation"},{id:"05-pipeline-fundamentals",title:"Ch 5: Pipeline Fundamentals",number:5,section:"Core Skills"},{id:"06-pipeline-syntax-and-steps",title:"Ch 6: Pipeline Syntax & Steps",number:6,section:"Core Skills"},{id:"07-agents-nodes-and-distributed-builds",title:"Ch 7: Agents, Nodes & Distributed Builds",number:7,section:"Core Skills"},{id:"08-source-code-management",title:"Ch 8: Source Code Management",number:8,section:"Core Skills"},{id:"09-shared-libraries-and-reusability",title:"Ch 9: Shared Libraries & Reusability",number:9,section:"Advanced"},{id:"10-multi-branch-pipelines",title:"Ch 10: Multi-Branch Pipelines",number:10,section:"Advanced"},{id:"11-jenkins-docker-and-kubernetes",title:"Ch 11: Docker & Kubernetes Integration",number:11,section:"Advanced"},{id:"12-testing-security-and-compliance",title:"Ch 12: Testing, Security & Compliance",number:12,section:"Advanced"},{id:"13-jenkins-configuration-as-code",title:"Ch 13: Jenkins Configuration as Code (JCasC)",number:13,section:"Production & Exam Prep"},{id:"14-production-grade-jenkins",title:"Ch 14: Production-Grade Jenkins",number:14,section:"Production & Exam Prep"},{id:"15-exam-preparation-guide",title:"Ch 15: Exam Preparation Guide",number:15,section:"Production & Exam Prep"},{id:"16-interview-questions",title:"Ch 16: Interview Questions & Answers",number:16,section:"Bonus"},{id:"17-real-world-scenarios",title:"Ch 17: Real-World Scenario Questions",number:17,section:"Bonus"}],a=[{id:"exam-test-1",title:"Practice Test 1",number:1},{id:"exam-test-2",title:"Practice Test 2",number:2},{id:"exam-test-3",title:"Practice Test 3",number:3},{id:"exam-test-4",title:"Practice Test 4",number:4},{id:"exam-test-5",title:"Practice Test 5",number:5},{id:"exam-test-6",title:"Practice Test 6",number:6},{id:"exam-test-7",title:"Practice Test 7",number:7}];function s(){try{var e=localStorage.getItem(c);return e?JSON.parse(e):{}}catch{return{}}}function u(e,t){try{var n=s();n[e]=n[e]||{},Object.keys(t).forEach(function(s){n[e][s]=t[s]}),localStorage.setItem(c,JSON.stringify(n))}catch{}}function i(){var o=s(),e=0,n=0;return t.forEach(function(t){var s=o[t.id];s&&(s.read&&e++,s.completed&&n++)}),{read:e,completed:n,total:t.length}}function r(){var t=n(),e=0;return a.forEach(function(n){t[n.id]===!0&&e++}),{completed:e,total:a.length}}function g(){var e=window.location.pathname.match(/\/docs\/(\d+-[^/]+)\//);return e?e[1]:null}function v(){var e=g(),n=e&&t.some(function(t){return t.id===e});n&&(b(e),j(e))}function b(e){var t=s();(!t[e]||!t[e].read)&&u(e,{read:!0,readAt:Date.now()})}function j(e){var t,n,i,a,r,o=document.querySelector(".book-article");if(!o)return;if(o.querySelector(".chapter-complete-check"))return;a=s(),r=a[e]||{},i=r.completed===!0,t=document.createElement("div"),t.className="chapter-complete-check",t.innerHTML='<hr><div class="chapter-progress-bar"><input type="checkbox" id="ch-cpl-'+e+'" class="chapter-complete-checkbox" data-chapter-id="'+e+'"'+(i?" checked":"")+'><label for="ch-cpl-'+e+'" class="chapter-complete-label">✓ Mark this chapter as completed</label><span class="chapter-status-badge">'+(i?"✅ Completed":"📖 Reading")+"</span></div>",o.appendChild(t),n=t.querySelector(".chapter-complete-checkbox"),n.addEventListener("change",function(){u(e,{completed:n.checked,completedAt:n.checked?Date.now():null});var s=t.querySelector(".chapter-status-badge");s.textContent=n.checked?"✅ Completed":"📖 Reading"})}window.initExamDashboard=function(){var e,t=document.getElementById("exam-dashboard-app");if(!t)return;t.innerHTML=y(),document.querySelectorAll(".dashboard-chapter-check").forEach(function(e){e.addEventListener("change",function(){u(e.dataset.chapterId,{completed:e.checked,completedAt:e.checked?Date.now():null}),d()})}),document.querySelectorAll(".dashboard-test-check").forEach(function(e){e.addEventListener("change",function(){f(e.dataset.testId,e.checked),d()})}),e=document.getElementById("exam-reset-all"),e&&e.addEventListener("click",function(){confirm("Reset ALL progress (chapters and tests)? This cannot be undone.")&&(localStorage.removeItem(o),localStorage.removeItem(c),d())})};function y(){var m,o=i(),c=r(),u=s(),f=n(),d=o.total+c.total,h=o.completed+c.completed,l=d>0?Math.round(h/d*100):0,e="";return e+='<div class="exam-dashboard-header">',e+="  <h1>📊 Your Learning Dashboard</h1>",e+='  <p class="exam-progress-summary">Track your Jenkins learning journey — from chapters to practice exams</p>',e+="</div>",e+='<div class="exam-combined-progress">',e+='  <div class="exam-progress-bar-wrapper" style="max-width:100%;">',e+='    <div class="exam-progress-bar-fill" id="dash-combined-bar" style="width:'+l+'%;">'+(l>15?l+"%":"")+"</div>",e+="  </div>",e+='  <p class="exam-progress-summary" style="text-align:center;margin-top:0.75rem;">'+h+" of "+d+" total items completed</p>",e+="</div>",e+='<div class="exam-stats">',e+='  <div class="exam-stat-card"><span class="stat-number">'+o.completed+'</span><span class="stat-label">of '+o.total+" Chapters</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+o.read+'</span><span class="stat-label">Chapters Read</span></div>',e+='  <div class="exam-stat-card"><span class="stat-number">'+c.completed+'</span><span class="stat-label">of '+c.total+" Tests Passed</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+l+'%</span><span class="stat-label">Overall Progress</span></div>',e+="</div>",e+='<h2 style="margin-top:2.5rem;">📚 Learning Progress</h2>',e+='<div class="exam-dashboard-grid">',m=["Foundation","Core Skills","Advanced","Production & Exam Prep","Bonus"],m.forEach(function(n){if(s=t.filter(function(e){return e.section===n}),s.length===0)return;var s,i,a=0,o=0;s.forEach(function(e){var t=u[e.id];t&&(t.read&&a++,t.completed&&o++)}),i=Math.round(o/s.length*100),e+='<div class="dashboard-section-card">',e+='  <div class="dashboard-section-header">',e+='    <span class="dashboard-section-badge">'+n+"</span>",e+='    <span class="dashboard-section-count">'+o+"/"+s.length+"</span>",e+="  </div>",e+='  <div class="dashboard-section-bar-wrapper"><div class="dashboard-section-bar-fill" style="width:'+i+'%;"></div></div>',e+='  <div class="dashboard-section-chapters">',s.forEach(function(t){var s=u[t.id]||{},n=s.completed===!0,o=s.read===!0,i=n?"✅":o?"📖":"⬜";e+='    <div class="dashboard-chapter-row'+(n?" completed":"")+'" title="'+t.title+'">',e+='      <input type="checkbox" class="dashboard-chapter-check" data-chapter-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="dashboard-chapter-status">'+i+"</span>",e+='      <span class="dashboard-chapter-title">'+t.title+"</span>",e+="    </div>"}),e+="  </div>",e+="</div>"}),e+="</div>",e+='<h2 style="margin-top:2.5rem;">📝 Practice Test Progress</h2>',e+='<div class="exam-dashboard-grid">',a.forEach(function(t){var n=f[t.id]===!0;e+='  <div class="exam-dashboard-card'+(n?" completed":"")+'">',e+="    <h3>Practice Test "+t.number+"</h3>",e+="    <p>57 questions across all domains | 60 min</p>",e+='    <div style="display:flex;align-items:center;gap:0.5rem;">',e+='      <input type="checkbox" class="exam-dashboard-check dashboard-test-check" data-test-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="card-status">'+(n?"✅ Passed":"⬜ Not yet")+"</span>",e+="    </div>",e+='    <a href="/docs/'+(17+t.number)+"-exam-practice-test-"+t.number+'/" style="display:inline-block;margin-top:0.75rem;font-size:0.85rem;">→ Open test</a>',e+="  </div>"}),e+="</div>",e+='<div style="text-align:center;margin:2.5rem 0;">',e+='  <button class="btn-reset" id="exam-reset-all">🔄 Reset All Progress</button>',e+="</div>",e}function d(){window.initExamDashboard&&window.initExamDashboard()}window.refreshSidebarProgress=function(){var t=i(),e=r();l(t,e.completed,e.total)};function h(){w(),v(),document.getElementById("exam-dashboard-app")&&initExamDashboard();var t=i(),e=r();l(t,e.completed,e.total)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

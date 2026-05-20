@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Practice Test 2: Jenkins Architecture &amp; Pipelines# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: Jenkins architecture, pipeline syntax, declarative &amp; scripted pipelines
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/complete_jenkins_notes/docs/19-exam-practice-test-2/">
+  <meta property="og:site_name" content="Jenkins Learning Path">
+  <meta property="og:title" content="📝 Practice Test 2: Jenkins Architecture & Pipelines">
+  <meta property="og:description" content="Practice Test 2: Jenkins Architecture &amp; Pipelines# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: Jenkins architecture, pipeline syntax, declarative &amp; scripted pipelines">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="📝 Practice Test 2: Jenkins Architecture & Pipelines">
+  <meta itemprop="description" content="Practice Test 2: Jenkins Architecture &amp; Pipelines# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: Jenkins architecture, pipeline syntax, declarative &amp; scripted pipelines">
+  <meta itemprop="wordCount" content="4209">
+
+<title>📝 Practice Test 2: Jenkins Architecture &amp; Pipelines • Jenkins Learning Path</title>
+<link rel="icon" href="/complete_jenkins_notes/favicon.png" >
+<link rel="manifest" href="/complete_jenkins_notes/manifest.json">
+<link rel="canonical" href="/complete_jenkins_notes/docs/19-exam-practice-test-2/">
+<link rel="stylesheet" href="/complete_jenkins_notes/book.min.a65532e79bcac2f95ba4108b26cdc17b0fe6382f603d8a6b72971bfa3261bf47.css" >
+
+
+  <script defer type="module" src="/complete_jenkins_notes/en.search.min.2d25fa1fe6842b36dbd4e753f3112a465146ff5f09912883575978a46c3ff969.js" ></script>
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<div class="book-sidebar-toggle">
+  <label for="menu-control" role="button" class="sidebar-toggle-label" title="Toggle sidebar">
+    <span class="sidebar-toggle-icon">◀</span>
+  </label>
+</div>
+<aside class="book-menu">
+  <label for="menu-control" class="book-menu-collapse-target" title="Expand sidebar" aria-label="Expand sidebar"></label>
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/complete_jenkins_notes/"><span>Jenkins Learning Path</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+<div class="sidebar-progress" id="sidebar-progress">
+  <div class="sidebar-progress-header">
+    <span class="sidebar-progress-label">📊 Progress</span>
+    <span class="sidebar-progress-pct" id="sidebar-progress-pct">0%</span>
+  </div>
+  <div class="sidebar-progress-track">
+    <div class="sidebar-progress-fill" id="sidebar-progress-fill" style="width:0%;"></div>
+  </div>
+  <div class="sidebar-progress-detail" id="sidebar-progress-detail">
+    <span id="sidebar-progress-chapters">0/17 chapters</span>
+    <span id="sidebar-progress-tests">0/7 tests</span>
+  </div>
+</div>
+
+
+
+<ul><li><a href="/complete_jenkins_notes/">Home</a></li><li><a href="/complete_jenkins_notes/docs/">Documentation</a></li></ul>
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/25-progress-dashboard/" class="">
+      📊 Progress Dashboard</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/26-start-here/" class="">
+      🚀 Start Here</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="">
+      Ch 1: Introduction to CI/CD &amp; Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="">
+      Ch 2: Jenkins Architecture &amp; Installation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="">
+      Ch 3: Configuration &amp; Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="">
+      Ch 4: Freestyle Projects &amp; Build Jobs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/" class="">
+      Ch 5: Pipeline Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/" class="">
+      Ch 6: Pipeline Syntax &amp; Steps</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/" class="">
+      Ch 7: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="">
+      Ch 8: Source Code Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/" class="">
+      Ch 9: Shared Libraries &amp; Reusability</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="">
+      Ch 10: Multi-Branch Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="">
+      Ch 11: Docker &amp; Kubernetes Integration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/" class="">
+      Ch 12: Testing, Security &amp; Compliance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="">
+      Ch 13: Jenkins Configuration as Code (JCasC)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="">
+      Ch 14: Production-Grade Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/15-exam-preparation-guide/" class="">
+      Ch 15: Exam Preparation Guide</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="">
+      Ch 16: Interview Questions &amp; Answers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="">
+      Ch 17: Real-World Scenario Questions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="">
+      📝 Practice Test 1: CI/CD Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="active">
+      📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="">
+      📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="">
+      📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="">
+      📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="">
+      📝 Practice Test 6: Production Jenkins &amp; Monitoring</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="">
+      📝 Practice Test 7: DevOps &amp; Real-World Scenarios</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/complete_jenkins_notes/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</h3>
+
+  <label for="toc-control">
+    
+  </label>
+</div>
+
+
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="practice-test-2-jenkins-architecture--pipelines">Practice Test 2: Jenkins Architecture &amp; Pipelines<a class="anchor" href="#practice-test-2-jenkins-architecture--pipelines">#</a></h1>
+<blockquote class='book-hint '>
+<p><strong>Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.</strong></p>
+</blockquote><hr>
+<h2 id="-exam-instructions">📋 Exam Instructions<a class="anchor" href="#-exam-instructions">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Detail</th>
+          <th>Value</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Questions</strong></td>
+          <td>57</td>
+      </tr>
+      <tr>
+          <td><strong>Time Limit</strong></td>
+          <td>60 minutes</td>
+      </tr>
+      <tr>
+          <td><strong>Passing Score</strong></td>
+          <td>~70% (40/57 correct)</td>
+      </tr>
+      <tr>
+          <td><strong>Format</strong></td>
+          <td>Multiple choice</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<div class="exam-controls">
+  <div class="exam-timer" data-minutes="60" data-test-id="exam-test-2">
+    <div class="timer-face">
+      <span class="timer-minutes">60</span>
+      <span class="timer-separator">:</span>
+      <span class="timer-seconds">00</span>
+    </div>
+    <div class="timer-controls">
+      <button class="timer-btn timer-start">▶ Start</button>
+      <button class="timer-btn timer-pause">⏸ Pause</button>
+      <button class="timer-btn timer-reset">↺ Reset</button>
+    </div>
+    <span class="timer-status">Time Remaining</span>
+  </div>
+  <div class="exam-progress-check">
+    <input type="checkbox" class="test-complete-check" id="test-complete-2" data-test-id="exam-test-2">
+    <label for="test-complete-2">✓ Mark test as completed</label>
+  </div>
+</div>
+<p><strong>57 Questions | Duration: 60 minutes | Focus: Jenkins architecture, pipeline syntax, declarative &amp; scripted pipelines</strong></p>
+<hr>
+<h2 id="questions">Questions<a class="anchor" href="#questions">#</a></h2>
+<p><strong>1. Which of the following best describes the Jenkins controller-agent architecture?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A single-node system where all work happens on one server</li>
+<li><input disabled="" type="checkbox"> A distributed system where the controller manages and agents execute builds</li>
+<li><input disabled="" type="checkbox"> A peer-to-peer system where all nodes are equal</li>
+<li><input disabled="" type="checkbox"> A cloud-only architecture</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A distributed system where the controller manages and agents execute builds**
+<p>Jenkins uses a controller-agent architecture where the controller handles job scheduling, UI, and configuration, while agents (previously called slaves) execute the actual build jobs. This enables distributed builds across different machines and environments.</p>
+</details>
+<hr>
+<p><strong>2. What is the correct structure of a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>pipeline { agent { ... } stages { stage { steps { ... } } } }</code></li>
+<li><input disabled="" type="checkbox"> <code>stages { pipeline { steps { ... } } }</code></li>
+<li><input disabled="" type="checkbox"> <code>steps { pipeline { stages { ... } } }</code></li>
+<li><input disabled="" type="checkbox"> <code>agent { pipeline { stages { steps { ... } } } }</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`pipeline { agent { ... } stages { stage { steps { ... } } } }`**
+<p>The correct Declarative Pipeline structure is: <code>pipeline</code> block containing <code>agent</code>, then <code>stages</code> containing one or more <code>stage</code> blocks, each containing <code>steps</code> with the actual operations.</p>
+</details>
+<hr>
+<p><strong>3. What is the purpose of the <code>agent any</code> directive in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To run on all agents simultaneously</li>
+<li><input disabled="" type="checkbox"> To run on any available agent</li>
+<li><input disabled="" type="checkbox"> To skip agent allocation</li>
+<li><input disabled="" type="checkbox"> To run on the controller only</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To run on any available agent**
+<p><code>agent any</code> instructs Jenkins to run the pipeline or stage on any available agent. Jenkins will look for an idle executor on any configured node that matches the pipeline&rsquo;s requirements.</p>
+</details>
+<hr>
+<p><strong>4. In Scripted Pipeline, how do you define a stage?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>stage('Build') { ... }</code></li>
+<li><input disabled="" type="checkbox"> <code>stage Build { ... }</code></li>
+<li><input disabled="" type="checkbox"> <code>buildStage('Build') { ... }</code></li>
+<li><input disabled="" type="checkbox"> <code>stage -&gt; 'Build' { ... }</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`stage('Build') { ... }`**
+<p>In Scripted Pipeline, stages are defined using the <code>stage</code> function with a name string argument, followed by a block containing the stage logic. Scripted Pipeline provides more flexibility but less structure than Declarative Pipeline.</p>
+</details>
+<hr>
+<p><strong>5. How do you define environment variables in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using the <code>env</code> block</li>
+<li><input disabled="" type="checkbox"> Using the <code>environment</code> directive within <code>pipeline</code> or <code>stage</code></li>
+<li><input disabled="" type="checkbox"> Using <code>def env = [:]</code></li>
+<li><input disabled="" type="checkbox"> Using <code>withEnv</code> step</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Using the `environment` directive within `pipeline` or `stage`**
+<p>Environment variables in Declarative Pipeline are defined using the <code>environment</code> directive. They can be defined at the pipeline level (available to all stages) or within individual stages (scoped to that stage).</p>
+</details>
+<hr>
+<p><strong>6. What is the purpose of the <code>parallel</code> directive in Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To run multiple builds of the same job</li>
+<li><input disabled="" type="checkbox"> To execute multiple stages concurrently</li>
+<li><input disabled="" type="checkbox"> To run the same stage on different agents</li>
+<li><input disabled="" type="checkbox"> To synchronize build steps</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To execute multiple stages concurrently**
+<p>The <code>parallel</code> directive allows executing multiple stages or branches of work simultaneously. This is useful for running independent tasks like testing on different platforms or environments at the same time to reduce overall pipeline duration.</p>
+</details>
+<hr>
+<p><strong>7. What is the default agent for a Declarative Pipeline if no agent is specified at the top level?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>agent none</code></li>
+<li><input disabled="" type="checkbox"> <code>agent any</code></li>
+<li><input disabled="" type="checkbox"> <code>agent self</code></li>
+<li><input disabled="" type="checkbox"> The pipeline will fail validation</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**The pipeline will fail validation**
+<p>A Declarative Pipeline must have an <code>agent</code> directive. If not specified at the top level, <code>agent none</code> must be used, and each stage must define its own agent. Otherwise, the pipeline fails validation with an error.</p>
+</details>
+<hr>
+<p><strong>8. What does <code>agent none</code> mean in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> No agent is allocated; each stage must specify its own agent</li>
+<li><input disabled="" type="checkbox"> The pipeline runs on the controller</li>
+<li><input disabled="" type="checkbox"> No build steps are executed</li>
+<li><input disabled="" type="checkbox"> Agents are dynamically created</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**No agent is allocated; each stage must specify its own agent**
+<p><code>agent none</code> at the top level means no global agent is allocated. Each stage must then define its own <code>agent</code> directive. This is useful when different stages need different environments or agent types.</p>
+</details>
+<hr>
+<p><strong>9. Which of the following is a valid way to reference a build parameter in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>${BUILD_PARAM}</code></li>
+<li><input disabled="" type="checkbox"> <code>params.BUILD_PARAM</code></li>
+<li><input disabled="" type="checkbox"> <code>$BUILD_PARAM</code></li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Build parameters can be referenced as <code>params.PARAM_NAME</code>, <code>env.PARAM_NAME</code>, or directly as <code>$PARAM_NAME</code> in shell steps. The <code>params</code> object is the recommended approach for accessing build parameters explicitly.</p>
+</details>
+<hr>
+<p><strong>10. How do you run a shell command in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>shell('command')</code></li>
+<li><input disabled="" type="checkbox"> <code>sh 'command'</code></li>
+<li><input disabled="" type="checkbox"> <code>cmd 'command'</code></li>
+<li><input disabled="" type="checkbox"> <code>run 'command'</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`sh 'command'`**
+<p>The <code>sh</code> step executes a shell command on Unix/Linux agents. On Windows, the <code>bat</code> or <code>powershell</code> steps are used instead. Shell commands run in the agent&rsquo;s workspace directory.</p>
+</details>
+<hr>
+<p><strong>11. What is the purpose of the <code>options</code> directive in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To configure build parameters</li>
+<li><input disabled="" type="checkbox"> To set pipeline-specific options like timeout, retry, or build discarder</li>
+<li><input disabled="" type="checkbox"> To define agent configuration</li>
+<li><input disabled="" type="checkbox"> To set environment variables</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To set pipeline-specific options like timeout, retry, or build discarder**
+<p>The <code>options</code> directive configures pipeline-level behavior. Common options include <code>timeout</code> (maximum pipeline duration), <code>retry</code> (number of retries on failure), <code>buildDiscarder</code> (build log retention policy), and <code>disableConcurrentBuilds</code>.</p>
+</details>
+<hr>
+<p><strong>12. Which step sends a notification to Slack in a Jenkins Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>slackSend()</code></li>
+<li><input disabled="" type="checkbox"> <code>notify.slack()</code></li>
+<li><input disabled="" type="checkbox"> <code>slack.notify()</code></li>
+<li><input disabled="" type="checkbox"> <code>sendSlack()</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`slackSend()`**
+<p>The Slack Notification plugin provides the <code>slackSend()</code> step for sending messages to Slack channels. Configuration options include message text, channel, color (based on build status), and custom attachments.</p>
+</details>
+<hr>
+<p><strong>13. What does the <code>input</code> step do in a Jenkins Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Reads user input from a file</li>
+<li><input disabled="" type="checkbox"> Pauses the pipeline and waits for user approval</li>
+<li><input disabled="" type="checkbox"> Parses command-line arguments</li>
+<li><input disabled="" type="checkbox"> Validates pipeline syntax</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Pauses the pipeline and waits for user approval**
+<p>The <code>input</code> step pauses pipeline execution and presents a prompt to users in the Jenkins UI. It is commonly used for manual approval gates before deploying to production environments. It can include a message, list of approvers, and parameters.</p>
+</details>
+<hr>
+<p><strong>14. What is the purpose of the <code>timeout</code> step in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To measure build duration</li>
+<li><input disabled="" type="checkbox"> To limit the execution time of a block of code</li>
+<li><input disabled="" type="checkbox"> To schedule builds at specific times</li>
+<li><input disabled="" type="checkbox"> To delay build execution</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To limit the execution time of a block of code**
+<p>The <code>timeout</code> step limits how long a block of pipeline code can execute before it is forcibly stopped. This prevents runaway builds from consuming resources indefinitely. Timeouts can be defined in minutes, hours, or days.</p>
+</details>
+<hr>
+<p><strong>15. How do you handle errors in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using try/catch blocks</li>
+<li><input disabled="" type="checkbox"> Using the <code>post</code> section with conditions like <code>failure</code></li>
+<li><input disabled="" type="checkbox"> Using <code>error()</code> step</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Declarative Pipelines handle errors through multiple mechanisms: the <code>post</code> section with conditions like <code>failure</code> and <code>unstable</code>, <code>try/catch</code> blocks in script blocks, and the <code>error()</code> step for explicitly failing a pipeline.</p>
+</details>
+<hr>
+<p><strong>16. What is the correct way to define a Cron trigger in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>triggers { cron('H */4 * * *') }</code></li>
+<li><input disabled="" type="checkbox"> <code>cron 'H */4 * * *'</code></li>
+<li><input disabled="" type="checkbox"> <code>schedule('H */4 * * *')</code></li>
+<li><input disabled="" type="checkbox"> <code>timer('H */4 * * *')</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`triggers { cron('H */4 * * *') }`**
+<p>Cron triggers in Declarative Pipeline are defined within the <code>triggers</code> directive using the <code>cron</code> function. The <code>H</code> character is a Jenkins hash symbol that distributes load across time periods to prevent all jobs from starting at the same moment.</p>
+</details>
+<hr>
+<p><strong>17. What does the <code>retry</code> step do in a Scripted Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Retries a failed build from the beginning</li>
+<li><input disabled="" type="checkbox"> Retries a block of code a specified number of times on failure</li>
+<li><input disabled="" type="checkbox"> Retries agent connection</li>
+<li><input disabled="" type="checkbox"> Retries plugin downloads</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Retries a block of code a specified number of times on failure**
+<p>The <code>retry</code> step wraps a block of pipeline code and retries it if it fails, up to the specified number of attempts. This is useful for handling transient failures like network timeouts or temporary resource unavailability.</p>
+</details>
+<hr>
+<p><strong>18. What is the purpose of the <code>pipeline</code> block in a Jenkinsfile?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To define the build agent</li>
+<li><input disabled="" type="checkbox"> To define the entire Declarative Pipeline configuration</li>
+<li><input disabled="" type="checkbox"> To manage Jenkins plugins</li>
+<li><input disabled="" type="checkbox"> To configure SCM settings</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To define the entire Declarative Pipeline configuration**
+<p>The <code>pipeline</code> block is the top-level structure in a Declarative Pipeline. It contains all directives including <code>agent</code>, <code>stages</code>, <code>post</code>, <code>environment</code>, <code>options</code>, <code>parameters</code>, and <code>triggers</code>.</p>
+</details>
+<hr>
+<p><strong>19. What is a shared library in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A collection of reusable Pipeline code stored in a separate repository</li>
+<li><input disabled="" type="checkbox"> A shared Jenkins configuration file</li>
+<li><input disabled="" type="checkbox"> A shared build agent pool</li>
+<li><input disabled="" type="checkbox"> A shared plugin repository</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A collection of reusable Pipeline code stored in a separate repository**
+<p>Shared libraries allow teams to define reusable Pipeline functions, steps, and variables in a separate Git repository. Pipelines can load and use these libraries, promoting code reuse and standardization across projects.</p>
+</details>
+<hr>
+<p><strong>20. How do you load a shared library in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>library('my-library')</code></li>
+<li><input disabled="" type="checkbox"> <code>@Library('my-library')</code></li>
+<li><input disabled="" type="checkbox"> <code>import 'my-library'</code></li>
+<li><input disabled="" type="checkbox"> <code>loadLibrary('my-library')</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`@Library('my-library')`**
+<p>Shared libraries are loaded using the <code>@Library</code> annotation at the top of the Jenkinsfile. The annotation can specify the library name, version (branch or tag), and can load multiple libraries separated by commas.</p>
+</details>
+<hr>
+<p><strong>21. What is the purpose of the <code>readFile</code> step in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To read a file from a remote server</li>
+<li><input disabled="" type="checkbox"> To read a file from the workspace into a variable</li>
+<li><input disabled="" type="checkbox"> To read Jenkins configuration files</li>
+<li><input disabled="" type="checkbox"> To read build parameters</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To read a file from the workspace into a variable**
+<p>The <code>readFile</code> step reads a file from the workspace and returns its contents as a string. This is useful for reading configuration files, version numbers, or any workspace file content during pipeline execution.</p>
+</details>
+<hr>
+<p><strong>22. What does the <code>writeFile</code> step do?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Writes content to a file in the workspace</li>
+<li><input disabled="" type="checkbox"> Writes to the Jenkins log</li>
+<li><input disabled="" type="checkbox"> Writes build artifacts to a remote server</li>
+<li><input disabled="" type="checkbox"> Writes pipeline configuration</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Writes content to a file in the workspace**
+<p>The <code>writeFile</code> step writes content to a file in the workspace. It can be used to generate configuration files, reports, or any output as part of the pipeline execution.</p>
+</details>
+<hr>
+<p><strong>23. In Jenkins, what is the purpose of <code>pipelineTriggers</code> in the <code>triggers</code> directive?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To define webhook polling triggers</li>
+<li><input disabled="" type="checkbox"> To define SCM polling and other pipeline-specific triggers</li>
+<li><input disabled="" type="checkbox"> To define email notifications</li>
+<li><input disabled="" type="checkbox"> To define build parameters</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To define SCM polling and other pipeline-specific triggers**
+<p><code>pipelineTriggers</code> contains trigger definitions like SCM polling (<code>pollSCM</code>) and webhook-based triggers. It allows pipelines to automatically start when changes are detected in the source repository.</p>
+</details>
+<hr>
+<p><strong>24. What is the difference between <code>stage</code> and <code>steps</code> in Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> They are interchangeable</li>
+<li><input disabled="" type="checkbox"> <code>stage</code> defines a phase; <code>steps</code> contains the actual operations within a stage</li>
+<li><input disabled="" type="checkbox"> <code>steps</code> defines phases; <code>stage</code> contains operations</li>
+<li><input disabled="" type="checkbox"> <code>stage</code> is for scripted; <code>steps</code> is for declarative</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`stage` defines a phase; `steps` contains the actual operations within a stage**
+<p>In Declarative Pipeline, <code>stage</code> directives create logical groupings (e.g., &ldquo;Build&rdquo;, &ldquo;Test&rdquo;, &ldquo;Deploy&rdquo;), while <code>steps</code> within each <code>stage</code> contain the actual commands and operations to execute.</p>
+</details>
+<hr>
+<p><strong>25. How do you define a string parameter in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>parameters { string(name: 'BRANCH', defaultValue: 'main') }</code></li>
+<li><input disabled="" type="checkbox"> <code>params { string('BRANCH', 'main') }</code></li>
+<li><input disabled="" type="checkbox"> <code>parameter { string 'BRANCH', 'main' }</code></li>
+<li><input disabled="" type="checkbox"> <code>param('BRANCH', type: 'string', default: 'main')</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`parameters { string(name: 'BRANCH', defaultValue: 'main') }`**
+<p>Pipeline parameters are defined within the <code>parameters</code> directive. Each parameter has a type (string, booleanChoice, choice, password, etc.), name, and optional default value.</p>
+</details>
+<hr>
+<p><strong>26. What is the purpose of the <code>currentBuild</code> global variable in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To track running builds</li>
+<li><input disabled="" type="checkbox"> To access and modify the current build&rsquo;s properties</li>
+<li><input disabled="" type="checkbox"> To list all builds in the queue</li>
+<li><input disabled="" type="checkbox"> To cancel running builds</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To access and modify the current build's properties**
+<p><code>currentBuild</code> is a global variable that provides access to the current build&rsquo;s properties including result, duration, display name, build number, and build variables. It can be used to change the build result or update build information.</p>
+</details>
+<hr>
+<p><strong>27. How can you mark a build as unstable in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>currentBuild.result = 'UNSTABLE'</code></li>
+<li><input disabled="" type="checkbox"> <code>build.unstable()</code></li>
+<li><input disabled="" type="checkbox"> <code>markUnstable()</code></li>
+<li><input disabled="" type="checkbox"> <code>error('Unstable')</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`currentBuild.result = 'UNSTABLE'`**
+<p>To mark a build as unstable, set <code>currentBuild.result = 'UNSTABLE'</code>. The unstable status indicates that the build completed but had issues (like test failures) that don&rsquo;t warrant a full failure status.</p>
+</details>
+<hr>
+<p><strong>28. What does the <code>dir</code> step do in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Lists the contents of a directory</li>
+<li><input disabled="" type="checkbox"> Changes the current working directory for a block of code</li>
+<li><input disabled="" type="checkbox"> Deletes a directory</li>
+<li><input disabled="" type="checkbox"> Creates a new directory</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Changes the current working directory for a block of code**
+<p>The <code>dir</code> step changes the current working directory within the workspace for the duration of the enclosed block. After the block completes, the working directory returns to the previous location.</p>
+</details>
+<hr>
+<p><strong>29. What is the purpose of the <code>credentials</code> binding in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To validate user credentials</li>
+<li><input disabled="" type="checkbox"> To securely inject credentials as environment variables or files</li>
+<li><input disabled="" type="checkbox"> To create new credentials</li>
+<li><input disabled="" type="checkbox"> To delete expired credentials</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To securely inject credentials as environment variables or files**
+<p>The <code>credentials</code> binding in the <code>environment</code> directive allows securely injecting Jenkins-stored credentials into pipeline environment variables. Credentials are masked in logs and not exposed in the UI.</p>
+</details>
+<hr>
+<p><strong>30. How do you define a choice parameter in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>choice(name: 'ENV', choices: ['dev', 'staging', 'prod'])</code></li>
+<li><input disabled="" type="checkbox"> <code>parameters { choice(name: 'ENV', choices: ['dev', 'staging', 'prod']) }</code></li>
+<li><input disabled="" type="checkbox"> <code>parameter { choice('ENV', ['dev', 'staging', 'prod']) }</code></li>
+<li><input disabled="" type="checkbox"> <code>params { choices('ENV', 'dev staging prod') }</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`parameters { choice(name: 'ENV', choices: ['dev', 'staging', 'prod']) }`**
+<p>Choice parameters are defined within the <code>parameters</code> directive. The <code>choices</code> list defines the available options that will be presented as a dropdown in the Jenkins UI when triggering the build.</p>
+</details>
+<hr>
+<p><strong>31. What is the purpose of the <code>withCredentials</code> step?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To configure Jenkins credentials store</li>
+<li><input disabled="" type="checkbox"> To bind credentials securely within a block scope</li>
+<li><input disabled="" type="checkbox"> To create new credentials in Jenkins</li>
+<li><input disabled="" type="checkbox"> To delete credentials from Jenkins</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To bind credentials securely within a block scope**
+<p><code>withCredentials</code> binds credentials (secrets, usernames/passwords, SSH keys) to variables within a block scope. The credentials are masked in logs and safely handled. This is the recommended way to use credentials in Scripted Pipelines.</p>
+</details>
+<hr>
+<p><strong>32. What does the <code>echo</code> step do in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Sends a message to Slack</li>
+<li><input disabled="" type="checkbox"> Prints a message to the build console log</li>
+<li><input disabled="" type="checkbox"> Sends an email notification</li>
+<li><input disabled="" type="checkbox"> Creates an audio alert</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Prints a message to the build console log**
+<p>The <code>echo</code> step prints a message to the Jenkins build console log. It is useful for debugging, logging pipeline progress, and printing variable values during pipeline execution.</p>
+</details>
+<hr>
+<p><strong>33. How do you run a Gradle build in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>gradle build</code></li>
+<li><input disabled="" type="checkbox"> <code>sh 'gradle build'</code></li>
+<li><input disabled="" type="checkbox"> <code>runGradle('build')</code></li>
+<li><input disabled="" type="checkbox"> <code>executeGradle('build')</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`sh 'gradle build'`**
+<p>Build tools like Gradle are executed via the <code>sh</code> step in Pipeline. If Gradle is installed on the agent, <code>sh 'gradle build'</code> runs the build. Alternatively, the <code>tools</code> directive can configure Gradle automatically.</p>
+</details>
+<hr>
+<p><strong>34. What is the purpose of the <code>tool</code> step in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To install new tools</li>
+<li><input disabled="" type="checkbox"> To use a tool configured in Jenkins Global Tool Configuration</li>
+<li><input disabled="" type="checkbox"> To remove old tools</li>
+<li><input disabled="" type="checkbox"> To update tool versions</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To use a tool configured in Jenkins Global Tool Configuration**
+<p>The <code>tool</code> step allows using tools that have been configured in Jenkins&rsquo; Global Tool Configuration (JDK, Maven, Gradle, etc.). It returns the path to the tool installation, which can then be used in shell commands.</p>
+</details>
+<hr>
+<p><strong>35. What is the script block in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A block that defines the agent</li>
+<li><input disabled="" type="checkbox"> A block that allows writing Scripted Pipeline syntax within Declarative Pipeline</li>
+<li><input disabled="" type="checkbox"> A block that defines build triggers</li>
+<li><input disabled="" type="checkbox"> A block for defining environment variables</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A block that allows writing Scripted Pipeline syntax within Declarative Pipeline**
+<p>The <code>script</code> block allows embedding Scripted Pipeline code (Groovy syntax) inside a Declarative Pipeline stage. This provides access to programmatic constructs like loops, conditional logic, and complex variable manipulation.</p>
+</details>
+<hr>
+<p><strong>36. How do you archive build artifacts in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>archiveArtifacts artifacts: '**/target/*.jar'</code></li>
+<li><input disabled="" type="checkbox"> <code>archive '**/target/*.jar'</code></li>
+<li><input disabled="" type="checkbox"> <code>saveArtifacts '**/target/*.jar'</code></li>
+<li><input disabled="" type="checkbox"> <code>publish '**/target/*.jar'</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`archiveArtifacts artifacts: '**/target/*.jar'`**
+<p>The <code>archiveArtifacts</code> step saves files matching the specified glob pattern. These artifacts are stored on the Jenkins controller and are available for download from the build page. They are also available for later pipeline stages.</p>
+</details>
+<hr>
+<p><strong>37. What is the purpose of the <code>junit</code> step in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To install JUnit</li>
+<li><input disabled="" type="checkbox"> To publish JUnit XML test results and track test history</li>
+<li><input disabled="" type="checkbox"> To run JUnit tests</li>
+<li><input disabled="" type="checkbox"> To configure JUnit settings</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To publish JUnit XML test results and track test history**
+<p>The <code>junit</code> step consumes JUnit-compatible XML test reports and publishes them. Jenkins tracks test results over time, provides trend graphs, and can mark builds as unstable based on test failures.</p>
+</details>
+<hr>
+<p><strong>38. How do you define a boolean parameter in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>booleanParam(name: 'DEPLOY', defaultValue: true)</code></li>
+<li><input disabled="" type="checkbox"> <code>parameters { booleanParam(name: 'DEPLOY', defaultValue: true) }</code></li>
+<li><input disabled="" type="checkbox"> <code>params { boolean('DEPLOY', true) }</code></li>
+<li><input disabled="" type="checkbox"> <code>parameter { bool('DEPLOY', true) }</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`parameters { booleanParam(name: 'DEPLOY', defaultValue: true) }`**
+<p>Boolean parameters are defined within the <code>parameters</code> directive using <code>booleanParam</code>. They appear as checkboxes in the Jenkins UI when triggering a parameterized build.</p>
+</details>
+<hr>
+<p><strong>39. What does the <code>string</code> function return in the context of <code>parameters</code>?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A string parameter definition</li>
+<li><input disabled="" type="checkbox"> A random string</li>
+<li><input disabled="" type="checkbox"> A formatted string</li>
+<li><input disabled="" type="checkbox"> A string from user input</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A string parameter definition**
+<p>In the <code>parameters</code> directive, <code>string(name:, defaultValue:, description:)</code> creates a string parameter definition. When the build is triggered, users can enter a value for this parameter.</p>
+</details>
+<hr>
+<p><strong>40. How do you trigger another Jenkins job from a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>runJob('job-name')</code></li>
+<li><input disabled="" type="checkbox"> <code>build job: 'downstream-job', parameters: [...]</code></li>
+<li><input disabled="" type="checkbox"> <code>startJob 'downstream-job'</code></li>
+<li><input disabled="" type="checkbox"> <code>launchJob 'downstream-job'</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`build job: 'downstream-job', parameters: [...]`**
+<p>The <code>build</code> step triggers another Jenkins job (freestyle or pipeline) from within a Pipeline. It supports passing parameters, waiting for the downstream job to complete, and propagating its result.</p>
+</details>
+<hr>
+<p><strong>41. What is the difference between <code>build.wait: true</code> and <code>build.wait: false</code>?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>wait: true</code> waits for the downstream job; <code>wait: false</code> proceeds immediately</li>
+<li><input disabled="" type="checkbox"> <code>wait: true</code> runs on the same node; <code>wait: false</code> runs on any node</li>
+<li><input disabled="" type="checkbox"> They are equivalent</li>
+<li><input disabled="" type="checkbox"> <code>wait: true</code> queues the job; <code>wait: false</code> runs it immediately</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`wait: true` waits for the downstream job; `wait: false` proceeds immediately**
+<p>When <code>wait: true</code>, the pipeline pauses until the downstream job completes and propagates its result. When <code>wait: false</code>, the pipeline proceeds without waiting, and the downstream job result is not checked.</p>
+</details>
+<hr>
+<p><strong>42. What is the purpose of the <code>publishHTML</code> step?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To publish HTML test reports in Jenkins</li>
+<li><input disabled="" type="checkbox"> To generate HTML pages</li>
+<li><input disabled="" type="checkbox"> To send HTML emails</li>
+<li><input disabled="" type="checkbox"> To render HTML in the console log</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To publish HTML test reports in Jenkins**
+<p>The HTML Publisher plugin provides the <code>publishHTML</code> step to publish HTML reports generated during the build. These reports are accessible from the Jenkins job page with links to each HTML file.</p>
+</details>
+<hr>
+<p><strong>43. How do you check out a specific branch in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>checkout scm: [$class: 'GitSCM', branches: [[name: '*/main']]]</code></li>
+<li><input disabled="" type="checkbox"> <code>checkoutGit branch: 'main'</code></li>
+<li><input disabled="" type="checkbox"> <code>git branch: 'main'</code></li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Jenkins supports multiple ways to check out a specific branch: via the <code>checkout</code> step with GitSCM class, the <code>git</code> step with a branch parameter, or by setting the branch in the pipeline&rsquo;s SCM configuration.</p>
+</details>
+<hr>
+<p><strong>44. What does the <code>sleep</code> step do in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Pauses pipeline execution for a specified duration</li>
+<li><input disabled="" type="checkbox"> Shuts down the agent</li>
+<li><input disabled="" type="checkbox"> Suspends the Jenkins service</li>
+<li><input disabled="" type="checkbox"> Puts the build to sleep permanently</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Pauses pipeline execution for a specified duration**
+<p>The <code>sleep</code> step pauses pipeline execution for a specified number of seconds or time duration. It is useful for waiting between operations, simulating delays, or adding wait times before retries.</p>
+</details>
+<hr>
+<p><strong>45. What is the purpose of <code>Mail</code> notification in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To send build status notifications via email</li>
+<li><input disabled="" type="checkbox"> To configure email servers</li>
+<li><input disabled="" type="checkbox"> To read emails in Jenkins</li>
+<li><input disabled="" type="checkbox"> To create email templates</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To send build status notifications via email**
+<p>Jenkins can send email notifications about build results. The <code>mail</code> or <code>emailext</code> steps send emails to configured recipients with build status, logs, and links to the build page. Email notifications are typically configured in post-build actions.</p>
+</details>
+<hr>
+<p><strong>46. What is the <code>findFiles</code> step used for?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To search for files matching a pattern in the workspace</li>
+<li><input disabled="" type="checkbox"> To find plugins</li>
+<li><input disabled="" type="checkbox"> To locate Jenkins configuration files</li>
+<li><input disabled="" type="checkbox"> To search for build logs</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To search for files matching a pattern in the workspace**
+<p>The <code>findFiles</code> step scans the workspace for files matching a specified glob pattern and returns a list of file paths. This is useful for dynamically discovering test reports, artifacts, or configuration files.</p>
+</details>
+<hr>
+<p><strong>47. How do you define a password parameter in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>parameters { password(name: 'API_KEY', defaultValue: '') }</code></li>
+<li><input disabled="" type="checkbox"> <code>password(name: 'API_KEY')</code></li>
+<li><input disabled="" type="checkbox"> <code>params { password('API_KEY') }</code></li>
+<li><input disabled="" type="checkbox"> <code>parameter { pass('API_KEY') }</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`parameters { password(name: 'API_KEY', defaultValue: '') }`**
+<p>Password parameters are defined using <code>password</code> within the <code>parameters</code> directive. Values entered for password parameters are masked in the Jenkins UI and logs, providing a basic level of security for sensitive inputs.</p>
+</details>
+<hr>
+<p><strong>48. What is the purpose of the <code>cleanWs</code> step?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To clean the Jenkins workspace</li>
+<li><input disabled="" type="checkbox"> To delete all files in the workspace</li>
+<li><input disabled="" type="checkbox"> To compress workspace files</li>
+<li><input disabled="" type="checkbox"> To archive the workspace</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To delete all files in the workspace**
+<p>The <code>cleanWs</code> step (from the Workspace Cleanup plugin) deletes all files from the workspace. It is commonly used in post-build actions to free up disk space, especially on ephemeral agents.</p>
+</details>
+<hr>
+<p><strong>49. What does the <code>isUnix()</code> step check?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Whether the controller is running on Unix</li>
+<li><input disabled="" type="checkbox"> Whether the current node is a Unix-like system</li>
+<li><input disabled="" type="checkbox"> Whether the build configuration is Unix-compatible</li>
+<li><input disabled="" type="checkbox"> Whether Unix commands are available</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Whether the current node is a Unix-like system**
+<p>The <code>isUnix()</code> step returns <code>true</code> if the node executing the pipeline is a Unix-like system (Linux, macOS). This is useful for writing cross-platform pipelines that adapt their behavior based on the operating system.</p>
+</details>
+<hr>
+<p><strong>50. What is the purpose of <code>sh</code> with <code>returnStdout: true</code>?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To execute a shell command and return the exit code</li>
+<li><input disabled="" type="checkbox"> To execute a shell command and capture its standard output</li>
+<li><input disabled="" type="checkbox"> To execute a shell command silently</li>
+<li><input disabled="" type="checkbox"> To execute a shell command in the background</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To execute a shell command and capture its standard output**
+<p><code>sh</code> with <code>returnStdout: true</code> executes a shell command and returns the command&rsquo;s standard output as a string. The output is not printed to the console log by default unless <code>returnStdout</code> is combined with other options.</p>
+</details>
+<hr>
+<p><strong>51. What is the <code>withEnv</code> step used for?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To set environment variables for a block scope</li>
+<li><input disabled="" type="checkbox"> To read environment variables</li>
+<li><input disabled="" type="checkbox"> To delete environment variables</li>
+<li><input disabled="" type="checkbox"> To list all environment variables</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To set environment variables for a block scope**
+<p>The <code>withEnv</code> step sets temporary environment variables within a block scope. Variables set with <code>withEnv</code> override existing environment variables only within the block and restore previous values afterward.</p>
+</details>
+<hr>
+<p><strong>52. How do you define a multi-line shell command in a Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Use triple quotes: <code>sh ''' command1 command2 '''</code></li>
+<li><input disabled="" type="checkbox"> Use semicolons: <code>sh 'command1; command2'</code></li>
+<li><input disabled="" type="checkbox"> Use backslashes: <code>sh 'command1 \ command2'</code></li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Multi-line shell commands can be defined using triple quotes (both single and double), semicolons to chain commands on one line, or backslash line continuation. Triple quotes are the most readable approach.</p>
+</details>
+<hr>
+<p><strong>53. What does the <code>fileExists</code> step do?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Checks if a file exists in the workspace</li>
+<li><input disabled="" type="checkbox"> Downloads a file from a URL</li>
+<li><input disabled="" type="checkbox"> Uploads a file to a remote server</li>
+<li><input disabled="" type="checkbox"> Creates a new file</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Checks if a file exists in the workspace**
+<p>The <code>fileExists</code> step returns <code>true</code> if a specified file or path exists in the workspace. This is useful for conditionally executing steps based on whether files like configuration or build outputs are present.</p>
+</details>
+<hr>
+<p><strong>54. What is the purpose of the <code>input</code> message parameter?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To provide instructions for the user approving the input</li>
+<li><input disabled="" type="checkbox"> To define the input format</li>
+<li><input disabled="" type="checkbox"> To specify the input type</li>
+<li><input disabled="" type="checkbox"> To validate user input</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To provide instructions for the user approving the input**
+<p>The <code>message</code> parameter of the <code>input</code> step provides a description or instructions displayed to the user when they are prompted to approve the pipeline. It helps users understand what they are approving and why.</p>
+</details>
+<hr>
+<p><strong>55. How do you define an active choice parameter in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using the Active Choices Plugin with Groovy scripts</li>
+<li><input disabled="" type="checkbox"> Using the standard choice parameter</li>
+<li><input disabled="" type="checkbox"> Using a string parameter with validation</li>
+<li><input disabled="" type="checkbox"> Using a boolean parameter</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Using the Active Choices Plugin with Groovy scripts**
+<p>Active Choices parameters are provided by the Active Choices Plugin. They use Groovy scripts to dynamically generate parameter values based on other parameters, API responses, or runtime conditions.</p>
+</details>
+<hr>
+<p><strong>56. What is the purpose of the <code>ansiColor</code> step?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To add color to console output based on ANSI escape codes</li>
+<li><input disabled="" type="checkbox"> To change the Jenkins theme colors</li>
+<li><input disabled="" type="checkbox"> To colorize build artifacts</li>
+<li><input disabled="" type="checkbox"> To apply color to HTML reports</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To add color to console output based on ANSI escape codes**
+<p>The <code>ansiColor</code> step enables interpretation of ANSI escape codes in console output. This allows tools (like test runners or linters) that produce colored output to display properly in the Jenkins console log.</p>
+</details>
+<hr>
+<p><strong>57. How do you run a Docker container in a Declarative Pipeline?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>agent { docker { image 'node:18' } }</code></li>
+<li><input disabled="" type="checkbox"> <code>docker run node:18</code></li>
+<li><input disabled="" type="checkbox"> <code>container('node:18')</code></li>
+<li><input disabled="" type="checkbox"> <code>withDocker('node:18')</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`agent { docker { image 'node:18' } }`**
+<p>The <code>agent { docker { image '...' } }</code> syntax tells Jenkins to run the pipeline or stage inside a Docker container based on the specified image. Jenkins automatically pulls the image, runs the container, and executes pipeline steps inside it.</p>
+</details>
+<hr>
+<blockquote class='book-hint '>
+<p><strong>Pro tip:</strong> After completing this test, check your score per topic. If you scored below 70% in any area, review the corresponding chapters in this guide before attempting the next practice test.</p>
+</blockquote></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="flex align-center">
+        <img src="/complete_jenkins_notes/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>📝 Practice Test 1: CI/CD Fundamentals</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="flex align-center">
+        <span>📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</span>
+        <img src="/complete_jenkins_notes/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){"use strict";document.querySelectorAll("pre > code").forEach(function(t){var n,s=t.parentElement;if(!s||s.tagName!=="PRE")return;if(s.querySelector(".copy-button"))return;s.style.position="relative",n=document.createElement("button"),n.className="copy-button",n.textContent="Copy",n.setAttribute("aria-label","Copy code to clipboard"),n.setAttribute("type","button"),s.appendChild(n),n.addEventListener("click",function(){var s=t.textContent||"";navigator.clipboard?navigator.clipboard.writeText(s).then(function(){n.textContent="Copied!",n.classList.add("copied"),setTimeout(function(){n.textContent="Copy",n.classList.remove("copied")},2e3)}).catch(function(){e(s,n)}):e(s,n)})});function e(e,t){var n=document.createElement("textarea");n.value=e,n.style.position="fixed",n.style.opacity="0",document.body.appendChild(n),n.select();try{document.execCommand("copy"),t.textContent="Copied!",t.classList.add("copied"),setTimeout(function(){t.textContent="Copy",t.classList.remove("copied")},2e3)}catch{t.textContent="Error",setTimeout(function(){t.textContent="Copy"},2e3)}document.body.removeChild(n)}})()</script>
+  
+
+        
+  
+    <script>(function(){"use strict";var t,a,o="jenkins_exam_progress",c="jenkins_chapter_progress";function e(e){this.element=e,this.minutesDisplay=e.querySelector(".timer-minutes"),this.secondsDisplay=e.querySelector(".timer-seconds"),this.statusEl=e.querySelector(".timer-status"),this.totalSeconds=parseInt(e.dataset.minutes||"60",10)*60,this.remaining=this.totalSeconds,this.interval=null,this.running=!1,this.finished=!1;var n,s,o,i,t=this.loadState();t&&t.remaining>0&&!t.finished&&(this.remaining=t.remaining),this.updateDisplay(),n=this,s=e.querySelector(".timer-start"),o=e.querySelector(".timer-pause"),i=e.querySelector(".timer-reset"),s&&s.addEventListener("click",function(){n.start()}),o&&o.addEventListener("click",function(){n.pause()}),i&&i.addEventListener("click",function(){n.reset()}),t&&t.running&&this.start()}e.prototype.start=function(){if(this.finished)return;if(this.running)return;this.running=!0,this.element.classList.add("timer-running"),this.element.classList.remove("timer-paused");var e=this;this.interval=setInterval(function(){e.remaining--,e.updateDisplay(),e.saveState(),e.remaining<=0&&(e.remaining=0,e.updateDisplay(),e.finish())},1e3)},e.prototype.pause=function(){if(!this.running)return;this.running=!1,this.element.classList.remove("timer-running"),this.element.classList.add("timer-paused"),clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.reset=function(){this.pause(),this.remaining=this.totalSeconds,this.finished=!1,this.element.classList.remove("timer-finished"),this.element.classList.remove("timer-paused"),this.statusEl.textContent="Time Remaining",this.updateDisplay(),this.saveState(),localStorage.removeItem(this.getTimerStorageKey())},e.prototype.finish=function(){this.running=!1,this.finished=!0,this.element.classList.remove("timer-running"),this.element.classList.add("timer-finished"),this.statusEl.textContent="⏰ Time's Up!",clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.updateDisplay=function(){var e=Math.floor(this.remaining/60),t=this.remaining%60;this.minutesDisplay.textContent=String(e).padStart(2,"0"),this.secondsDisplay.textContent=String(t).padStart(2,"0"),this.remaining<=300&&this.remaining>0?this.element.classList.add("timer-warning"):this.element.classList.remove("timer-warning")},e.prototype.getTimerStorageKey=function(){return o+"_timer_"+this.element.dataset.testId},e.prototype.loadState=function(){try{var e=localStorage.getItem(this.getTimerStorageKey());return e?JSON.parse(e):null}catch{return null}},e.prototype.saveState=function(){try{var e={remaining:this.remaining,running:this.running,finished:this.finished,savedAt:Date.now()};localStorage.setItem(this.getTimerStorageKey(),JSON.stringify(e))}catch{}},document.querySelectorAll(".exam-timer").forEach(function(t){new e(t)});function f(e,t){try{var s=n();s[e]=t,localStorage.setItem(o,JSON.stringify(s)),m()}catch{}}function n(){try{var e=localStorage.getItem(o);return e?JSON.parse(e):{}}catch{return{}}}function _(){var e=n();return Object.keys(e).filter(function(t){return e[t]===!0}).length}function p(){return 7}function m(){var t=_(),e=p(),n=e>0?Math.round(t/e*100):0,a=i(),s=document.getElementById("exam-progress-bar"),o=document.getElementById("exam-progress-text");s&&(s.style.width=n+"%",s.textContent=n>15?n+"%":""),o&&(o.textContent=t+" of "+e+" tests completed"),l(a,t,e)}function l(e,t,n){var s,o,l,i=document.getElementById("sidebar-progress-fill"),a=document.getElementById("sidebar-progress-pct"),r=document.getElementById("sidebar-progress-chapters"),c=document.getElementById("sidebar-progress-tests");if(!i)return;s=e.total+n,l=e.completed+t,o=s>0?Math.round(l/s*100):0,i.style.width=o+"%",a&&(a.textContent=o+"%"),r&&(r.textContent=e.completed+"/"+e.total+" chapters"),c&&(c.textContent=t+"/"+n+" tests")}document.addEventListener("change",function(e){if(e.target&&e.target.matches(".test-complete-check")){var t=e.target.dataset.testId;t&&f(t,e.target.checked)}});function w(){var e=n();document.querySelectorAll(".test-complete-check").forEach(function(t){var n=t.dataset.testId;n&&e[n]===!0&&(t.checked=!0)}),m()}t=[{id:"01-introduction-to-ci-cd-and-jenkins",title:"Ch 1: Introduction to CI/CD & Jenkins",number:1,section:"Foundation"},{id:"02-jenkins-architecture-and-installation",title:"Ch 2: Jenkins Architecture & Installation",number:2,section:"Foundation"},{id:"03-jenkins-configuration-and-management",title:"Ch 3: Configuration & Management",number:3,section:"Foundation"},{id:"04-freestyle-projects-and-build-jobs",title:"Ch 4: Freestyle Projects & Build Jobs",number:4,section:"Foundation"},{id:"05-pipeline-fundamentals",title:"Ch 5: Pipeline Fundamentals",number:5,section:"Core Skills"},{id:"06-pipeline-syntax-and-steps",title:"Ch 6: Pipeline Syntax & Steps",number:6,section:"Core Skills"},{id:"07-agents-nodes-and-distributed-builds",title:"Ch 7: Agents, Nodes & Distributed Builds",number:7,section:"Core Skills"},{id:"08-source-code-management",title:"Ch 8: Source Code Management",number:8,section:"Core Skills"},{id:"09-shared-libraries-and-reusability",title:"Ch 9: Shared Libraries & Reusability",number:9,section:"Advanced"},{id:"10-multi-branch-pipelines",title:"Ch 10: Multi-Branch Pipelines",number:10,section:"Advanced"},{id:"11-jenkins-docker-and-kubernetes",title:"Ch 11: Docker & Kubernetes Integration",number:11,section:"Advanced"},{id:"12-testing-security-and-compliance",title:"Ch 12: Testing, Security & Compliance",number:12,section:"Advanced"},{id:"13-jenkins-configuration-as-code",title:"Ch 13: Jenkins Configuration as Code (JCasC)",number:13,section:"Production & Exam Prep"},{id:"14-production-grade-jenkins",title:"Ch 14: Production-Grade Jenkins",number:14,section:"Production & Exam Prep"},{id:"15-exam-preparation-guide",title:"Ch 15: Exam Preparation Guide",number:15,section:"Production & Exam Prep"},{id:"16-interview-questions",title:"Ch 16: Interview Questions & Answers",number:16,section:"Bonus"},{id:"17-real-world-scenarios",title:"Ch 17: Real-World Scenario Questions",number:17,section:"Bonus"}],a=[{id:"exam-test-1",title:"Practice Test 1",number:1},{id:"exam-test-2",title:"Practice Test 2",number:2},{id:"exam-test-3",title:"Practice Test 3",number:3},{id:"exam-test-4",title:"Practice Test 4",number:4},{id:"exam-test-5",title:"Practice Test 5",number:5},{id:"exam-test-6",title:"Practice Test 6",number:6},{id:"exam-test-7",title:"Practice Test 7",number:7}];function s(){try{var e=localStorage.getItem(c);return e?JSON.parse(e):{}}catch{return{}}}function u(e,t){try{var n=s();n[e]=n[e]||{},Object.keys(t).forEach(function(s){n[e][s]=t[s]}),localStorage.setItem(c,JSON.stringify(n))}catch{}}function i(){var o=s(),e=0,n=0;return t.forEach(function(t){var s=o[t.id];s&&(s.read&&e++,s.completed&&n++)}),{read:e,completed:n,total:t.length}}function r(){var t=n(),e=0;return a.forEach(function(n){t[n.id]===!0&&e++}),{completed:e,total:a.length}}function g(){var e=window.location.pathname.match(/\/docs\/(\d+-[^/]+)\//);return e?e[1]:null}function v(){var e=g(),n=e&&t.some(function(t){return t.id===e});n&&(b(e),j(e))}function b(e){var t=s();(!t[e]||!t[e].read)&&u(e,{read:!0,readAt:Date.now()})}function j(e){var t,n,i,a,r,o=document.querySelector(".book-article");if(!o)return;if(o.querySelector(".chapter-complete-check"))return;a=s(),r=a[e]||{},i=r.completed===!0,t=document.createElement("div"),t.className="chapter-complete-check",t.innerHTML='<hr><div class="chapter-progress-bar"><input type="checkbox" id="ch-cpl-'+e+'" class="chapter-complete-checkbox" data-chapter-id="'+e+'"'+(i?" checked":"")+'><label for="ch-cpl-'+e+'" class="chapter-complete-label">✓ Mark this chapter as completed</label><span class="chapter-status-badge">'+(i?"✅ Completed":"📖 Reading")+"</span></div>",o.appendChild(t),n=t.querySelector(".chapter-complete-checkbox"),n.addEventListener("change",function(){u(e,{completed:n.checked,completedAt:n.checked?Date.now():null});var s=t.querySelector(".chapter-status-badge");s.textContent=n.checked?"✅ Completed":"📖 Reading"})}window.initExamDashboard=function(){var e,t=document.getElementById("exam-dashboard-app");if(!t)return;t.innerHTML=y(),document.querySelectorAll(".dashboard-chapter-check").forEach(function(e){e.addEventListener("change",function(){u(e.dataset.chapterId,{completed:e.checked,completedAt:e.checked?Date.now():null}),d()})}),document.querySelectorAll(".dashboard-test-check").forEach(function(e){e.addEventListener("change",function(){f(e.dataset.testId,e.checked),d()})}),e=document.getElementById("exam-reset-all"),e&&e.addEventListener("click",function(){confirm("Reset ALL progress (chapters and tests)? This cannot be undone.")&&(localStorage.removeItem(o),localStorage.removeItem(c),d())})};function y(){var m,o=i(),c=r(),u=s(),f=n(),d=o.total+c.total,h=o.completed+c.completed,l=d>0?Math.round(h/d*100):0,e="";return e+='<div class="exam-dashboard-header">',e+="  <h1>📊 Your Learning Dashboard</h1>",e+='  <p class="exam-progress-summary">Track your Jenkins learning journey — from chapters to practice exams</p>',e+="</div>",e+='<div class="exam-combined-progress">',e+='  <div class="exam-progress-bar-wrapper" style="max-width:100%;">',e+='    <div class="exam-progress-bar-fill" id="dash-combined-bar" style="width:'+l+'%;">'+(l>15?l+"%":"")+"</div>",e+="  </div>",e+='  <p class="exam-progress-summary" style="text-align:center;margin-top:0.75rem;">'+h+" of "+d+" total items completed</p>",e+="</div>",e+='<div class="exam-stats">',e+='  <div class="exam-stat-card"><span class="stat-number">'+o.completed+'</span><span class="stat-label">of '+o.total+" Chapters</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+o.read+'</span><span class="stat-label">Chapters Read</span></div>',e+='  <div class="exam-stat-card"><span class="stat-number">'+c.completed+'</span><span class="stat-label">of '+c.total+" Tests Passed</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+l+'%</span><span class="stat-label">Overall Progress</span></div>',e+="</div>",e+='<h2 style="margin-top:2.5rem;">📚 Learning Progress</h2>',e+='<div class="exam-dashboard-grid">',m=["Foundation","Core Skills","Advanced","Production & Exam Prep","Bonus"],m.forEach(function(n){if(s=t.filter(function(e){return e.section===n}),s.length===0)return;var s,i,a=0,o=0;s.forEach(function(e){var t=u[e.id];t&&(t.read&&a++,t.completed&&o++)}),i=Math.round(o/s.length*100),e+='<div class="dashboard-section-card">',e+='  <div class="dashboard-section-header">',e+='    <span class="dashboard-section-badge">'+n+"</span>",e+='    <span class="dashboard-section-count">'+o+"/"+s.length+"</span>",e+="  </div>",e+='  <div class="dashboard-section-bar-wrapper"><div class="dashboard-section-bar-fill" style="width:'+i+'%;"></div></div>',e+='  <div class="dashboard-section-chapters">',s.forEach(function(t){var s=u[t.id]||{},n=s.completed===!0,o=s.read===!0,i=n?"✅":o?"📖":"⬜";e+='    <div class="dashboard-chapter-row'+(n?" completed":"")+'" title="'+t.title+'">',e+='      <input type="checkbox" class="dashboard-chapter-check" data-chapter-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="dashboard-chapter-status">'+i+"</span>",e+='      <span class="dashboard-chapter-title">'+t.title+"</span>",e+="    </div>"}),e+="  </div>",e+="</div>"}),e+="</div>",e+='<h2 style="margin-top:2.5rem;">📝 Practice Test Progress</h2>',e+='<div class="exam-dashboard-grid">',a.forEach(function(t){var n=f[t.id]===!0;e+='  <div class="exam-dashboard-card'+(n?" completed":"")+'">',e+="    <h3>Practice Test "+t.number+"</h3>",e+="    <p>57 questions across all domains | 60 min</p>",e+='    <div style="display:flex;align-items:center;gap:0.5rem;">',e+='      <input type="checkbox" class="exam-dashboard-check dashboard-test-check" data-test-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="card-status">'+(n?"✅ Passed":"⬜ Not yet")+"</span>",e+="    </div>",e+='    <a href="/docs/'+(17+t.number)+"-exam-practice-test-"+t.number+'/" style="display:inline-block;margin-top:0.75rem;font-size:0.85rem;">→ Open test</a>',e+="  </div>"}),e+="</div>",e+='<div style="text-align:center;margin:2.5rem 0;">',e+='  <button class="btn-reset" id="exam-reset-all">🔄 Reset All Progress</button>',e+="</div>",e}function d(){window.initExamDashboard&&window.initExamDashboard()}window.refreshSidebarProgress=function(){var t=i(),e=r();l(t,e.completed,e.total)};function h(){w(),v(),document.getElementById("exam-dashboard-app")&&initExamDashboard();var t=i(),e=r();l(t,e.completed,e.total)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

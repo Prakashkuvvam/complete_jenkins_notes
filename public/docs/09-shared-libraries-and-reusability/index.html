@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Shared Libraries &amp; Reusability# Learning Objectives# After reading this chapter, you will be able to:
+Create and structure a shared library in Jenkins Load libraries globally or per-pipeline Write reusable pipeline functions and steps Version and test shared libraries Implement best practices for library design Understand library scoping and security 9.1 What is a Shared Library?# A shared library is a collection of reusable pipeline code stored in a separate Git repository. It allows you to:
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/">
+  <meta property="og:site_name" content="Jenkins Learning Path">
+  <meta property="og:title" content="Ch 9: Shared Libraries & Reusability">
+  <meta property="og:description" content="Shared Libraries &amp; Reusability# Learning Objectives# After reading this chapter, you will be able to:
+Create and structure a shared library in Jenkins Load libraries globally or per-pipeline Write reusable pipeline functions and steps Version and test shared libraries Implement best practices for library design Understand library scoping and security 9.1 What is a Shared Library?# A shared library is a collection of reusable pipeline code stored in a separate Git repository. It allows you to:">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="Ch 9: Shared Libraries & Reusability">
+  <meta itemprop="description" content="Shared Libraries &amp; Reusability# Learning Objectives# After reading this chapter, you will be able to:
+Create and structure a shared library in Jenkins Load libraries globally or per-pipeline Write reusable pipeline functions and steps Version and test shared libraries Implement best practices for library design Understand library scoping and security 9.1 What is a Shared Library?# A shared library is a collection of reusable pipeline code stored in a separate Git repository. It allows you to:">
+  <meta itemprop="wordCount" content="1170">
+
+<title>Ch 9: Shared Libraries &amp; Reusability • Jenkins Learning Path</title>
+<link rel="icon" href="/complete_jenkins_notes/favicon.png" >
+<link rel="manifest" href="/complete_jenkins_notes/manifest.json">
+<link rel="canonical" href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/">
+<link rel="stylesheet" href="/complete_jenkins_notes/book.min.a65532e79bcac2f95ba4108b26cdc17b0fe6382f603d8a6b72971bfa3261bf47.css" >
+
+
+  <script defer type="module" src="/complete_jenkins_notes/en.search.min.2d25fa1fe6842b36dbd4e753f3112a465146ff5f09912883575978a46c3ff969.js" ></script>
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<div class="book-sidebar-toggle">
+  <label for="menu-control" role="button" class="sidebar-toggle-label" title="Toggle sidebar">
+    <span class="sidebar-toggle-icon">◀</span>
+  </label>
+</div>
+<aside class="book-menu">
+  <label for="menu-control" class="book-menu-collapse-target" title="Expand sidebar" aria-label="Expand sidebar"></label>
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/complete_jenkins_notes/"><span>Jenkins Learning Path</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+<div class="sidebar-progress" id="sidebar-progress">
+  <div class="sidebar-progress-header">
+    <span class="sidebar-progress-label">📊 Progress</span>
+    <span class="sidebar-progress-pct" id="sidebar-progress-pct">0%</span>
+  </div>
+  <div class="sidebar-progress-track">
+    <div class="sidebar-progress-fill" id="sidebar-progress-fill" style="width:0%;"></div>
+  </div>
+  <div class="sidebar-progress-detail" id="sidebar-progress-detail">
+    <span id="sidebar-progress-chapters">0/17 chapters</span>
+    <span id="sidebar-progress-tests">0/7 tests</span>
+  </div>
+</div>
+
+
+
+<ul><li><a href="/complete_jenkins_notes/">Home</a></li><li><a href="/complete_jenkins_notes/docs/">Documentation</a></li></ul>
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/25-progress-dashboard/" class="">
+      📊 Progress Dashboard</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/26-start-here/" class="">
+      🚀 Start Here</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="">
+      Ch 1: Introduction to CI/CD &amp; Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="">
+      Ch 2: Jenkins Architecture &amp; Installation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="">
+      Ch 3: Configuration &amp; Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="">
+      Ch 4: Freestyle Projects &amp; Build Jobs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/" class="">
+      Ch 5: Pipeline Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/" class="">
+      Ch 6: Pipeline Syntax &amp; Steps</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/" class="">
+      Ch 7: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="">
+      Ch 8: Source Code Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/" class="active">
+      Ch 9: Shared Libraries &amp; Reusability</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="">
+      Ch 10: Multi-Branch Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="">
+      Ch 11: Docker &amp; Kubernetes Integration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/" class="">
+      Ch 12: Testing, Security &amp; Compliance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="">
+      Ch 13: Jenkins Configuration as Code (JCasC)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="">
+      Ch 14: Production-Grade Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/15-exam-preparation-guide/" class="">
+      Ch 15: Exam Preparation Guide</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="">
+      Ch 16: Interview Questions &amp; Answers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="">
+      Ch 17: Real-World Scenario Questions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="">
+      📝 Practice Test 1: CI/CD Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="">
+      📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="">
+      📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="">
+      📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="">
+      📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="">
+      📝 Practice Test 6: Production Jenkins &amp; Monitoring</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="">
+      📝 Practice Test 7: DevOps &amp; Real-World Scenarios</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/complete_jenkins_notes/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>Ch 9: Shared Libraries &amp; Reusability</h3>
+
+  <label for="toc-control">
+    
+    <img src="/complete_jenkins_notes/icons/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#91-what-is-a-shared-library">9.1 What is a Shared Library?</a>
+      <ul>
+        <li><a href="#library-structure">Library Structure</a></li>
+      </ul>
+    </li>
+    <li><a href="#92-creating-a-global-variable">9.2 Creating a Global Variable</a>
+      <ul>
+        <li><a href="#simple-variable-varssayhellogroovy">Simple Variable: <code>vars/sayHello.groovy</code></a></li>
+        <li><a href="#more-complex-varsbuildjavaappgroovy">More Complex: <code>vars/buildJavaApp.groovy</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#93-loading--using-libraries">9.3 Loading &amp; Using Libraries</a>
+      <ul>
+        <li><a href="#global-libraries">Global Libraries</a></li>
+        <li><a href="#per-pipeline-libraries">Per-Pipeline Libraries</a></li>
+        <li><a href="#multiple-libraries--versioning">Multiple Libraries &amp; Versioning</a></li>
+      </ul>
+    </li>
+    <li><a href="#94-using-src-for-helper-classes">9.4 Using <code>src/</code> for Helper Classes</a>
+      <ul>
+        <li><a href="#pipelineutilsgroovy">PipelineUtils.groovy</a></li>
+        <li><a href="#using-helper-classes-in-pipeline">Using Helper Classes in Pipeline</a></li>
+      </ul>
+    </li>
+    <li><a href="#95-reading-resources">9.5 Reading Resources</a>
+      <ul>
+        <li><a href="#using-resources-in-pipeline">Using Resources in Pipeline</a></li>
+      </ul>
+    </li>
+    <li><a href="#96-library-versioning-strategy">9.6 Library Versioning Strategy</a>
+      <ul>
+        <li><a href="#semantic-versioning">Semantic Versioning</a></li>
+        <li><a href="#branch-based-development">Branch-Based Development</a></li>
+        <li><a href="#referencing-versions">Referencing Versions</a></li>
+      </ul>
+    </li>
+    <li><a href="#97-testing-shared-libraries">9.7 Testing Shared Libraries</a>
+      <ul>
+        <li><a href="#unit-testing-with-jenkinspipelineunit">Unit Testing with JenkinsPipelineUnit</a></li>
+        <li><a href="#integration-testing">Integration Testing</a></li>
+      </ul>
+    </li>
+    <li><a href="#98-best-practices">9.8 Best Practices</a>
+      <ul>
+        <li><a href="#dos">Do&rsquo;s</a></li>
+        <li><a href="#donts">Don&rsquo;ts</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="shared-libraries--reusability">Shared Libraries &amp; Reusability<a class="anchor" href="#shared-libraries--reusability">#</a></h1>
+<h2 id="learning-objectives">Learning Objectives<a class="anchor" href="#learning-objectives">#</a></h2>
+<p>After reading this chapter, you will be able to:</p>
+<ul>
+<li>Create and structure a shared library in Jenkins</li>
+<li>Load libraries globally or per-pipeline</li>
+<li>Write reusable pipeline functions and steps</li>
+<li>Version and test shared libraries</li>
+<li>Implement best practices for library design</li>
+<li>Understand library scoping and security</li>
+</ul>
+<hr>
+<h2 id="91-what-is-a-shared-library">9.1 What is a Shared Library?<a class="anchor" href="#91-what-is-a-shared-library">#</a></h2>
+<p>A <strong>shared library</strong> is a collection of reusable pipeline code stored in a separate Git repository. It allows you to:</p>
+<ul>
+<li><strong>DRY up pipeline code</strong> — Define common logic once, use everywhere</li>
+<li><strong>Standardize processes</strong> — Enforce consistent build/deploy patterns</li>
+<li><strong>Reduce Jenkinsfile size</strong> — Keep pipelines simple and readable</li>
+<li><strong>Version control pipeline logic</strong> — Library changes can be reviewed like any code</li>
+</ul>
+<h3 id="library-structure">Library Structure<a class="anchor" href="#library-structure">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-gdscript3" data-lang="gdscript3"><span class="line"><span class="cl"><span class="n">shared</span><span class="o">-</span><span class="n">library</span><span class="o">-</span><span class="n">repo</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">vars</span><span class="o">/</span>                    <span class="c1"># Global variables (exposed to pipelines)</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">buildJavaApp</span><span class="o">.</span><span class="n">groovy</span> <span class="c1"># Define a method</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">deployToK8s</span><span class="o">.</span><span class="n">groovy</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">└──</span> <span class="n">slackNotify</span><span class="o">.</span><span class="n">groovy</span>
+</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">src</span><span class="o">/</span>                     <span class="c1"># Groovy classes (helper utilities)</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">└──</span> <span class="n">com</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">└──</span> <span class="n">company</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>           <span class="err">└──</span> <span class="n">PipelineUtils</span><span class="o">.</span><span class="n">groovy</span>
+</span></span><span class="line"><span class="cl"><span class="err">├──</span> <span class="n">resources</span><span class="o">/</span>               <span class="c1"># Non-Groovy files (templates, configs)</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">├──</span> <span class="n">templates</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">│</span>   <span class="err">└──</span> <span class="n">deployment</span><span class="o">.</span><span class="n">yaml</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>   <span class="err">└──</span> <span class="n">config</span><span class="o">/</span>
+</span></span><span class="line"><span class="cl"><span class="err">│</span>       <span class="err">└──</span> <span class="n">default</span><span class="o">.</span><span class="n">properties</span>
+</span></span><span class="line"><span class="cl"><span class="err">└──</span> <span class="n">Jenkinsfile</span>              <span class="c1"># Test the library itself</span></span></span></code></pre></div><hr>
+<h2 id="92-creating-a-global-variable">9.2 Creating a Global Variable<a class="anchor" href="#92-creating-a-global-variable">#</a></h2>
+<p>A <strong>global variable</strong> is a Groovy file in the <code>vars/</code> directory. The filename becomes the step name in pipelines.</p>
+<h3 id="simple-variable-varssayhellogroovy">Simple Variable: <code>vars/sayHello.groovy</code><a class="anchor" href="#simple-variable-varssayhellogroovy">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// vars/sayHello.groovy
+</span></span></span><span class="line"><span class="cl"><span class="kt">def</span> <span class="nf">call</span><span class="o">(</span><span class="n">String</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;World&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">echo</span> <span class="s2">&#34;Hello, ${name}!&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><p>Usage in pipeline:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Greet&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">sayHello</span><span class="o">(</span><span class="s1">&#39;Jenkins&#39;</span><span class="o">)</span>    <span class="c1">// → &#34;Hello, Jenkins!&#34;
+</span></span></span><span class="line"><span class="cl">                <span class="n">sayHello</span><span class="o">()</span>              <span class="c1">// → &#34;Hello, World!&#34;
+</span></span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="more-complex-varsbuildjavaappgroovy">More Complex: <code>vars/buildJavaApp.groovy</code><a class="anchor" href="#more-complex-varsbuildjavaappgroovy">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// vars/buildJavaApp.groovy
+</span></span></span><span class="line"><span class="cl"><span class="kt">def</span> <span class="nf">call</span><span class="o">(</span><span class="n">Map</span> <span class="n">params</span> <span class="o">=</span> <span class="o">[:])</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">def</span> <span class="n">jdkVersion</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="na">jdkVersion</span> <span class="o">?:</span> <span class="s1">&#39;JDK 17&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">def</span> <span class="n">mavenVersion</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="na">mavenVersion</span> <span class="o">?:</span> <span class="s1">&#39;Maven 3.9&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">def</span> <span class="n">skipTests</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="na">skipTests</span> <span class="o">?:</span> <span class="kc">false</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">def</span> <span class="n">extraArgs</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="na">extraArgs</span> <span class="o">?:</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">        <span class="n">tools</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">jdk</span> <span class="n">jdkVersion</span>
+</span></span><span class="line"><span class="cl">            <span class="n">maven</span> <span class="n">mavenVersion</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Checkout&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">checkout</span> <span class="n">scm</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Compile&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s2">&#34;mvn clean compile ${extraArgs}&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Test&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">when</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">expression</span> <span class="o">{</span> <span class="o">!</span><span class="n">skipTests</span> <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s1">&#39;mvn test&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">always</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">junit</span> <span class="s1">&#39;target/surefire-reports/*.xml&#39;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Package&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">sh</span> <span class="s2">&#34;mvn package -DskipTests ${extraArgs}&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="n">post</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">success</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">archiveArtifacts</span> <span class="nl">artifacts:</span> <span class="s1">&#39;target/*.jar&#39;</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><p>Usage:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Simple usage
+</span></span></span><span class="line"><span class="cl"><span class="n">buildJavaApp</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// With parameters
+</span></span></span><span class="line"><span class="cl"><span class="n">buildJavaApp</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">jdkVersion:</span> <span class="s1">&#39;JDK 11&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">skipTests:</span> <span class="kc">true</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">extraArgs:</span> <span class="s1">&#39;-P production&#39;</span>
+</span></span><span class="line"><span class="cl"><span class="o">)</span></span></span></code></pre></div><hr>
+<h2 id="93-loading--using-libraries">9.3 Loading &amp; Using Libraries<a class="anchor" href="#93-loading--using-libraries">#</a></h2>
+<h3 id="global-libraries">Global Libraries<a class="anchor" href="#global-libraries">#</a></h3>
+<p>Configured system-wide by Jenkins admin:</p>
+<p>Dashboard → Manage Jenkins → Configure System → Global Pipeline Libraries</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">Name: my-shared-lib
+</span></span><span class="line"><span class="cl">Default version: main
+</span></span><span class="line"><span class="cl">Source: Git
+</span></span><span class="line"><span class="cl">Project Repository: https://github.com/org/shared-library.git
+</span></span><span class="line"><span class="cl">Credentials: (optional)
+</span></span><span class="line"><span class="cl">☑ Load implicitly
+</span></span><span class="line"><span class="cl">☑ Allow default version to be overridden
+</span></span><span class="line"><span class="cl">☑ Include in @Library changeset</span></span></code></pre></div><h3 id="per-pipeline-libraries">Per-Pipeline Libraries<a class="anchor" href="#per-pipeline-libraries">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="nd">@Library</span><span class="o">(</span><span class="s1">&#39;my-shared-lib&#39;</span><span class="o">)</span> <span class="n">_</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// Use steps from the library
+</span></span></span><span class="line"><span class="cl">                <span class="n">buildJavaApp</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="multiple-libraries--versioning">Multiple Libraries &amp; Versioning<a class="anchor" href="#multiple-libraries--versioning">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Multiple libraries
+</span></span></span><span class="line"><span class="cl"><span class="nd">@Library</span><span class="o">([</span><span class="s1">&#39;my-shared-lib@v1.2&#39;</span><span class="o">,</span> <span class="s1">&#39;another-lib@v2.0&#39;</span><span class="o">])</span> <span class="n">_</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Specific version
+</span></span></span><span class="line"><span class="cl"><span class="nd">@Library</span><span class="o">(</span><span class="s1">&#39;my-shared-lib@feature/new-step&#39;</span><span class="o">)</span> <span class="n">_</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Disable automatic library loading
+</span></span></span><span class="line"><span class="cl"><span class="nd">@Library</span><span class="o">(</span><span class="s1">&#39;my-shared-lib@1.5.0&#39;</span><span class="o">,</span> <span class="nl">changelog:</span> <span class="kc">false</span><span class="o">)</span> <span class="n">_</span></span></span></code></pre></div><hr>
+<h2 id="94-using-src-for-helper-classes">9.4 Using <code>src/</code> for Helper Classes<a class="anchor" href="#94-using-src-for-helper-classes">#</a></h2>
+<h3 id="pipelineutilsgroovy">PipelineUtils.groovy<a class="anchor" href="#pipelineutilsgroovy">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// src/com/company/PipelineUtils.groovy
+</span></span></span><span class="line"><span class="cl"><span class="kn">package</span> <span class="n">com</span><span class="o">.</span><span class="na">company</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">PipelineUtils</span> <span class="kd">implements</span> <span class="n">Serializable</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="kd">private</span> <span class="kd">final</span> <span class="n">steps</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nf">PipelineUtils</span><span class="o">(</span><span class="n">steps</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">this</span><span class="o">.</span><span class="na">steps</span> <span class="o">=</span> <span class="n">steps</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="kt">def</span> <span class="nf">getGitCommitHash</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">steps</span><span class="o">.</span><span class="na">sh</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">script:</span> <span class="s1">&#39;git rev-parse HEAD&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">returnStdout:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">        <span class="o">).</span><span class="na">trim</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="kt">def</span> <span class="nf">getGitBranch</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">steps</span><span class="o">.</span><span class="na">sh</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">script:</span> <span class="s1">&#39;git rev-parse --abbrev-ref HEAD&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">returnStdout:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">        <span class="o">).</span><span class="na">trim</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="kt">def</span> <span class="nf">getChangedFiles</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">def</span> <span class="n">output</span> <span class="o">=</span> <span class="n">steps</span><span class="o">.</span><span class="na">sh</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">script:</span> <span class="s1">&#39;git diff --name-only HEAD~1 HEAD&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">returnStdout:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">        <span class="o">).</span><span class="na">trim</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">output</span> <span class="o">?</span> <span class="n">output</span><span class="o">.</span><span class="na">split</span><span class="o">(</span><span class="s1">&#39;\n&#39;</span><span class="o">)</span> <span class="o">:</span> <span class="o">[]</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="kt">def</span> <span class="nf">isProductionBranch</span><span class="o">(</span><span class="n">String</span> <span class="n">branch</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">branch</span> <span class="o">==</span> <span class="s1">&#39;main&#39;</span> <span class="o">||</span> <span class="n">branch</span> <span class="o">==~</span> <span class="s">/release\/</span><span class="err">\</span><span class="n">d</span><span class="o">+</span><span class="err">\</span><span class="o">.</span><span class="err">\</span><span class="n">d</span><span class="o">+/</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="kt">def</span> <span class="nf">sendSlackNotification</span><span class="o">(</span><span class="n">String</span> <span class="n">color</span><span class="o">,</span> <span class="n">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">steps</span><span class="o">.</span><span class="na">slackSend</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">color:</span> <span class="n">color</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">message:</span> <span class="n">message</span>
+</span></span><span class="line"><span class="cl">        <span class="o">)</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="kt">def</span> <span class="nf">archiveBuildInfo</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">def</span> <span class="n">info</span> <span class="o">=</span> <span class="o">[</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">commit:</span> <span class="n">getGitCommitHash</span><span class="o">(),</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">branch:</span> <span class="n">getGitBranch</span><span class="o">(),</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">buildNumber:</span> <span class="n">steps</span><span class="o">.</span><span class="na">env</span><span class="o">.</span><span class="na">BUILD_NUMBER</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">timestamp:</span> <span class="n">steps</span><span class="o">.</span><span class="na">currentBuild</span><span class="o">.</span><span class="na">startTimeInMillis</span>
+</span></span><span class="line"><span class="cl">        <span class="o">]</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="kt">def</span> <span class="n">json</span> <span class="o">=</span> <span class="n">steps</span><span class="o">.</span><span class="na">writeJSON</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">file:</span> <span class="s1">&#39;build-info.json&#39;</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">json:</span> <span class="n">info</span>
+</span></span><span class="line"><span class="cl">        <span class="o">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">steps</span><span class="o">.</span><span class="na">archiveArtifacts</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">            <span class="nl">artifacts:</span> <span class="s1">&#39;build-info.json&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="k">return</span> <span class="n">info</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="using-helper-classes-in-pipeline">Using Helper Classes in Pipeline<a class="anchor" href="#using-helper-classes-in-pipeline">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="nd">@Library</span><span class="o">(</span><span class="s1">&#39;my-shared-lib&#39;</span><span class="o">)</span> <span class="n">_</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">com.company.PipelineUtils</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Prepare&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Create utility instance
+</span></span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">utils</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PipelineUtils</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Use helper methods
+</span></span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">commit</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="na">getGitCommitHash</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">branch</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="na">getGitBranch</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="n">echo</span> <span class="s2">&#34;Building ${branch} commit ${commit}&#34;</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="k">if</span> <span class="o">(</span><span class="n">utils</span><span class="o">.</span><span class="na">isProductionBranch</span><span class="o">(</span><span class="n">branch</span><span class="o">))</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="n">echo</span> <span class="s2">&#34;Production branch detected!&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">buildJavaApp</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Archive&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">utils</span> <span class="o">=</span> <span class="k">new</span> <span class="n">PipelineUtils</span><span class="o">(</span><span class="k">this</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                    <span class="n">utils</span><span class="o">.</span><span class="na">archiveBuildInfo</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="95-reading-resources">9.5 Reading Resources<a class="anchor" href="#95-reading-resources">#</a></h2>
+<p>The <code>resources/</code> directory holds non-Groovy files accessible via <code>libraryResource</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// resources/templates/deployment.yaml
+</span></span></span><span class="line"><span class="cl"><span class="nl">apiVersion:</span> <span class="n">apps</span><span class="o">/</span><span class="n">v1</span>
+</span></span><span class="line"><span class="cl"><span class="nl">kind:</span> <span class="n">Deployment</span>
+</span></span><span class="line"><span class="cl"><span class="nl">metadata:</span>
+</span></span><span class="line"><span class="cl">  <span class="nl">name:</span> <span class="n">$</span><span class="o">{</span><span class="n">APP_NAME</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nl">labels:</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">app:</span> <span class="n">$</span><span class="o">{</span><span class="n">APP_NAME</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">version:</span> <span class="n">$</span><span class="o">{</span><span class="n">VERSION</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="nl">spec:</span>
+</span></span><span class="line"><span class="cl">  <span class="nl">replicas:</span> <span class="n">$</span><span class="o">{</span><span class="n">REPLICAS</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nl">selector:</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">matchLabels:</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">app:</span> <span class="n">$</span><span class="o">{</span><span class="n">APP_NAME</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl">  <span class="nl">template:</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">metadata:</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">labels:</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">app:</span> <span class="n">$</span><span class="o">{</span><span class="n">APP_NAME</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="nl">spec:</span>
+</span></span><span class="line"><span class="cl">      <span class="nl">containers:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="nl">name:</span> <span class="n">app</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">image:</span> <span class="n">$</span><span class="o">{</span><span class="n">IMAGE</span><span class="o">}:</span><span class="n">$</span><span class="o">{</span><span class="n">VERSION</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="nl">ports:</span>
+</span></span><span class="line"><span class="cl">        <span class="o">-</span> <span class="nl">containerPort:</span> <span class="n">$</span><span class="o">{</span><span class="n">PORT</span><span class="o">}</span></span></span></code></pre></div><h3 id="using-resources-in-pipeline">Using Resources in Pipeline<a class="anchor" href="#using-resources-in-pipeline">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="nd">@Library</span><span class="o">(</span><span class="s1">&#39;my-shared-lib&#39;</span><span class="o">)</span> <span class="n">_</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Generate K8s Manifest&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="n">script</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">template</span> <span class="o">=</span> <span class="n">libraryResource</span> <span class="s1">&#39;templates/deployment.yaml&#39;</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="c1">// Substitute variables
+</span></span></span><span class="line"><span class="cl">                    <span class="kt">def</span> <span class="n">manifest</span> <span class="o">=</span> <span class="n">template</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s1">&#39;${APP_NAME}&#39;</span><span class="o">,</span> <span class="n">env</span><span class="o">.</span><span class="na">APP_NAME</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s1">&#39;${VERSION}&#39;</span><span class="o">,</span> <span class="n">env</span><span class="o">.</span><span class="na">BUILD_NUMBER</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s1">&#39;${IMAGE}&#39;</span><span class="o">,</span> <span class="s1">&#39;myapp:latest&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s1">&#39;${REPLICAS}&#39;</span><span class="o">,</span> <span class="s1">&#39;3&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                        <span class="o">.</span><span class="na">replace</span><span class="o">(</span><span class="s1">&#39;${PORT}&#39;</span><span class="o">,</span> <span class="s1">&#39;8080&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                    
+</span></span><span class="line"><span class="cl">                    <span class="n">writeFile</span> <span class="nl">file:</span> <span class="s1">&#39;deployment.yaml&#39;</span><span class="o">,</span> <span class="nl">text:</span> <span class="n">manifest</span>
+</span></span><span class="line"><span class="cl">                <span class="o">}</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="96-library-versioning-strategy">9.6 Library Versioning Strategy<a class="anchor" href="#96-library-versioning-strategy">#</a></h2>
+<h3 id="semantic-versioning">Semantic Versioning<a class="anchor" href="#semantic-versioning">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">v1.0.0 — Major release (breaking changes)
+</span></span><span class="line"><span class="cl">v1.1.0 — Minor release (new features, backward compatible)
+</span></span><span class="line"><span class="cl">v1.1.1 — Patch release (bug fixes)</span></span></code></pre></div><h3 id="branch-based-development">Branch-Based Development<a class="anchor" href="#branch-based-development">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">main          ← v1.2.0 (latest stable)
+</span></span><span class="line"><span class="cl">feature/      ← New features in development
+</span></span><span class="line"><span class="cl">v1.1.x        ← Maintenance branch for v1.1</span></span></code></pre></div><h3 id="referencing-versions">Referencing Versions<a class="anchor" href="#referencing-versions">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Pin to exact version (recommended for production)
+</span></span></span><span class="line"><span class="cl"><span class="nd">@Library</span><span class="o">(</span><span class="s1">&#39;my-shared-lib@v1.2.0&#39;</span><span class="o">)</span> <span class="n">_</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Use latest from branch (development/testing)
+</span></span></span><span class="line"><span class="cl"><span class="nd">@Library</span><span class="o">(</span><span class="s1">&#39;my-shared-lib@main&#39;</span><span class="o">)</span> <span class="n">_</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Use release tag
+</span></span></span><span class="line"><span class="cl"><span class="nd">@Library</span><span class="o">(</span><span class="s1">&#39;my-shared-lib@v1.0.0&#39;</span><span class="o">)</span> <span class="n">_</span></span></span></code></pre></div><hr>
+<h2 id="97-testing-shared-libraries">9.7 Testing Shared Libraries<a class="anchor" href="#97-testing-shared-libraries">#</a></h2>
+<h3 id="unit-testing-with-jenkinspipelineunit">Unit Testing with JenkinsPipelineUnit<a class="anchor" href="#unit-testing-with-jenkinspipelineunit">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// test/vars/BuildJavaAppTest.groovy
+</span></span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">com.lesfurets.jenkins.unit.BasePipelineTest</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.junit.Before</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">org.junit.Test</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kd">class</span> <span class="nc">BuildJavaAppTest</span> <span class="kd">extends</span> <span class="n">BasePipelineTest</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nd">@Override</span>
+</span></span><span class="line"><span class="cl">    <span class="nd">@Before</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">setUp</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kd">super</span><span class="o">.</span><span class="na">setUp</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">helper</span><span class="o">.</span><span class="na">registerAllowedMethod</span><span class="o">(</span><span class="s1">&#39;sh&#39;</span><span class="o">,</span> <span class="o">[</span><span class="n">Map</span><span class="o">],</span> <span class="o">{</span> <span class="n">args</span> <span class="o">-&gt;</span>
+</span></span><span class="line"><span class="cl">            <span class="n">println</span> <span class="s2">&#34;sh: ${args.script}&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="s1">&#39;&#39;</span>
+</span></span><span class="line"><span class="cl">        <span class="o">})</span>
+</span></span><span class="line"><span class="cl">        <span class="n">helper</span><span class="o">.</span><span class="na">registerAllowedMethod</span><span class="o">(</span><span class="s1">&#39;checkout&#39;</span><span class="o">,</span> <span class="o">[</span><span class="n">Map</span><span class="o">],</span> <span class="o">{</span> <span class="n">args</span> <span class="o">-&gt;</span> 
+</span></span><span class="line"><span class="cl">            <span class="n">println</span> <span class="s2">&#34;checkout: ${args}&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="k">return</span> <span class="o">[:]</span>
+</span></span><span class="line"><span class="cl">        <span class="o">})</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">testBuildWithDefaultParams</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">def</span> <span class="n">script</span> <span class="o">=</span> <span class="n">loadScript</span><span class="o">(</span><span class="s1">&#39;vars/buildJavaApp.groovy&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">script</span><span class="o">.</span><span class="na">call</span><span class="o">([:])</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="c1">// Assert that specific steps were called
+</span></span></span><span class="line"><span class="cl">        <span class="n">printCallStack</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">assertJobStatusSuccess</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="nd">@Test</span>
+</span></span><span class="line"><span class="cl">    <span class="kt">void</span> <span class="nf">testBuildWithSkipTests</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kt">def</span> <span class="n">script</span> <span class="o">=</span> <span class="n">loadScript</span><span class="o">(</span><span class="s1">&#39;vars/buildJavaApp.groovy&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">script</span><span class="o">.</span><span class="na">call</span><span class="o">(</span><span class="nl">skipTests:</span> <span class="kc">true</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">        
+</span></span><span class="line"><span class="cl">        <span class="n">printCallStack</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">        <span class="n">assertJobStatusSuccess</span><span class="o">()</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><h3 id="integration-testing">Integration Testing<a class="anchor" href="#integration-testing">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="c1">// Jenkinsfile.test
+</span></span></span><span class="line"><span class="cl"><span class="nd">@Library</span><span class="o">(</span><span class="s1">&#39;my-shared-lib@PR-42&#39;</span><span class="o">)</span> <span class="n">_</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
+</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Test Library&#39;</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">                <span class="c1">// Test each step in the library
+</span></span></span><span class="line"><span class="cl">                <span class="n">sayHello</span><span class="o">(</span><span class="s1">&#39;Test&#39;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">                
+</span></span><span class="line"><span class="cl">                <span class="n">buildJavaApp</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">skipTests:</span> <span class="kc">true</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="nl">extraArgs:</span> <span class="s1">&#39;-q&#39;</span>
+</span></span><span class="line"><span class="cl">                <span class="o">)</span>
+</span></span><span class="line"><span class="cl">            <span class="o">}</span>
+</span></span><span class="line"><span class="cl">        <span class="o">}</span>
+</span></span><span class="line"><span class="cl">    <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span></span></span></code></pre></div><hr>
+<h2 id="98-best-practices">9.8 Best Practices<a class="anchor" href="#98-best-practices">#</a></h2>
+<h3 id="dos">Do&rsquo;s<a class="anchor" href="#dos">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Practice</th>
+          <th>Reason</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Keep libraries focused</td>
+          <td>One library per concern (build, deploy, notify)</td>
+      </tr>
+      <tr>
+          <td>Serialize everything</td>
+          <td>All classes should implement <code>Serializable</code></td>
+      </tr>
+      <tr>
+          <td>Pin versions</td>
+          <td>Always specify a version in production pipelines</td>
+      </tr>
+      <tr>
+          <td>Document APIs</td>
+          <td>Add comments to every public variable/function</td>
+      </tr>
+      <tr>
+          <td>Write unit tests</td>
+          <td>Use JenkinsPipelineUnit for library testing</td>
+      </tr>
+      <tr>
+          <td>Use <code>@NonCPS</code> sparingly</td>
+          <td>Only for methods that can&rsquo;t be serialized</td>
+      </tr>
+      <tr>
+          <td>Validate parameters</td>
+          <td>Check required params with defaults or errors</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="donts">Don&rsquo;ts<a class="anchor" href="#donts">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>Anti-Pattern</th>
+          <th>Why</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Global variables calling other global variables</td>
+          <td>Hard to test and debug</td>
+      </tr>
+      <tr>
+          <td>Using <code>input</code> inside a library</td>
+          <td>Blocks all pipelines using the library</td>
+      </tr>
+      <tr>
+          <td>Hard-coding credentials or URLs</td>
+          <td>Makes library non-portable</td>
+      </tr>
+      <tr>
+          <td>Loading large files into memory</td>
+          <td>Can cause OOM errors on the master</td>
+      </tr>
+      <tr>
+          <td>Ignoring serialization</td>
+          <td>Pipeline may fail with NotSerializableException</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<h2 id="key-takeaways">Key Takeaways<a class="anchor" href="#key-takeaways">#</a></h2>
+<ul>
+<li>Shared libraries store reusable pipeline steps in a separate Git repo</li>
+<li><code>vars/</code> defines global variables (filename = step name)</li>
+<li><code>src/</code> contains Groovy classes for complex helper logic</li>
+<li><code>resources/</code> stores templates and configuration files</li>
+<li>Version libraries with tags for safe consumption across pipelines</li>
+<li>Test libraries with JenkinsPipelineUnit and pin versions in production</li>
+<li>Always implement <code>Serializable</code> in library classes</li>
+</ul>
+<hr>
+<h2 id="next-steps">Next Steps<a class="anchor" href="#next-steps">#</a></h2>
+<p>→ Continue to <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/">Chapter 10: Multi-Branch Pipelines</a></p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="flex align-center">
+        <img src="/complete_jenkins_notes/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>Ch 8: Source Code Management</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="flex align-center">
+        <span>Ch 10: Multi-Branch Pipelines</span>
+        <img src="/complete_jenkins_notes/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){"use strict";document.querySelectorAll("pre > code").forEach(function(t){var n,s=t.parentElement;if(!s||s.tagName!=="PRE")return;if(s.querySelector(".copy-button"))return;s.style.position="relative",n=document.createElement("button"),n.className="copy-button",n.textContent="Copy",n.setAttribute("aria-label","Copy code to clipboard"),n.setAttribute("type","button"),s.appendChild(n),n.addEventListener("click",function(){var s=t.textContent||"";navigator.clipboard?navigator.clipboard.writeText(s).then(function(){n.textContent="Copied!",n.classList.add("copied"),setTimeout(function(){n.textContent="Copy",n.classList.remove("copied")},2e3)}).catch(function(){e(s,n)}):e(s,n)})});function e(e,t){var n=document.createElement("textarea");n.value=e,n.style.position="fixed",n.style.opacity="0",document.body.appendChild(n),n.select();try{document.execCommand("copy"),t.textContent="Copied!",t.classList.add("copied"),setTimeout(function(){t.textContent="Copy",t.classList.remove("copied")},2e3)}catch{t.textContent="Error",setTimeout(function(){t.textContent="Copy"},2e3)}document.body.removeChild(n)}})()</script>
+  
+
+        
+  
+    <script>(function(){"use strict";var t,a,o="jenkins_exam_progress",c="jenkins_chapter_progress";function e(e){this.element=e,this.minutesDisplay=e.querySelector(".timer-minutes"),this.secondsDisplay=e.querySelector(".timer-seconds"),this.statusEl=e.querySelector(".timer-status"),this.totalSeconds=parseInt(e.dataset.minutes||"60",10)*60,this.remaining=this.totalSeconds,this.interval=null,this.running=!1,this.finished=!1;var n,s,o,i,t=this.loadState();t&&t.remaining>0&&!t.finished&&(this.remaining=t.remaining),this.updateDisplay(),n=this,s=e.querySelector(".timer-start"),o=e.querySelector(".timer-pause"),i=e.querySelector(".timer-reset"),s&&s.addEventListener("click",function(){n.start()}),o&&o.addEventListener("click",function(){n.pause()}),i&&i.addEventListener("click",function(){n.reset()}),t&&t.running&&this.start()}e.prototype.start=function(){if(this.finished)return;if(this.running)return;this.running=!0,this.element.classList.add("timer-running"),this.element.classList.remove("timer-paused");var e=this;this.interval=setInterval(function(){e.remaining--,e.updateDisplay(),e.saveState(),e.remaining<=0&&(e.remaining=0,e.updateDisplay(),e.finish())},1e3)},e.prototype.pause=function(){if(!this.running)return;this.running=!1,this.element.classList.remove("timer-running"),this.element.classList.add("timer-paused"),clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.reset=function(){this.pause(),this.remaining=this.totalSeconds,this.finished=!1,this.element.classList.remove("timer-finished"),this.element.classList.remove("timer-paused"),this.statusEl.textContent="Time Remaining",this.updateDisplay(),this.saveState(),localStorage.removeItem(this.getTimerStorageKey())},e.prototype.finish=function(){this.running=!1,this.finished=!0,this.element.classList.remove("timer-running"),this.element.classList.add("timer-finished"),this.statusEl.textContent="⏰ Time's Up!",clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.updateDisplay=function(){var e=Math.floor(this.remaining/60),t=this.remaining%60;this.minutesDisplay.textContent=String(e).padStart(2,"0"),this.secondsDisplay.textContent=String(t).padStart(2,"0"),this.remaining<=300&&this.remaining>0?this.element.classList.add("timer-warning"):this.element.classList.remove("timer-warning")},e.prototype.getTimerStorageKey=function(){return o+"_timer_"+this.element.dataset.testId},e.prototype.loadState=function(){try{var e=localStorage.getItem(this.getTimerStorageKey());return e?JSON.parse(e):null}catch{return null}},e.prototype.saveState=function(){try{var e={remaining:this.remaining,running:this.running,finished:this.finished,savedAt:Date.now()};localStorage.setItem(this.getTimerStorageKey(),JSON.stringify(e))}catch{}},document.querySelectorAll(".exam-timer").forEach(function(t){new e(t)});function f(e,t){try{var s=n();s[e]=t,localStorage.setItem(o,JSON.stringify(s)),m()}catch{}}function n(){try{var e=localStorage.getItem(o);return e?JSON.parse(e):{}}catch{return{}}}function _(){var e=n();return Object.keys(e).filter(function(t){return e[t]===!0}).length}function p(){return 7}function m(){var t=_(),e=p(),n=e>0?Math.round(t/e*100):0,a=i(),s=document.getElementById("exam-progress-bar"),o=document.getElementById("exam-progress-text");s&&(s.style.width=n+"%",s.textContent=n>15?n+"%":""),o&&(o.textContent=t+" of "+e+" tests completed"),l(a,t,e)}function l(e,t,n){var s,o,l,i=document.getElementById("sidebar-progress-fill"),a=document.getElementById("sidebar-progress-pct"),r=document.getElementById("sidebar-progress-chapters"),c=document.getElementById("sidebar-progress-tests");if(!i)return;s=e.total+n,l=e.completed+t,o=s>0?Math.round(l/s*100):0,i.style.width=o+"%",a&&(a.textContent=o+"%"),r&&(r.textContent=e.completed+"/"+e.total+" chapters"),c&&(c.textContent=t+"/"+n+" tests")}document.addEventListener("change",function(e){if(e.target&&e.target.matches(".test-complete-check")){var t=e.target.dataset.testId;t&&f(t,e.target.checked)}});function w(){var e=n();document.querySelectorAll(".test-complete-check").forEach(function(t){var n=t.dataset.testId;n&&e[n]===!0&&(t.checked=!0)}),m()}t=[{id:"01-introduction-to-ci-cd-and-jenkins",title:"Ch 1: Introduction to CI/CD & Jenkins",number:1,section:"Foundation"},{id:"02-jenkins-architecture-and-installation",title:"Ch 2: Jenkins Architecture & Installation",number:2,section:"Foundation"},{id:"03-jenkins-configuration-and-management",title:"Ch 3: Configuration & Management",number:3,section:"Foundation"},{id:"04-freestyle-projects-and-build-jobs",title:"Ch 4: Freestyle Projects & Build Jobs",number:4,section:"Foundation"},{id:"05-pipeline-fundamentals",title:"Ch 5: Pipeline Fundamentals",number:5,section:"Core Skills"},{id:"06-pipeline-syntax-and-steps",title:"Ch 6: Pipeline Syntax & Steps",number:6,section:"Core Skills"},{id:"07-agents-nodes-and-distributed-builds",title:"Ch 7: Agents, Nodes & Distributed Builds",number:7,section:"Core Skills"},{id:"08-source-code-management",title:"Ch 8: Source Code Management",number:8,section:"Core Skills"},{id:"09-shared-libraries-and-reusability",title:"Ch 9: Shared Libraries & Reusability",number:9,section:"Advanced"},{id:"10-multi-branch-pipelines",title:"Ch 10: Multi-Branch Pipelines",number:10,section:"Advanced"},{id:"11-jenkins-docker-and-kubernetes",title:"Ch 11: Docker & Kubernetes Integration",number:11,section:"Advanced"},{id:"12-testing-security-and-compliance",title:"Ch 12: Testing, Security & Compliance",number:12,section:"Advanced"},{id:"13-jenkins-configuration-as-code",title:"Ch 13: Jenkins Configuration as Code (JCasC)",number:13,section:"Production & Exam Prep"},{id:"14-production-grade-jenkins",title:"Ch 14: Production-Grade Jenkins",number:14,section:"Production & Exam Prep"},{id:"15-exam-preparation-guide",title:"Ch 15: Exam Preparation Guide",number:15,section:"Production & Exam Prep"},{id:"16-interview-questions",title:"Ch 16: Interview Questions & Answers",number:16,section:"Bonus"},{id:"17-real-world-scenarios",title:"Ch 17: Real-World Scenario Questions",number:17,section:"Bonus"}],a=[{id:"exam-test-1",title:"Practice Test 1",number:1},{id:"exam-test-2",title:"Practice Test 2",number:2},{id:"exam-test-3",title:"Practice Test 3",number:3},{id:"exam-test-4",title:"Practice Test 4",number:4},{id:"exam-test-5",title:"Practice Test 5",number:5},{id:"exam-test-6",title:"Practice Test 6",number:6},{id:"exam-test-7",title:"Practice Test 7",number:7}];function s(){try{var e=localStorage.getItem(c);return e?JSON.parse(e):{}}catch{return{}}}function u(e,t){try{var n=s();n[e]=n[e]||{},Object.keys(t).forEach(function(s){n[e][s]=t[s]}),localStorage.setItem(c,JSON.stringify(n))}catch{}}function i(){var o=s(),e=0,n=0;return t.forEach(function(t){var s=o[t.id];s&&(s.read&&e++,s.completed&&n++)}),{read:e,completed:n,total:t.length}}function r(){var t=n(),e=0;return a.forEach(function(n){t[n.id]===!0&&e++}),{completed:e,total:a.length}}function g(){var e=window.location.pathname.match(/\/docs\/(\d+-[^/]+)\//);return e?e[1]:null}function v(){var e=g(),n=e&&t.some(function(t){return t.id===e});n&&(b(e),j(e))}function b(e){var t=s();(!t[e]||!t[e].read)&&u(e,{read:!0,readAt:Date.now()})}function j(e){var t,n,i,a,r,o=document.querySelector(".book-article");if(!o)return;if(o.querySelector(".chapter-complete-check"))return;a=s(),r=a[e]||{},i=r.completed===!0,t=document.createElement("div"),t.className="chapter-complete-check",t.innerHTML='<hr><div class="chapter-progress-bar"><input type="checkbox" id="ch-cpl-'+e+'" class="chapter-complete-checkbox" data-chapter-id="'+e+'"'+(i?" checked":"")+'><label for="ch-cpl-'+e+'" class="chapter-complete-label">✓ Mark this chapter as completed</label><span class="chapter-status-badge">'+(i?"✅ Completed":"📖 Reading")+"</span></div>",o.appendChild(t),n=t.querySelector(".chapter-complete-checkbox"),n.addEventListener("change",function(){u(e,{completed:n.checked,completedAt:n.checked?Date.now():null});var s=t.querySelector(".chapter-status-badge");s.textContent=n.checked?"✅ Completed":"📖 Reading"})}window.initExamDashboard=function(){var e,t=document.getElementById("exam-dashboard-app");if(!t)return;t.innerHTML=y(),document.querySelectorAll(".dashboard-chapter-check").forEach(function(e){e.addEventListener("change",function(){u(e.dataset.chapterId,{completed:e.checked,completedAt:e.checked?Date.now():null}),d()})}),document.querySelectorAll(".dashboard-test-check").forEach(function(e){e.addEventListener("change",function(){f(e.dataset.testId,e.checked),d()})}),e=document.getElementById("exam-reset-all"),e&&e.addEventListener("click",function(){confirm("Reset ALL progress (chapters and tests)? This cannot be undone.")&&(localStorage.removeItem(o),localStorage.removeItem(c),d())})};function y(){var m,o=i(),c=r(),u=s(),f=n(),d=o.total+c.total,h=o.completed+c.completed,l=d>0?Math.round(h/d*100):0,e="";return e+='<div class="exam-dashboard-header">',e+="  <h1>📊 Your Learning Dashboard</h1>",e+='  <p class="exam-progress-summary">Track your Jenkins learning journey — from chapters to practice exams</p>',e+="</div>",e+='<div class="exam-combined-progress">',e+='  <div class="exam-progress-bar-wrapper" style="max-width:100%;">',e+='    <div class="exam-progress-bar-fill" id="dash-combined-bar" style="width:'+l+'%;">'+(l>15?l+"%":"")+"</div>",e+="  </div>",e+='  <p class="exam-progress-summary" style="text-align:center;margin-top:0.75rem;">'+h+" of "+d+" total items completed</p>",e+="</div>",e+='<div class="exam-stats">',e+='  <div class="exam-stat-card"><span class="stat-number">'+o.completed+'</span><span class="stat-label">of '+o.total+" Chapters</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+o.read+'</span><span class="stat-label">Chapters Read</span></div>',e+='  <div class="exam-stat-card"><span class="stat-number">'+c.completed+'</span><span class="stat-label">of '+c.total+" Tests Passed</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+l+'%</span><span class="stat-label">Overall Progress</span></div>',e+="</div>",e+='<h2 style="margin-top:2.5rem;">📚 Learning Progress</h2>',e+='<div class="exam-dashboard-grid">',m=["Foundation","Core Skills","Advanced","Production & Exam Prep","Bonus"],m.forEach(function(n){if(s=t.filter(function(e){return e.section===n}),s.length===0)return;var s,i,a=0,o=0;s.forEach(function(e){var t=u[e.id];t&&(t.read&&a++,t.completed&&o++)}),i=Math.round(o/s.length*100),e+='<div class="dashboard-section-card">',e+='  <div class="dashboard-section-header">',e+='    <span class="dashboard-section-badge">'+n+"</span>",e+='    <span class="dashboard-section-count">'+o+"/"+s.length+"</span>",e+="  </div>",e+='  <div class="dashboard-section-bar-wrapper"><div class="dashboard-section-bar-fill" style="width:'+i+'%;"></div></div>',e+='  <div class="dashboard-section-chapters">',s.forEach(function(t){var s=u[t.id]||{},n=s.completed===!0,o=s.read===!0,i=n?"✅":o?"📖":"⬜";e+='    <div class="dashboard-chapter-row'+(n?" completed":"")+'" title="'+t.title+'">',e+='      <input type="checkbox" class="dashboard-chapter-check" data-chapter-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="dashboard-chapter-status">'+i+"</span>",e+='      <span class="dashboard-chapter-title">'+t.title+"</span>",e+="    </div>"}),e+="  </div>",e+="</div>"}),e+="</div>",e+='<h2 style="margin-top:2.5rem;">📝 Practice Test Progress</h2>',e+='<div class="exam-dashboard-grid">',a.forEach(function(t){var n=f[t.id]===!0;e+='  <div class="exam-dashboard-card'+(n?" completed":"")+'">',e+="    <h3>Practice Test "+t.number+"</h3>",e+="    <p>57 questions across all domains | 60 min</p>",e+='    <div style="display:flex;align-items:center;gap:0.5rem;">',e+='      <input type="checkbox" class="exam-dashboard-check dashboard-test-check" data-test-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="card-status">'+(n?"✅ Passed":"⬜ Not yet")+"</span>",e+="    </div>",e+='    <a href="/docs/'+(17+t.number)+"-exam-practice-test-"+t.number+'/" style="display:inline-block;margin-top:0.75rem;font-size:0.85rem;">→ Open test</a>',e+="  </div>"}),e+="</div>",e+='<div style="text-align:center;margin:2.5rem 0;">',e+='  <button class="btn-reset" id="exam-reset-all">🔄 Reset All Progress</button>',e+="</div>",e}function d(){window.initExamDashboard&&window.initExamDashboard()}window.refreshSidebarProgress=function(){var t=i(),e=r();l(t,e.completed,e.total)};function h(){w(),v(),document.getElementById("exam-dashboard-app")&&initExamDashboard();var t=i(),e=r();l(t,e.completed,e.total)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+  <div class="book-toc-toggle">
+    <label for="toc-control" role="button" class="toc-toggle-label" title="Toggle table of contents">
+      <span class="toc-toggle-icon">▶</span>
+    </label>
+  </div>
+  <aside class="book-toc">
+    <label for="toc-control" class="book-toc-collapse-target" title="Expand table of contents" aria-label="Expand table of contents"></label>
+    <div class="book-toc-content">
+      
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#learning-objectives">Learning Objectives</a></li>
+    <li><a href="#91-what-is-a-shared-library">9.1 What is a Shared Library?</a>
+      <ul>
+        <li><a href="#library-structure">Library Structure</a></li>
+      </ul>
+    </li>
+    <li><a href="#92-creating-a-global-variable">9.2 Creating a Global Variable</a>
+      <ul>
+        <li><a href="#simple-variable-varssayhellogroovy">Simple Variable: <code>vars/sayHello.groovy</code></a></li>
+        <li><a href="#more-complex-varsbuildjavaappgroovy">More Complex: <code>vars/buildJavaApp.groovy</code></a></li>
+      </ul>
+    </li>
+    <li><a href="#93-loading--using-libraries">9.3 Loading &amp; Using Libraries</a>
+      <ul>
+        <li><a href="#global-libraries">Global Libraries</a></li>
+        <li><a href="#per-pipeline-libraries">Per-Pipeline Libraries</a></li>
+        <li><a href="#multiple-libraries--versioning">Multiple Libraries &amp; Versioning</a></li>
+      </ul>
+    </li>
+    <li><a href="#94-using-src-for-helper-classes">9.4 Using <code>src/</code> for Helper Classes</a>
+      <ul>
+        <li><a href="#pipelineutilsgroovy">PipelineUtils.groovy</a></li>
+        <li><a href="#using-helper-classes-in-pipeline">Using Helper Classes in Pipeline</a></li>
+      </ul>
+    </li>
+    <li><a href="#95-reading-resources">9.5 Reading Resources</a>
+      <ul>
+        <li><a href="#using-resources-in-pipeline">Using Resources in Pipeline</a></li>
+      </ul>
+    </li>
+    <li><a href="#96-library-versioning-strategy">9.6 Library Versioning Strategy</a>
+      <ul>
+        <li><a href="#semantic-versioning">Semantic Versioning</a></li>
+        <li><a href="#branch-based-development">Branch-Based Development</a></li>
+        <li><a href="#referencing-versions">Referencing Versions</a></li>
+      </ul>
+    </li>
+    <li><a href="#97-testing-shared-libraries">9.7 Testing Shared Libraries</a>
+      <ul>
+        <li><a href="#unit-testing-with-jenkinspipelineunit">Unit Testing with JenkinsPipelineUnit</a></li>
+        <li><a href="#integration-testing">Integration Testing</a></li>
+      </ul>
+    </li>
+    <li><a href="#98-best-practices">9.8 Best Practices</a>
+      <ul>
+        <li><a href="#dos">Do&rsquo;s</a></li>
+        <li><a href="#donts">Don&rsquo;ts</a></li>
+      </ul>
+    </li>
+    <li><a href="#key-takeaways">Key Takeaways</a></li>
+    <li><a href="#next-steps">Next Steps</a></li>
+  </ul>
+</nav>
+
+
+
+    </div>
+  </aside>
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

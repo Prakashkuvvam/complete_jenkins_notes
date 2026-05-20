@@ -1,0 +1,15 @@
+{
+  "name": "Jenkins Learning Path",
+  "short_name": "Jenkins Learning Path",
+  "start_url": "/complete_jenkins_notes/",
+  "scope": "/complete_jenkins_notes/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/complete_jenkins_notes/favicon.svg",
+      "sizes": "512x512"
+    }
+  ]
+}

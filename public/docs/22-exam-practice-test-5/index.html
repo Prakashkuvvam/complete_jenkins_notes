@@ -1,0 +1,1405 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+<head>
+  <!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Practice Test 5: Shared Libraries, Security &amp; JCasC# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: Shared libraries, security best practices, Jenkins Configuration as Code (JCasC)
+">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2e3440">
+<meta name="color-scheme" content="light dark"><meta property="og:url" content="/complete_jenkins_notes/docs/22-exam-practice-test-5/">
+  <meta property="og:site_name" content="Jenkins Learning Path">
+  <meta property="og:title" content="📝 Practice Test 5: Shared Libraries, Security & JCasC">
+  <meta property="og:description" content="Practice Test 5: Shared Libraries, Security &amp; JCasC# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: Shared libraries, security best practices, Jenkins Configuration as Code (JCasC)">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="docs">
+
+
+  <meta itemprop="name" content="📝 Practice Test 5: Shared Libraries, Security & JCasC">
+  <meta itemprop="description" content="Practice Test 5: Shared Libraries, Security &amp; JCasC# Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.
+📋 Exam Instructions# Detail Value Questions 57 Time Limit 60 minutes Passing Score ~70% (40/57 correct) Format Multiple choice 60 : 00 ▶ Start ⏸ Pause ↺ Reset Time Remaining ✓ Mark test as completed 57 Questions | Duration: 60 minutes | Focus: Shared libraries, security best practices, Jenkins Configuration as Code (JCasC)">
+  <meta itemprop="wordCount" content="4043">
+
+<title>📝 Practice Test 5: Shared Libraries, Security &amp; JCasC • Jenkins Learning Path</title>
+<link rel="icon" href="/complete_jenkins_notes/favicon.png" >
+<link rel="manifest" href="/complete_jenkins_notes/manifest.json">
+<link rel="canonical" href="/complete_jenkins_notes/docs/22-exam-practice-test-5/">
+<link rel="stylesheet" href="/complete_jenkins_notes/book.min.a65532e79bcac2f95ba4108b26cdc17b0fe6382f603d8a6b72971bfa3261bf47.css" >
+
+
+  <script defer type="module" src="/complete_jenkins_notes/en.search.min.2d25fa1fe6842b36dbd4e753f3112a465146ff5f09912883575978a46c3ff969.js" ></script>
+
+  
+</head>
+<body dir="ltr" class="book-kind-page book-type-docs">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    
+<div class="book-sidebar-toggle">
+  <label for="menu-control" role="button" class="sidebar-toggle-label" title="Toggle sidebar">
+    <span class="sidebar-toggle-icon">◀</span>
+  </label>
+</div>
+<aside class="book-menu">
+  <label for="menu-control" class="book-menu-collapse-target" title="Expand sidebar" aria-label="Expand sidebar"></label>
+  <div class="book-menu-content">
+    
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/complete_jenkins_notes/"><span>Jenkins Learning Path</span>
+  </a>
+</h2>
+
+
+<div class="book-search hidden">
+  <input id="book-search-input" type="text" 
+    placeholder="Search"
+    aria-label="Search"
+    maxlength="64" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+<script>document.querySelector(".book-search").classList.remove("hidden")</script>
+
+
+
+
+
+<div class="sidebar-progress" id="sidebar-progress">
+  <div class="sidebar-progress-header">
+    <span class="sidebar-progress-label">📊 Progress</span>
+    <span class="sidebar-progress-pct" id="sidebar-progress-pct">0%</span>
+  </div>
+  <div class="sidebar-progress-track">
+    <div class="sidebar-progress-fill" id="sidebar-progress-fill" style="width:0%;"></div>
+  </div>
+  <div class="sidebar-progress-detail" id="sidebar-progress-detail">
+    <span id="sidebar-progress-chapters">0/17 chapters</span>
+    <span id="sidebar-progress-tests">0/7 tests</span>
+  </div>
+</div>
+
+
+
+<ul><li><a href="/complete_jenkins_notes/">Home</a></li><li><a href="/complete_jenkins_notes/docs/">Documentation</a></li></ul>
+
+
+
+
+
+  
+  <ul>
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/25-progress-dashboard/" class="">
+      📊 Progress Dashboard</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/26-start-here/" class="">
+      🚀 Start Here</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/01-introduction-to-ci-cd-and-jenkins/" class="">
+      Ch 1: Introduction to CI/CD &amp; Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/02-jenkins-architecture-and-installation/" class="">
+      Ch 2: Jenkins Architecture &amp; Installation</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/03-jenkins-configuration-and-management/" class="">
+      Ch 3: Configuration &amp; Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/04-freestyle-projects-and-build-jobs/" class="">
+      Ch 4: Freestyle Projects &amp; Build Jobs</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/05-pipeline-fundamentals/" class="">
+      Ch 5: Pipeline Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/06-pipeline-syntax-and-steps/" class="">
+      Ch 6: Pipeline Syntax &amp; Steps</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/07-agents-nodes-and-distributed-builds/" class="">
+      Ch 7: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/08-source-code-management/" class="">
+      Ch 8: Source Code Management</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/09-shared-libraries-and-reusability/" class="">
+      Ch 9: Shared Libraries &amp; Reusability</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/10-multi-branch-pipelines/" class="">
+      Ch 10: Multi-Branch Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/11-jenkins-docker-and-kubernetes/" class="">
+      Ch 11: Docker &amp; Kubernetes Integration</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/12-testing-security-and-compliance/" class="">
+      Ch 12: Testing, Security &amp; Compliance</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/13-jenkins-configuration-as-code/" class="">
+      Ch 13: Jenkins Configuration as Code (JCasC)</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/14-production-grade-jenkins/" class="">
+      Ch 14: Production-Grade Jenkins</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/15-exam-preparation-guide/" class="">
+      Ch 15: Exam Preparation Guide</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/16-interview-questions/" class="">
+      Ch 16: Interview Questions &amp; Answers</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/17-real-world-scenarios/" class="">
+      Ch 17: Real-World Scenario Questions</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/18-exam-practice-test-1/" class="">
+      📝 Practice Test 1: CI/CD Fundamentals</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/19-exam-practice-test-2/" class="">
+      📝 Practice Test 2: Jenkins Architecture &amp; Pipelines</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/20-exam-practice-test-3/" class="">
+      📝 Practice Test 3: SCM, Build Triggers &amp; Credentials</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="">
+      📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/22-exam-practice-test-5/" class="active">
+      📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="">
+      📝 Practice Test 6: Production Jenkins &amp; Monitoring</a>
+  
+
+        </li>
+      
+    
+      
+        <li>
+          
+  
+  
+
+  
+    <a href="/complete_jenkins_notes/docs/24-exam-practice-test-7/" class="">
+      📝 Practice Test 7: DevOps &amp; Real-World Scenarios</a>
+  
+
+        </li>
+      
+    
+  </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+
+  </div>
+</aside>
+ 
+
+    <div class="book-page">
+      <header class="book-header hidden">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/complete_jenkins_notes/icons/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <h3>📝 Practice Test 5: Shared Libraries, Security &amp; JCasC</h3>
+
+  <label for="toc-control">
+    
+  </label>
+</div>
+
+
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown book-article"><h1 id="practice-test-5-shared-libraries-security--jcasc">Practice Test 5: Shared Libraries, Security &amp; JCasC<a class="anchor" href="#practice-test-5-shared-libraries-security--jcasc">#</a></h1>
+<blockquote class='book-hint '>
+<p><strong>Simulate the real Jenkins certification exam with 57 questions. Time yourself — you have 60 minutes. Aim for 70% or higher.</strong></p>
+</blockquote><hr>
+<h2 id="-exam-instructions">📋 Exam Instructions<a class="anchor" href="#-exam-instructions">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>Detail</th>
+          <th>Value</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><strong>Questions</strong></td>
+          <td>57</td>
+      </tr>
+      <tr>
+          <td><strong>Time Limit</strong></td>
+          <td>60 minutes</td>
+      </tr>
+      <tr>
+          <td><strong>Passing Score</strong></td>
+          <td>~70% (40/57 correct)</td>
+      </tr>
+      <tr>
+          <td><strong>Format</strong></td>
+          <td>Multiple choice</td>
+      </tr>
+  </tbody>
+</table>
+<hr>
+<div class="exam-controls">
+  <div class="exam-timer" data-minutes="60" data-test-id="exam-test-5">
+    <div class="timer-face">
+      <span class="timer-minutes">60</span>
+      <span class="timer-separator">:</span>
+      <span class="timer-seconds">00</span>
+    </div>
+    <div class="timer-controls">
+      <button class="timer-btn timer-start">▶ Start</button>
+      <button class="timer-btn timer-pause">⏸ Pause</button>
+      <button class="timer-btn timer-reset">↺ Reset</button>
+    </div>
+    <span class="timer-status">Time Remaining</span>
+  </div>
+  <div class="exam-progress-check">
+    <input type="checkbox" class="test-complete-check" id="test-complete-5" data-test-id="exam-test-5">
+    <label for="test-complete-5">✓ Mark test as completed</label>
+  </div>
+</div>
+<p><strong>57 Questions | Duration: 60 minutes | Focus: Shared libraries, security best practices, Jenkins Configuration as Code (JCasC)</strong></p>
+<hr>
+<h2 id="questions">Questions<a class="anchor" href="#questions">#</a></h2>
+<p><strong>1. What is a Jenkins shared library?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A plugin that provides shared build tools</li>
+<li><input disabled="" type="checkbox"> A version-controlled repository of reusable Pipeline code</li>
+<li><input disabled="" type="checkbox"> A shared agent configuration</li>
+<li><input disabled="" type="checkbox"> A credential repository</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A version-controlled repository of reusable Pipeline code**
+<p>A Jenkins shared library is a Git repository that contains reusable Pipeline code (Groovy functions, steps, variables). Pipelines can load and use these libraries, enabling code reuse and standardization across multiple projects.</p>
+</details>
+<hr>
+<p><strong>2. What is the default directory structure of a shared library?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>src/</code>, <code>vars/</code>, <code>resources/</code></li>
+<li><input disabled="" type="checkbox"> <code>lib/</code>, <code>src/</code>, <code>config/</code></li>
+<li><input disabled="" type="checkbox"> <code>pipelines/</code>, <code>steps/</code>, <code>resources/</code></li>
+<li><input disabled="" type="checkbox"> <code>src/</code>, <code>test/</code>, <code>resources/</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`src/`, `vars/`, `resources/`**
+<p>A shared library has three main directories: <code>src/</code> for Groovy classes (similar to Java packages), <code>vars/</code> for global variables/functions (each file defines a callable step), and <code>resources/</code> for static data (templates, configuration files, scripts).</p>
+</details>
+<hr>
+<p><strong>3. How do you load a shared library in a Jenkinsfile?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>@Library('my-shared-library')</code></li>
+<li><input disabled="" type="checkbox"> <code>library 'my-shared-library'</code></li>
+<li><input disabled="" type="checkbox"> Both A and B</li>
+<li><input disabled="" type="checkbox"> <code>import 'my-shared-library'</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Both A and B**
+<p>Shared libraries can be loaded with the <code>@Library</code> annotation (recommended for Declarative pipelines) or the <code>library</code> step (for Scripted pipelines). The annotation syntax can also specify version: <code>@Library('my-library@v1.0')</code>.</p>
+</details>
+<hr>
+<p><strong>4. What is the purpose of the <code>vars/</code> directory in a shared library?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To store pipeline variables</li>
+<li><input disabled="" type="checkbox"> To define global variables that can be used as pipeline steps</li>
+<li><input disabled="" type="checkbox"> To declare Jenkins job parameters</li>
+<li><input disabled="" type="checkbox"> To store build configuration</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To define global variables that can be used as pipeline steps**
+<p>The <code>vars/</code> directory contains Groovy scripts that define global variables. Each <code>.groovy</code> file in <code>vars/</code> becomes a callable function in pipelines. For example, <code>vars/buildApp.groovy</code> can be called as <code>buildApp()</code> in any Jenkinsfile.</p>
+</details>
+<hr>
+<p><strong>5. What is the purpose of the <code>src/</code> directory in a shared library?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To store source code</li>
+<li><input disabled="" type="checkbox"> To define reusable Groovy classes following standard Java package structure</li>
+<li><input disabled="" type="checkbox"> To store pipeline templates</li>
+<li><input disabled="" type="checkbox"> To archive build artifacts</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To define reusable Groovy classes following standard Java package structure**
+<p>The <code>src/</code> directory contains Groovy classes organized in standard Java package structure (e.g., <code>src/org/company/PipelineUtils.groovy</code>). These classes provide reusable utility functions and can be imported and used in shared library variables or directly in pipelines.</p>
+</details>
+<hr>
+<p><strong>6. How do you define a global variable in a shared library?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> By creating a file in <code>vars/</code> with a <code>call()</code> method</li>
+<li><input disabled="" type="checkbox"> By defining a class in <code>src/</code></li>
+<li><input disabled="" type="checkbox"> By creating a plugin</li>
+<li><input disabled="" type="checkbox"> By editing Jenkins configuration</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**By creating a file in `vars/` with a `call()` method**
+<p>A global variable in <code>vars/</code> is a Groovy script file (e.g., <code>vars/myStep.groovy</code>) that defines a <code>call()</code> method. When the pipeline calls <code>myStep()</code>, Jenkins executes the <code>call()</code> method. The variable name becomes the step name.</p>
+</details>
+<hr>
+<p><strong>7. Can shared library variables accept parameters?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Yes, through method parameters in the <code>call()</code> method</li>
+<li><input disabled="" type="checkbox"> No, they are parameterless</li>
+<li><input disabled="" type="checkbox"> Only through environment variables</li>
+<li><input disabled="" type="checkbox"> Only through build parameters</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Yes, through method parameters in the `call()` method**
+<p>Shared library variables accept parameters through the <code>call()</code> method definition. Parameters can be positional or named. Example: <code>def call(String name, String version = 'latest') { ... }</code> allows usage as <code>buildApp('myapp')</code> or <code>buildApp(name: 'myapp', version: '1.0')</code>.</p>
+</details>
+<hr>
+<p><strong>8. What is the purpose of the <code>resources/</code> directory in a shared library?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To store configuration templates and static files</li>
+<li><input disabled="" type="checkbox"> To store build artifacts</li>
+<li><input disabled="" type="checkbox"> To manage library dependencies</li>
+<li><input disabled="" type="checkbox"> To store credentials</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To store configuration templates and static files**
+<p>The <code>resources/</code> directory holds static files like configuration templates, shell scripts, or Dockerfiles. These can be accessed using the <code>libraryResource</code> step, which reads the file content and returns it as a string.</p>
+</details>
+<hr>
+<p><strong>9. How do you access a resource file from a shared library?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>libraryResource 'path/to/file'</code></li>
+<li><input disabled="" type="checkbox"> <code>readResource 'path/to/file'</code></li>
+<li><input disabled="" type="checkbox"> <code>getResource 'path/to/file'</code></li>
+<li><input disabled="" type="checkbox"> <code>loadResource 'path/to/file'</code></li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`libraryResource 'path/to/file'`**
+<p>The <code>libraryResource</code> step reads a file from the <code>resources/</code> directory of the shared library and returns its content as a string. This is useful for reading templates, scripts, or configuration files stored in the library.</p>
+</details>
+<hr>
+<p><strong>10. How do you version control a shared library?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using Git branches and tags as versions</li>
+<li><input disabled="" type="checkbox"> Using a version file</li>
+<li><input disabled="" type="checkbox"> Using library plugins</li>
+<li><input disabled="" type="checkbox"> Using Jenkins job parameters</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Using Git branches and tags as versions**
+<p>Shared libraries are version-controlled using Git branches and tags. The library is configured in Jenkins with a default version (branch name). Pipelines can specify a specific version: <code>@Library('mylib@v2.0')</code> or <code>@Library('mylib@main')</code>.</p>
+</details>
+<hr>
+<p><strong>11. How do you configure a shared library in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Manage Jenkins &gt; Configure System &gt; Global Pipeline Libraries</li>
+<li><input disabled="" type="checkbox"> By editing Jenkins config.xml</li>
+<li><input disabled="" type="checkbox"> By installing a plugin</li>
+<li><input disabled="" type="checkbox"> By creating a Jenkinsfile</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Manage Jenkins > Configure System > Global Pipeline Libraries**
+<p>Shared libraries are configured in Jenkins under Manage Jenkins &gt; Configure System &gt; Global Pipeline Libraries. For each library, you specify the name, default version (branch), retrieval method (SCM), and whether it should be loaded implicitly.</p>
+</details>
+<hr>
+<p><strong>12. What is the difference between global and folder-level shared libraries?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Global libraries are available to all pipelines; folder-level only within that folder</li>
+<li><input disabled="" type="checkbox"> Global libraries are faster</li>
+<li><input disabled="" type="checkbox"> Folder-level libraries are more secure</li>
+<li><input disabled="" type="checkbox"> There is no difference</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Global libraries are available to all pipelines; folder-level only within that folder**
+<p>Global shared libraries are configured at the system level and available to all jobs. Folder-level libraries are scoped to a folder in the Jenkins job hierarchy, allowing different teams to maintain their own libraries without global access.</p>
+</details>
+<hr>
+<p><strong>13. What is the <code>@Library</code> annotation&rsquo;s syntax for loading multiple libraries?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>@Library(['lib1', 'lib2'])</code></li>
+<li><input disabled="" type="checkbox"> <code>@Library('lib1') @Library('lib2')</code></li>
+<li><input disabled="" type="checkbox"> <code>@Library('lib1, lib2')</code></li>
+<li><input disabled="" type="checkbox"> Multiple libraries cannot be loaded</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**`@Library(['lib1', 'lib2'])`**
+<p>Multiple shared libraries can be loaded using an array syntax: <code>@Library(['lib1', 'lib2'])</code> or <code>@Library('lib1')</code> repeated. The underscore variable can capture the library: <code>@Library('lib1') _</code> to avoid unused import warnings.</p>
+</details>
+<hr>
+<p><strong>14. What is the implicit shared library load?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Libraries loaded automatically without the <code>@Library</code> annotation</li>
+<li><input disabled="" type="checkbox"> Libraries loaded only when needed</li>
+<li><input disabled="" type="checkbox"> Libraries loaded at controller startup</li>
+<li><input disabled="" type="checkbox"> Libraries loaded by every job</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Libraries loaded automatically without the `@Library` annotation**
+<p>The &ldquo;Load implicitly&rdquo; option in library configuration makes the library available to all pipelines without requiring the <code>@Library</code> annotation. This is convenient for organization-wide standard libraries but can slow down pipelines.</p>
+</details>
+<hr>
+<p><strong>15. Can shared library scripts use external Java libraries?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Yes, by adding dependencies in the shared library&rsquo;s configuration</li>
+<li><input disabled="" type="checkbox"> No, external libraries are not supported</li>
+<li><input disabled="" type="checkbox"> Only through plugins</li>
+<li><input disabled="" type="checkbox"> Only through Maven</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Yes, by adding dependencies in the shared library's configuration**
+<p>Shared library <code>src/</code> classes can use external Java/Groovy libraries by adding them as dependencies in the shared library configuration in Jenkins. These dependencies are loaded into the classpath when the library is used.</p>
+</details>
+<hr>
+<p><strong>16. What is the function of the <code>config.groovy</code> file in a shared library?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To configure the shared library itself</li>
+<li><input disabled="" type="checkbox"> To define default configuration for library users</li>
+<li><input disabled="" type="checkbox"> To store environment-specific settings</li>
+<li><input disabled="" type="checkbox"> The <code>config.groovy</code> file is not a standard concept</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**The `config.groovy` file is not a standard concept**
+<p><code>config.groovy</code> is not a standard file in the shared library structure. Configuration is typically handled through <code>resources/</code> files, environment variables, or custom configuration classes in the <code>src/</code> directory.</p>
+</details>
+<hr>
+<p><strong>17. How do you test a shared library?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using JenkinsPipelineUnit testing framework</li>
+<li><input disabled="" type="checkbox"> By running test pipelines</li>
+<li><input disabled="" type="checkbox"> By manual code review</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Shared libraries can be tested using the JenkinsPipelineUnit framework (which provides unit testing for Pipeline code), by running test pipelines in Jenkins with different inputs, and through code review in pull requests.</p>
+</details>
+<hr>
+<p><strong>18. What is the JenkinsPipelineUnit library?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A tool for testing pipeline code offline</li>
+<li><input disabled="" type="checkbox"> A plugin for Jenkins</li>
+<li><input disabled="" type="checkbox"> A shared library template</li>
+<li><input disabled="" type="checkbox"> A monitoring tool</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A tool for testing pipeline code offline**
+<p>JenkinsPipelineUnit is a testing framework that allows testing Jenkins Pipeline code (including shared libraries) locally without a running Jenkins instance. It mocks Pipeline steps and provides assertions for testing pipeline behavior.</p>
+</details>
+<hr>
+<p><strong>19. What is the principle of least privilege in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Giving users the minimum permissions necessary to perform their tasks</li>
+<li><input disabled="" type="checkbox"> Granting admin access to all users</li>
+<li><input disabled="" type="checkbox"> Restricting all user access</li>
+<li><input disabled="" type="checkbox"> Allowing all access by default</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Giving users the minimum permissions necessary to perform their tasks**
+<p>The principle of least privilege means users, jobs, and agents should only have the permissions required to perform their specific functions. In Jenkins, this translates to granular permission management, restricted agent access, and minimal credential exposure.</p>
+</details>
+<hr>
+<p><strong>20. What is Jenkins Matrix-based security?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A security model where permissions are assigned to users/groups in a matrix</li>
+<li><input disabled="" type="checkbox"> A plugin for security scanning</li>
+<li><input disabled="" type="checkbox"> A encryption algorithm</li>
+<li><input disabled="" type="checkbox"> A user authentication protocol</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A security model where permissions are assigned to users/groups in a matrix**
+<p>Matrix-based security allows administrators to assign specific permissions (read, create, configure, delete, etc.) to individual users or groups. The matrix provides fine-grained access control for different Jenkins resources.</p>
+</details>
+<hr>
+<p><strong>21. What is the purpose of the &ldquo;Agent to Controller Access Control&rdquo; in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To prevent agents from accessing controller file system and internal services</li>
+<li><input disabled="" type="checkbox"> To allow agents to control the controller</li>
+<li><input disabled="" type="checkbox"> To enable agent-to-agent communication</li>
+<li><input disabled="" type="checkbox"> To manage agent credentials</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To prevent agents from accessing controller file system and internal services**
+<p>Agent to Controller Access Control restricts what agents can do on the controller, preventing malicious agents from reading sensitive files (credentials.xml, config.xml) or making internal API calls.</p>
+</details>
+<hr>
+<p><strong>22. What is the Jenkins security realm?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A method for securing network traffic</li>
+<li><input disabled="" type="checkbox"> A user authentication source</li>
+<li><input disabled="" type="checkbox"> A encryption service</li>
+<li><input disabled="" type="checkbox"> A password storage system</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A user authentication source**
+<p>The security realm defines how Jenkins authenticates users. Options include Jenkins&rsquo; internal database, LDAP, Active Directory, SAML, OAuth (GitHub, GitLab, Google), and custom security plugins.</p>
+</details>
+<hr>
+<p><strong>23. What is an authorization strategy in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A method for authorizing API requests</li>
+<li><input disabled="" type="checkbox"> A strategy for determining what authenticated users can do</li>
+<li><input disabled="" type="checkbox"> A method for authorizing plugin installations</li>
+<li><input disabled="" type="checkbox"> A strategy for validating credentials</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A strategy for determining what authenticated users can do**
+<p>An authorization strategy defines permissions for authenticated and anonymous users. Options include &ldquo;Anyone can do anything&rdquo; (insecure), &ldquo;Logged-in users can do anything&rdquo;, &ldquo;Matrix-based security&rdquo;, and &ldquo;Role-based strategy&rdquo;.</p>
+</details>
+<hr>
+<p><strong>24. What is the role of the Role-based Strategy plugin?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To assign roles to users and projects for granular access control</li>
+<li><input disabled="" type="checkbox"> To manage credentials</li>
+<li><input disabled="" type="checkbox"> To encrypt build logs</li>
+<li><input disabled="" type="checkbox"> To monitor security events</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To assign roles to users and projects for granular access control**
+<p>The Role-based Strategy plugin extends Jenkins&rsquo; authorization with roles. It allows creating global roles, project roles, and agent roles, simplifying permission management for large teams with many projects.</p>
+</details>
+<hr>
+<p><strong>25. What does the &ldquo;CSRF Protection&rdquo; setting do in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Prevents Cross-Site Request Forgery attacks</li>
+<li><input disabled="" type="checkbox"> Encrypts data transmissions</li>
+<li><input disabled="" type="checkbox"> Validates user sessions</li>
+<li><input disabled="" type="checkbox"> Manages API tokens</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Prevents Cross-Site Request Forgery attacks**
+<p>CSRF Protection prevents malicious websites from making unauthorized requests to Jenkins on behalf of an authenticated user. It requires a crumb (token) in all state-changing requests that modify Jenkins data.</p>
+</details>
+<hr>
+<p><strong>26. What is an API token in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A token used to authenticate external applications without a password</li>
+<li><input disabled="" type="checkbox"> A token for accessing external APIs</li>
+<li><input disabled="" type="checkbox"> A token for plugin authentication</li>
+<li><input disabled="" type="checkbox"> A session token</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A token used to authenticate external applications without a password**
+<p>Jenkins API tokens allow external applications (like CLI tools, scripts, or CI/CD integrations) to authenticate without storing passwords. Each user can generate their own API tokens from their configuration page.</p>
+</details>
+<hr>
+<p><strong>27. What is Jenkins security scanning?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> The process of scanning Jenkins configuration for vulnerabilities</li>
+<li><input disabled="" type="checkbox"> A plugin for security testing</li>
+<li><input disabled="" type="checkbox"> Source code vulnerability scanning in pipelines</li>
+<li><input disabled="" type="checkbox"> Network security monitoring</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**The process of scanning Jenkins configuration for vulnerabilities**
+<p>Security scanning in Jenkins involves reviewing configuration for security issues: outdated plugins, weak authentication, overly permissive authorization, exposed credentials, and unencrypted communications.</p>
+</details>
+<hr>
+<p><strong>28. What is the purpose of the &ldquo;Disable remember me&rdquo; security option?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To prevent Jenkins from persisting user sessions</li>
+<li><input disabled="" type="checkbox"> To improve performance</li>
+<li><input disabled="" type="checkbox"> To reduce storage usage</li>
+<li><input disabled="" type="checkbox"> To simplify login</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To prevent Jenkins from persisting user sessions**
+<p>Disabling &ldquo;Remember me&rdquo; prevents Jenkins from persisting user sessions across browser restarts using cookies. Users must log in again each time they access Jenkins, which improves security in shared or public environments.</p>
+</details>
+<hr>
+<p><strong>29. What is the Folders Plus plugin used for?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To organize Jenkins jobs in folders</li>
+<li><input disabled="" type="checkbox"> To manage permissions at the folder level</li>
+<li><input disabled="" type="checkbox"> To create job hierarchies</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>The Folders Plus plugin extends Jenkins&rsquo; folder capabilities, allowing nested folder hierarchies and folder-level permission management. It enables teams to organize projects and control access at a granular level.</p>
+</details>
+<hr>
+<p><strong>30. What is the purpose of the <code>credentials.xml</code> file in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To store Jenkins credentials in encrypted form</li>
+<li><input disabled="" type="checkbox"> To configure credential providers</li>
+<li><input disabled="" type="checkbox"> To manage user passwords</li>
+<li><input disabled="" type="checkbox"> To store SSH keys in plain text</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To store Jenkins credentials in encrypted form**
+<p><code>credentials.xml</code> is the file in the Jenkins home directory that stores all configured credentials in encrypted form. This file should be protected and backed up securely. It should never be shared or exposed.</p>
+</details>
+<hr>
+<p><strong>31. What is the Jenkins Secret key?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A key used to encrypt credentials in Jenkins</li>
+<li><input disabled="" type="checkbox"> A key for Jenkins API authentication</li>
+<li><input disabled="" type="checkbox"> A key for plugin verification</li>
+<li><input disabled="" type="checkbox"> A key for agent authentication</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A key used to encrypt credentials in Jenkins**
+<p>The Jenkins secret key (stored in <code>secrets/master.key</code> and <code>secrets/hudson.util.Secret</code>) is used to encrypt and decrypt credentials stored in <code>credentials.xml</code>. Losing this key means losing access to all stored credentials.</p>
+</details>
+<hr>
+<p><strong>32. What is the purpose of the <code>hudson.util.Secret</code> file?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To store the master encryption key</li>
+<li><input disabled="" type="checkbox"> To store encrypted credentials</li>
+<li><input disabled="" type="checkbox"> To manage API secrets</li>
+<li><input disabled="" type="checkbox"> To authenticate Jenkins slaves</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To store the master encryption key**
+<p>The <code>hudson.util.Secret</code> file (in <code>secrets/</code> directory) contains the master encryption key used for credential encryption. This key is generated when Jenkins is first installed and should be backed up securely.</p>
+</details>
+<hr>
+<p><strong>33. What is SSL/TLS configuration in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Configuration for HTTPS access to Jenkins</li>
+<li><input disabled="" type="checkbox"> Configuration for secure agent connections</li>
+<li><input disabled="" type="checkbox"> Configuration for encrypted build logs</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>SSL/TLS configuration in Jenkins covers enabling HTTPS for the Jenkins web interface, securing agent connections with TLS, and potentially encrypting sensitive data in transit throughout the CI/CD pipeline.</p>
+</details>
+<hr>
+<p><strong>34. How do you configure Jenkins to use HTTPS?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> By configuring a reverse proxy (Nginx, Apache) with SSL termination</li>
+<li><input disabled="" type="checkbox"> By configuring Jenkins&rsquo; built-in HTTPS support</li>
+<li><input disabled="" type="checkbox"> By placing Jenkins behind a load balancer with SSL</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Jenkins can use HTTPS through multiple approaches: a reverse proxy with SSL termination (most common), Jenkins&rsquo; built-in HTTPS support (by configuring the <code>--httpsPort</code> and keystore), or placing Jenkins behind a load balancer with SSL.</p>
+</details>
+<hr>
+<p><strong>35. What is the Jenkins CLI and how is it secured?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A command-line interface for Jenkins accessible via SSH or HTTP</li>
+<li><input disabled="" type="checkbox"> A GUI for Jenkins administration</li>
+<li><input disabled="" type="checkbox"> A plugin installation tool</li>
+<li><input disabled="" type="checkbox"> A build triggering tool</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A command-line interface for Jenkins accessible via SSH or HTTP**
+<p>The Jenkins CLI (Command Line Interface) allows interacting with Jenkins from scripts and automation. It can be accessed via SSH (recommended for security) or the HTTP CLI endpoint. Access is controlled by the same authorization settings as the web UI.</p>
+</details>
+<hr>
+<p><strong>36. What is the purpose of the <code>jenkins-cli.jar</code>?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To manage Jenkins from the command line</li>
+<li><input disabled="" type="checkbox"> To install Jenkins</li>
+<li><input disabled="" type="checkbox"> To configure Jenkins agents</li>
+<li><input disabled="" type="checkbox"> To backup Jenkins</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To manage Jenkins from the command line**
+<p>The <code>jenkins-cli.jar</code> is a JAR file that provides command-line access to Jenkins operations. It can create jobs, trigger builds, manage nodes, and perform other administrative tasks. It requires authentication and appropriate permissions.</p>
+</details>
+<hr>
+<p><strong>37. What is the Groovy sandbox in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A security mechanism that restricts what Groovy code can do</li>
+<li><input disabled="" type="checkbox"> A development environment for Groovy scripts</li>
+<li><input disabled="" type="checkbox"> A testing framework</li>
+<li><input disabled="" type="checkbox"> A plugin management tool</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A security mechanism that restricts what Groovy code can do**
+<p>The Groovy sandbox restricts Pipeline scripts from executing dangerous operations (file system access, network calls, class loading). Administrators can approve specific methods, and scripts outside the sandbox require script security approval.</p>
+</details>
+<hr>
+<p><strong>38. What is script approval in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A process where administrators approve Groovy scripts for execution</li>
+<li><input disabled="" type="checkbox"> A code review process</li>
+<li><input disabled="" type="checkbox"> A plugin approval mechanism</li>
+<li><input disabled="" type="checkbox"> A job creation approval</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A process where administrators approve Groovy scripts for execution**
+<p>Script approval is a security feature where Groovy methods, classes, and field accesses that are not whitelisted must be explicitly approved by a Jenkins administrator before they can be used in pipelines. This prevents malicious code execution.</p>
+</details>
+<hr>
+<p><strong>39. What is Just-in-Time (JIT) script approval?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Approving scripts on-the-fly when they are first encountered</li>
+<li><input disabled="" type="checkbox"> Pre-approving all scripts</li>
+<li><input disabled="" type="checkbox"> Approving scripts at Jenkins startup</li>
+<li><input disabled="" type="checkbox"> Approving scripts manually</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Approving scripts on-the-fly when they are first encountered**
+<p>JIT approval allows administrators to approve or reject script method calls when they are first encountered during pipeline execution. Jenkins presents the pending approvals in the UI, and administrators can approve them immediately.</p>
+</details>
+<hr>
+<p><strong>40. What is Jenkins Configuration as Code (JCasC)?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> A tool for automating Jenkins configuration through YAML files</li>
+<li><input disabled="" type="checkbox"> A configuration plugin</li>
+<li><input disabled="" type="checkbox"> A Jenkins job type</li>
+<li><input disabled="" type="checkbox"> A configuration management tool</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**A tool for automating Jenkins configuration through YAML files**
+<p>Jenkins Configuration as Code (JCasC) is a plugin that allows defining Jenkins system configuration (security, tools, plugins, pipelines, agents) in YAML files. Jenkins applies these configurations at startup, enabling version-controlled, reproducible Jenkins setups.</p>
+</details>
+<hr>
+<p><strong>41. What is the main JCasC configuration file?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>jenkins.yaml</code></li>
+<li><input disabled="" type="checkbox"> <code>jenkins.yml</code></li>
+<li><input disabled="" type="checkbox"> <code>casc.yaml</code></li>
+<li><input disabled="" type="checkbox"> The file path is configurable, default is <code>jenkins.yaml</code> or <code>CASC_JENKINS_CONFIG</code> env var</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**The file path is configurable, default is `jenkins.yaml` or `CASC_JENKINS_CONFIG` env var**
+<p>The JCasC configuration file path is specified through the <code>CASC_JENKINS_CONFIG</code> environment variable, a system property, or can be placed at a default location. Common names include <code>jenkins.yaml</code> or <code>casc.yaml</code>.</p>
+</details>
+<hr>
+<p><strong>42. What can be configured with JCasC?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> System settings, security, tools, plugins, pipelines, agents</li>
+<li><input disabled="" type="checkbox"> Only system settings</li>
+<li><input disabled="" type="checkbox"> Only plugins</li>
+<li><input disabled="" type="checkbox"> Only user management</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**System settings, security, tools, plugins, pipelines, agents**
+<p>JCasC can configure almost all Jenkins system settings: Jenkins URL, system messages, security realm, authorization strategy, credentials, tools (JDK, Maven), clouds (Docker, Kubernetes), global pipeline libraries, and more.</p>
+</details>
+<hr>
+<p><strong>43. What is the benefit of using JCasC?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Version-controlled, reproducible Jenkins configuration</li>
+<li><input disabled="" type="checkbox"> Faster Jenkins setup</li>
+<li><input disabled="" type="checkbox"> Easy backup and restore</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>JCasC provides version-controlled infrastructure (configuration in Git), reproducible Jenkins instances (identical configuration from the same YAML), faster setup (apply configuration at startup), and easy backup (the YAML file is the backup).</p>
+</details>
+<hr>
+<p><strong>44. What is the purpose of the <code>unclassified</code> section in a JCasC YAML?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To configure unclassified plugins and features</li>
+<li><input disabled="" type="checkbox"> To define unknown settings</li>
+<li><input disabled="" type="checkbox"> To list unsupported plugins</li>
+<li><input disabled="" type="checkbox"> To categorize Jenkins configuration</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To configure unclassified plugins and features**
+<p>The <code>unclassified</code> section in JCasC YAML is used for plugin and feature configurations that don&rsquo;t fit into other categories like <code>tool</code>, <code>security</code>, or <code>jenkins</code>. Each plugin typically has its own section under <code>unclassified</code>.</p>
+</details>
+<hr>
+<p><strong>45. How do you include credentials in a JCasC YAML?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using <code>${CREDENTIALS_ID}</code> variable references</li>
+<li><input disabled="" type="checkbox"> Using the <code>credentials</code> block with the credential type and base64-encoded values</li>
+<li><input disabled="" type="checkbox"> Credentials should not be stored in YAML files</li>
+<li><input disabled="" type="checkbox"> Using environment variable references</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Using environment variable references**
+<p>Credentials should never be stored directly in JCasC YAML files. Instead, reference environment variables (e.g., <code>${SSH_PRIVATE_KEY}</code>) or use Jenkins&rsquo; credential store directly. JCasC supports placeholder substitution from environment variables.</p>
+</details>
+<hr>
+<p><strong>46. What is the JCasC <code>credentials</code> section used for?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To configure credential providers and types</li>
+<li><input disabled="" type="checkbox"> To store actual credential values</li>
+<li><input disabled="" type="checkbox"> To list all credentials</li>
+<li><input disabled="" type="checkbox"> To delete credentials</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To configure credential providers and types**
+<p>The <code>credentials</code> section in JCasC defines the types of credentials and optionally their configuration. Actual secret values should be provided via environment variables or secure external sources, never hardcoded in YAML.</p>
+</details>
+<hr>
+<p><strong>47. What is the recommended way to validate JCasC configuration changes?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using the JCasC Configuration as Code plugin&rsquo;s validation feature</li>
+<li><input disabled="" type="checkbox"> By applying to a test Jenkins instance</li>
+<li><input disabled="" type="checkbox"> By using the <code>jcasc-validate</code> command-line tool</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>JCasC changes should be validated using the plugin&rsquo;s configuration validation feature in the UI, by applying to a test/non-production Jenkins instance first, and using the schema validation tools available in the JCasC ecosystem.</p>
+</details>
+<hr>
+<p><strong>48. What is the purpose of the <code>CASC_RELOAD</code> environment variable?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To trigger a JCasC configuration reload without restarting Jenkins</li>
+<li><input disabled="" type="checkbox"> To reload Jenkins completely</li>
+<li><input disabled="" type="checkbox"> To restore default configuration</li>
+<li><input disabled="" type="checkbox"> To reload plugins</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To trigger a JCasC configuration reload without restarting Jenkins**
+<p>Setting <code>CASC_RELOAD</code> triggers JCasC to reload its configuration without a full Jenkins restart. This allows applying configuration changes on a running instance, though some changes (like security realm) may still require a restart.</p>
+</details>
+<hr>
+<p><strong>49. What is the relationship between JCasC and Jenkins job DSL?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> JCasC configures Jenkins system; Job DSL creates and manages jobs</li>
+<li><input disabled="" type="checkbox"> They are the same plugin</li>
+<li><input disabled="" type="checkbox"> JCasC replaces Job DSL</li>
+<li><input disabled="" type="checkbox"> Job DSL is a feature of JCasC</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**JCasC configures Jenkins system; Job DSL creates and manages jobs**
+<p>JCasC handles system-level configuration (security, tools, settings). Job DSL (Domain Specific Language) creates and manages Jenkins jobs programmatically using Groovy scripts. They complement each other for complete infrastructure-as-code.</p>
+</details>
+<hr>
+<p><strong>50. What is the &ldquo;Pipeline as Code&rdquo; concept in Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Defining CI/CD pipelines in a Jenkinsfile stored in source code</li>
+<li><input disabled="" type="checkbox"> Using Groovy code for pipeline definitions</li>
+<li><input disabled="" type="checkbox"> Versioning pipeline configurations with Git</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>Pipeline as Code means defining CI/CD pipelines in Jenkinsfiles stored in version control. It encompasses using code (Groovy DSL) to define pipeline logic, storing pipeline definitions alongside application code, and enabling versioning, code review, and collaboration.</p>
+</details>
+<hr>
+<p><strong>51. How do you configure a global pipeline library with JCasC?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Using the <code>unclassified.globalLibraries</code> section</li>
+<li><input disabled="" type="checkbox"> Using the <code>pipelineLibrary</code> block</li>
+<li><input disabled="" type="checkbox"> Using the <code>library</code> configuration</li>
+<li><input disabled="" type="checkbox"> Global libraries cannot be configured with JCasC</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Using the `unclassified.globalLibraries` section**
+<p>Global Pipeline Libraries are configured under <code>unclassified.globalLibraries</code> in the JCasC YAML. You specify the library name, default version, SCM repository URL, and retrieval credentials.</p>
+</details>
+<hr>
+<p><strong>52. What is the purpose of the <code>plugin</code> section in JCasC?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To configure plugin settings</li>
+<li><input disabled="" type="checkbox"> To install or uninstall plugins</li>
+<li><input disabled="" type="checkbox"> Both A and B</li>
+<li><input disabled="" type="checkbox"> To update plugin versions</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Both A and B**
+<p>The JCasC <code>plugin</code> section can configure individual plugin settings (like email, Slack, or LDAP plugins) and can also specify plugins to install. However, plugin installation is typically handled by the Plugin Manager.</p>
+</details>
+<hr>
+<p><strong>53. What is the recommended backup strategy for Jenkins?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Backup the JENKINS_HOME directory</li>
+<li><input disabled="" type="checkbox"> Version control JCasC YAML files</li>
+<li><input disabled="" type="checkbox"> Use backup plugins</li>
+<li><input disabled="" type="checkbox"> All of the above</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**All of the above**
+<p>A comprehensive Jenkins backup strategy includes: backing up the JENKINS_HOME directory (configs, jobs, builds), maintaining JCasC YAML files in version control, and using backup plugins or scripts for automated regular backups.</p>
+</details>
+<hr>
+<p><strong>54. What is the purpose of the <code>jobs</code> section in Jenkins JCasC?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To create and configure Jenkins jobs using JCasC</li>
+<li><input disabled="" type="checkbox"> To list all jobs</li>
+<li><input disabled="" type="checkbox"> To monitor job status</li>
+<li><input disabled="" type="checkbox"> To delete old jobs</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To create and configure Jenkins jobs using JCasC**
+<p>The <code>jobs</code> section in JCasC YAML allows defining job configurations directly. However, for complex pipelines, the Job DSL plugin offers more flexibility. JCasC can define basic jobs using XML or Job DSL scripts.</p>
+</details>
+<hr>
+<p><strong>55. How do you configure security realm with JCasC?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>jenkins.securityRealm: ldap</code></li>
+<li><input disabled="" type="checkbox"> <code>security: { realm: ldap }</code></li>
+<li><input disabled="" type="checkbox"> Using the <code>security.realm</code> section in JCasC</li>
+<li><input disabled="" type="checkbox"> Security cannot be configured with JCasC</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Using the `security.realm` section in JCasC**
+<p>The security realm is configured under <code>jenkins.securityRealm</code> or <code>security.realm</code> in the JCasC YAML. Supported realm types include <code>local</code> (Jenkins internal), <code>ldap</code>, <code>saml</code>, and others depending on installed plugins.</p>
+</details>
+<hr>
+<p><strong>56. What is the authorization strategy configuration in JCasC?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> <code>jenkins.authorizationStrategy: loggedInUsersCanDoAnything</code></li>
+<li><input disabled="" type="checkbox"> <code>security: { authorization: matrix }</code></li>
+<li><input disabled="" type="checkbox"> Using the <code>security.authorizationStrategy</code> section</li>
+<li><input disabled="" type="checkbox"> Authorization cannot be configured with JCasC</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**Using the `security.authorizationStrategy` section**
+<p>Authorization strategy is configured under <code>jenkins.authorizationStrategy</code> in JCasC. Common strategies include <code>loggedInUsersCanDoAnything</code>, <code>unsecured</code> (for testing), <code>globalMatrix</code> for matrix-based permissions, and <code>roleStrategy</code> for the Role-based Strategy plugin.</p>
+</details>
+<hr>
+<p><strong>57. What is the Jenkins <code>secret</code> command used for in CLI?</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> To generate encrypted secrets for use in credentials</li>
+<li><input disabled="" type="checkbox"> To manage Jenkins secret keys</li>
+<li><input disabled="" type="checkbox"> To generate API tokens</li>
+<li><input disabled="" type="checkbox"> To encrypt configuration files</li>
+</ul>
+<details>
+<summary>Answer</summary>
+**To generate encrypted secrets for use in credentials**
+<p>The Jenkins CLI <code>secret</code> command generates encrypted representations of secrets (like passwords or tokens) that can be used in JCasC YAML files or other configurations. This allows storing encrypted values, though environment variables are generally preferred.</p>
+</details>
+<hr>
+<blockquote class='book-hint '>
+<p><strong>Pro tip:</strong> After completing this test, check your score per topic. If you scored below 70% in any area, review the corresponding chapters in this guide before attempting the next practice test.</p>
+</blockquote></article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+<div>
+
+</div>
+
+<div>
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap justify-between">
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/21-exam-practice-test-4/" class="flex align-center">
+        <img src="/complete_jenkins_notes/icons/backward.svg" class="book-icon" alt="Backward" />
+        <span>📝 Practice Test 4: Agents, Nodes &amp; Distributed Builds</span>
+      </a>
+    
+    </span>
+    <span>
+    
+      <a href="/complete_jenkins_notes/docs/23-exam-practice-test-6/" class="flex align-center">
+        <span>📝 Practice Test 6: Production Jenkins &amp; Monitoring</span>
+        <img src="/complete_jenkins_notes/icons/forward.svg" class="book-icon" alt="Forward" />
+      </a>
+    
+    </span>
+  </div>
+
+ 
+        
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+        
+        
+  
+ 
+        
+  
+    <script>(function(){"use strict";document.querySelectorAll("pre > code").forEach(function(t){var n,s=t.parentElement;if(!s||s.tagName!=="PRE")return;if(s.querySelector(".copy-button"))return;s.style.position="relative",n=document.createElement("button"),n.className="copy-button",n.textContent="Copy",n.setAttribute("aria-label","Copy code to clipboard"),n.setAttribute("type","button"),s.appendChild(n),n.addEventListener("click",function(){var s=t.textContent||"";navigator.clipboard?navigator.clipboard.writeText(s).then(function(){n.textContent="Copied!",n.classList.add("copied"),setTimeout(function(){n.textContent="Copy",n.classList.remove("copied")},2e3)}).catch(function(){e(s,n)}):e(s,n)})});function e(e,t){var n=document.createElement("textarea");n.value=e,n.style.position="fixed",n.style.opacity="0",document.body.appendChild(n),n.select();try{document.execCommand("copy"),t.textContent="Copied!",t.classList.add("copied"),setTimeout(function(){t.textContent="Copy",t.classList.remove("copied")},2e3)}catch{t.textContent="Error",setTimeout(function(){t.textContent="Copy"},2e3)}document.body.removeChild(n)}})()</script>
+  
+
+        
+  
+    <script>(function(){"use strict";var t,a,o="jenkins_exam_progress",c="jenkins_chapter_progress";function e(e){this.element=e,this.minutesDisplay=e.querySelector(".timer-minutes"),this.secondsDisplay=e.querySelector(".timer-seconds"),this.statusEl=e.querySelector(".timer-status"),this.totalSeconds=parseInt(e.dataset.minutes||"60",10)*60,this.remaining=this.totalSeconds,this.interval=null,this.running=!1,this.finished=!1;var n,s,o,i,t=this.loadState();t&&t.remaining>0&&!t.finished&&(this.remaining=t.remaining),this.updateDisplay(),n=this,s=e.querySelector(".timer-start"),o=e.querySelector(".timer-pause"),i=e.querySelector(".timer-reset"),s&&s.addEventListener("click",function(){n.start()}),o&&o.addEventListener("click",function(){n.pause()}),i&&i.addEventListener("click",function(){n.reset()}),t&&t.running&&this.start()}e.prototype.start=function(){if(this.finished)return;if(this.running)return;this.running=!0,this.element.classList.add("timer-running"),this.element.classList.remove("timer-paused");var e=this;this.interval=setInterval(function(){e.remaining--,e.updateDisplay(),e.saveState(),e.remaining<=0&&(e.remaining=0,e.updateDisplay(),e.finish())},1e3)},e.prototype.pause=function(){if(!this.running)return;this.running=!1,this.element.classList.remove("timer-running"),this.element.classList.add("timer-paused"),clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.reset=function(){this.pause(),this.remaining=this.totalSeconds,this.finished=!1,this.element.classList.remove("timer-finished"),this.element.classList.remove("timer-paused"),this.statusEl.textContent="Time Remaining",this.updateDisplay(),this.saveState(),localStorage.removeItem(this.getTimerStorageKey())},e.prototype.finish=function(){this.running=!1,this.finished=!0,this.element.classList.remove("timer-running"),this.element.classList.add("timer-finished"),this.statusEl.textContent="⏰ Time's Up!",clearInterval(this.interval),this.interval=null,this.saveState()},e.prototype.updateDisplay=function(){var e=Math.floor(this.remaining/60),t=this.remaining%60;this.minutesDisplay.textContent=String(e).padStart(2,"0"),this.secondsDisplay.textContent=String(t).padStart(2,"0"),this.remaining<=300&&this.remaining>0?this.element.classList.add("timer-warning"):this.element.classList.remove("timer-warning")},e.prototype.getTimerStorageKey=function(){return o+"_timer_"+this.element.dataset.testId},e.prototype.loadState=function(){try{var e=localStorage.getItem(this.getTimerStorageKey());return e?JSON.parse(e):null}catch{return null}},e.prototype.saveState=function(){try{var e={remaining:this.remaining,running:this.running,finished:this.finished,savedAt:Date.now()};localStorage.setItem(this.getTimerStorageKey(),JSON.stringify(e))}catch{}},document.querySelectorAll(".exam-timer").forEach(function(t){new e(t)});function f(e,t){try{var s=n();s[e]=t,localStorage.setItem(o,JSON.stringify(s)),m()}catch{}}function n(){try{var e=localStorage.getItem(o);return e?JSON.parse(e):{}}catch{return{}}}function _(){var e=n();return Object.keys(e).filter(function(t){return e[t]===!0}).length}function p(){return 7}function m(){var t=_(),e=p(),n=e>0?Math.round(t/e*100):0,a=i(),s=document.getElementById("exam-progress-bar"),o=document.getElementById("exam-progress-text");s&&(s.style.width=n+"%",s.textContent=n>15?n+"%":""),o&&(o.textContent=t+" of "+e+" tests completed"),l(a,t,e)}function l(e,t,n){var s,o,l,i=document.getElementById("sidebar-progress-fill"),a=document.getElementById("sidebar-progress-pct"),r=document.getElementById("sidebar-progress-chapters"),c=document.getElementById("sidebar-progress-tests");if(!i)return;s=e.total+n,l=e.completed+t,o=s>0?Math.round(l/s*100):0,i.style.width=o+"%",a&&(a.textContent=o+"%"),r&&(r.textContent=e.completed+"/"+e.total+" chapters"),c&&(c.textContent=t+"/"+n+" tests")}document.addEventListener("change",function(e){if(e.target&&e.target.matches(".test-complete-check")){var t=e.target.dataset.testId;t&&f(t,e.target.checked)}});function w(){var e=n();document.querySelectorAll(".test-complete-check").forEach(function(t){var n=t.dataset.testId;n&&e[n]===!0&&(t.checked=!0)}),m()}t=[{id:"01-introduction-to-ci-cd-and-jenkins",title:"Ch 1: Introduction to CI/CD & Jenkins",number:1,section:"Foundation"},{id:"02-jenkins-architecture-and-installation",title:"Ch 2: Jenkins Architecture & Installation",number:2,section:"Foundation"},{id:"03-jenkins-configuration-and-management",title:"Ch 3: Configuration & Management",number:3,section:"Foundation"},{id:"04-freestyle-projects-and-build-jobs",title:"Ch 4: Freestyle Projects & Build Jobs",number:4,section:"Foundation"},{id:"05-pipeline-fundamentals",title:"Ch 5: Pipeline Fundamentals",number:5,section:"Core Skills"},{id:"06-pipeline-syntax-and-steps",title:"Ch 6: Pipeline Syntax & Steps",number:6,section:"Core Skills"},{id:"07-agents-nodes-and-distributed-builds",title:"Ch 7: Agents, Nodes & Distributed Builds",number:7,section:"Core Skills"},{id:"08-source-code-management",title:"Ch 8: Source Code Management",number:8,section:"Core Skills"},{id:"09-shared-libraries-and-reusability",title:"Ch 9: Shared Libraries & Reusability",number:9,section:"Advanced"},{id:"10-multi-branch-pipelines",title:"Ch 10: Multi-Branch Pipelines",number:10,section:"Advanced"},{id:"11-jenkins-docker-and-kubernetes",title:"Ch 11: Docker & Kubernetes Integration",number:11,section:"Advanced"},{id:"12-testing-security-and-compliance",title:"Ch 12: Testing, Security & Compliance",number:12,section:"Advanced"},{id:"13-jenkins-configuration-as-code",title:"Ch 13: Jenkins Configuration as Code (JCasC)",number:13,section:"Production & Exam Prep"},{id:"14-production-grade-jenkins",title:"Ch 14: Production-Grade Jenkins",number:14,section:"Production & Exam Prep"},{id:"15-exam-preparation-guide",title:"Ch 15: Exam Preparation Guide",number:15,section:"Production & Exam Prep"},{id:"16-interview-questions",title:"Ch 16: Interview Questions & Answers",number:16,section:"Bonus"},{id:"17-real-world-scenarios",title:"Ch 17: Real-World Scenario Questions",number:17,section:"Bonus"}],a=[{id:"exam-test-1",title:"Practice Test 1",number:1},{id:"exam-test-2",title:"Practice Test 2",number:2},{id:"exam-test-3",title:"Practice Test 3",number:3},{id:"exam-test-4",title:"Practice Test 4",number:4},{id:"exam-test-5",title:"Practice Test 5",number:5},{id:"exam-test-6",title:"Practice Test 6",number:6},{id:"exam-test-7",title:"Practice Test 7",number:7}];function s(){try{var e=localStorage.getItem(c);return e?JSON.parse(e):{}}catch{return{}}}function u(e,t){try{var n=s();n[e]=n[e]||{},Object.keys(t).forEach(function(s){n[e][s]=t[s]}),localStorage.setItem(c,JSON.stringify(n))}catch{}}function i(){var o=s(),e=0,n=0;return t.forEach(function(t){var s=o[t.id];s&&(s.read&&e++,s.completed&&n++)}),{read:e,completed:n,total:t.length}}function r(){var t=n(),e=0;return a.forEach(function(n){t[n.id]===!0&&e++}),{completed:e,total:a.length}}function g(){var e=window.location.pathname.match(/\/docs\/(\d+-[^/]+)\//);return e?e[1]:null}function v(){var e=g(),n=e&&t.some(function(t){return t.id===e});n&&(b(e),j(e))}function b(e){var t=s();(!t[e]||!t[e].read)&&u(e,{read:!0,readAt:Date.now()})}function j(e){var t,n,i,a,r,o=document.querySelector(".book-article");if(!o)return;if(o.querySelector(".chapter-complete-check"))return;a=s(),r=a[e]||{},i=r.completed===!0,t=document.createElement("div"),t.className="chapter-complete-check",t.innerHTML='<hr><div class="chapter-progress-bar"><input type="checkbox" id="ch-cpl-'+e+'" class="chapter-complete-checkbox" data-chapter-id="'+e+'"'+(i?" checked":"")+'><label for="ch-cpl-'+e+'" class="chapter-complete-label">✓ Mark this chapter as completed</label><span class="chapter-status-badge">'+(i?"✅ Completed":"📖 Reading")+"</span></div>",o.appendChild(t),n=t.querySelector(".chapter-complete-checkbox"),n.addEventListener("change",function(){u(e,{completed:n.checked,completedAt:n.checked?Date.now():null});var s=t.querySelector(".chapter-status-badge");s.textContent=n.checked?"✅ Completed":"📖 Reading"})}window.initExamDashboard=function(){var e,t=document.getElementById("exam-dashboard-app");if(!t)return;t.innerHTML=y(),document.querySelectorAll(".dashboard-chapter-check").forEach(function(e){e.addEventListener("change",function(){u(e.dataset.chapterId,{completed:e.checked,completedAt:e.checked?Date.now():null}),d()})}),document.querySelectorAll(".dashboard-test-check").forEach(function(e){e.addEventListener("change",function(){f(e.dataset.testId,e.checked),d()})}),e=document.getElementById("exam-reset-all"),e&&e.addEventListener("click",function(){confirm("Reset ALL progress (chapters and tests)? This cannot be undone.")&&(localStorage.removeItem(o),localStorage.removeItem(c),d())})};function y(){var m,o=i(),c=r(),u=s(),f=n(),d=o.total+c.total,h=o.completed+c.completed,l=d>0?Math.round(h/d*100):0,e="";return e+='<div class="exam-dashboard-header">',e+="  <h1>📊 Your Learning Dashboard</h1>",e+='  <p class="exam-progress-summary">Track your Jenkins learning journey — from chapters to practice exams</p>',e+="</div>",e+='<div class="exam-combined-progress">',e+='  <div class="exam-progress-bar-wrapper" style="max-width:100%;">',e+='    <div class="exam-progress-bar-fill" id="dash-combined-bar" style="width:'+l+'%;">'+(l>15?l+"%":"")+"</div>",e+="  </div>",e+='  <p class="exam-progress-summary" style="text-align:center;margin-top:0.75rem;">'+h+" of "+d+" total items completed</p>",e+="</div>",e+='<div class="exam-stats">',e+='  <div class="exam-stat-card"><span class="stat-number">'+o.completed+'</span><span class="stat-label">of '+o.total+" Chapters</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+o.read+'</span><span class="stat-label">Chapters Read</span></div>',e+='  <div class="exam-stat-card"><span class="stat-number">'+c.completed+'</span><span class="stat-label">of '+c.total+" Tests Passed</span></div>",e+='  <div class="exam-stat-card"><span class="stat-number">'+l+'%</span><span class="stat-label">Overall Progress</span></div>',e+="</div>",e+='<h2 style="margin-top:2.5rem;">📚 Learning Progress</h2>',e+='<div class="exam-dashboard-grid">',m=["Foundation","Core Skills","Advanced","Production & Exam Prep","Bonus"],m.forEach(function(n){if(s=t.filter(function(e){return e.section===n}),s.length===0)return;var s,i,a=0,o=0;s.forEach(function(e){var t=u[e.id];t&&(t.read&&a++,t.completed&&o++)}),i=Math.round(o/s.length*100),e+='<div class="dashboard-section-card">',e+='  <div class="dashboard-section-header">',e+='    <span class="dashboard-section-badge">'+n+"</span>",e+='    <span class="dashboard-section-count">'+o+"/"+s.length+"</span>",e+="  </div>",e+='  <div class="dashboard-section-bar-wrapper"><div class="dashboard-section-bar-fill" style="width:'+i+'%;"></div></div>',e+='  <div class="dashboard-section-chapters">',s.forEach(function(t){var s=u[t.id]||{},n=s.completed===!0,o=s.read===!0,i=n?"✅":o?"📖":"⬜";e+='    <div class="dashboard-chapter-row'+(n?" completed":"")+'" title="'+t.title+'">',e+='      <input type="checkbox" class="dashboard-chapter-check" data-chapter-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="dashboard-chapter-status">'+i+"</span>",e+='      <span class="dashboard-chapter-title">'+t.title+"</span>",e+="    </div>"}),e+="  </div>",e+="</div>"}),e+="</div>",e+='<h2 style="margin-top:2.5rem;">📝 Practice Test Progress</h2>',e+='<div class="exam-dashboard-grid">',a.forEach(function(t){var n=f[t.id]===!0;e+='  <div class="exam-dashboard-card'+(n?" completed":"")+'">',e+="    <h3>Practice Test "+t.number+"</h3>",e+="    <p>57 questions across all domains | 60 min</p>",e+='    <div style="display:flex;align-items:center;gap:0.5rem;">',e+='      <input type="checkbox" class="exam-dashboard-check dashboard-test-check" data-test-id="'+t.id+'"'+(n?" checked":"")+">",e+='      <span class="card-status">'+(n?"✅ Passed":"⬜ Not yet")+"</span>",e+="    </div>",e+='    <a href="/docs/'+(17+t.number)+"-exam-practice-test-"+t.number+'/" style="display:inline-block;margin-top:0.75rem;font-size:0.85rem;">→ Open test</a>',e+="  </div>"}),e+="</div>",e+='<div style="text-align:center;margin:2.5rem 0;">',e+='  <button class="btn-reset" id="exam-reset-all">🔄 Reset All Progress</button>',e+="</div>",e}function d(){window.initExamDashboard&&window.initExamDashboard()}window.refreshSidebarProgress=function(){var t=i(),e=r();l(t,e.completed,e.total)};function h(){w(),v(),document.getElementById("exam-dashboard-app")&&initExamDashboard();var t=i(),e=r();l(t,e.completed,e.total)}document.readyState==="loading"?document.addEventListener("DOMContentLoaded",h):h()})()</script>
+  
+
+      </footer>
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+  
+ 
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
